@@ -7,10 +7,45 @@
 }
 
 body {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    background-color: #ebe9ea;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header #Blazon {
+    height: 100%;
+    width: 10%;
+    margin-top: 1em;
+}
+
+header nav {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+article {
+    background-color: white;
+}
+
+section.container {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+
+    margin-top: 2em;
+    margin-left: auto;
+    margin-bottom: 2em;
+    margin-right: auto;
 }
 
 @media (max-width: 900px) {
-
-
+    section.container {
+        width: 75%;
+    }
 }
