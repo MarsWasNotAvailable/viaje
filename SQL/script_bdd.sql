@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 18, 2023 at 07:46 AM
+-- Generation Time: Jul 18, 2023 at 11:16 AM
 -- Server version: 5.7.40
 -- PHP Version: 8.0.26
 
@@ -62,21 +62,21 @@ INSERT INTO `article` (`id_article`, `titre`, `date`, `photo_principale`, `resum
 DROP TABLE IF EXISTS `commentaire`;
 CREATE TABLE IF NOT EXISTS `commentaire` (
   `id_commentaire` int(11) NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `contenu` varchar(1500) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
   `id_article` int(11) NOT NULL,
   PRIMARY KEY (`id_commentaire`),
   KEY `commentaire_article` (`id_article`),
   KEY `commentaire_utilisateur` (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `commentaire`
 --
 
 INSERT INTO `commentaire` (`id_commentaire`, `date`, `contenu`, `id_utilisateur`, `id_article`) VALUES
-(1, '2019-01-21 09:38:09', 'Bonjour,\r\nNous allons au Québec cet été (fin du mois de juin) et nous souhaitez faire une excursion pour observer des baleines. Nous sommes tombés sur ton blog et nous avons encore plus envie d\'aller à Tadoussac.\r\nMerci pour ce beau partage, ton blog est très bien organisé !\r\nCécile', 4, 1);
+(1, '2019-01-21 09:38:09', 'Bonjour,\nNous allons au Québec cet été (fin du mois de juin) et nous souhaitez faire une excursion pour observer des baleines. Nous sommes tombés sur ton blog et nous avons encore plus envie d aller à Tadoussac.\nMerci pour ce beau partage, ton blog est très bien organisé !\nCécile', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -91,8 +91,9 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `nom` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id_utilisateur`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `utilisateur`
@@ -112,8 +113,8 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `role`, `nom`, `email`, `mot_de_pas
 -- Constraints for table `commentaire`
 --
 ALTER TABLE `commentaire`
-  ADD CONSTRAINT `commentaire_article` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`),
-  ADD CONSTRAINT `commentaire_utilisateur` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`);
+  ADD CONSTRAINT `commentaire_article` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `commentaire_utilisateur` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
