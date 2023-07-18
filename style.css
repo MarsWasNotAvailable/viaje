@@ -31,21 +31,32 @@ header nav {
 
 article {
     background-color: white;
-}
 
-section.container {
-    display: flex;
     width: 60%;
-    flex-direction: column;
 
     margin-top: 2em;
     margin-left: auto;
     margin-bottom: 2em;
     margin-right: auto;
+
+    padding: 2em;
+}
+
+section.container {
+    display: flex;
+    flex-direction: column;
+}
+
+section.container * {
+    margin-bottom: 1em;
+}
+
+article section h2, article section h4 {
+    color: #d66d40;
 }
 
 @media (max-width: 900px) {
-    section.container {
+    article {
         width: 75%;
     }
 }

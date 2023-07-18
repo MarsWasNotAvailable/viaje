@@ -85,5 +85,27 @@
 
     </article>
 
+    <section id="Commentaires" class="container">
+        <?php
+            $AllComments = $NewConnection->select_join("article", "*", );
+
+            foreach ($AllComments as $Key => $Value)
+            {
+                echo '<fieldset class="comments">';
+                echo '<legend>' . $Value['nom'] .'</legend>';
+                echo '<h6>' . $Value['date'] . '</h6>';
+                echo '<p>' . $Value['contenu_3'] . '</p>';
+                echo '</fieldset>';
+            }
+        ?>
+
+        <form action="controller.php" method="POST">
+            <h3>Laisser un commentaires</h3>
+            <input type="text" name="nom" placeholder="Insérer votre nom ici">
+            <input type="email" name="email" placeholder="Insérer votre email ici">
+            <textarea type="text" name="contenu" placeholder="Insérer votre commentaire ici"></textarea>
+        </form>
+    </section>
+
 </body>
 </html>
