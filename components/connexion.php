@@ -48,22 +48,16 @@
         }
 
         /**Returns an associative array of the results, or false on error */
-        public function select_join($Table, $Column, $JoinPredicate, $ConditionField)
+        public function select_comments($ConditionField)
         {
             try {
-                //$SQLQueryString = 'SELECT `date_begin` FROM `reservations`
-                // INNER JOIN `users` ON `reservations`.`fk_user` = `users`.`id` WHERE `users`.`id` = 3 ;'
 
-                //SELECT `date_begin` FROM `reservations` INNER JOIN `users` ON `reservations`.`fk_user` = `users`.`id` WHERE `reservations`.`fk_user` = `3`
-
-                $RightTable = $JoinPredicate['Table'];
-                $OnColumnLeft = $JoinPredicate['OnColumnLeft'];
-                $OnColumnRight = $JoinPredicate['OnColumnRight'];
-                $ConditionKey = $ConditionField['Key'];
-                $ConditionValue = $ConditionField['Value'];
-
-
-                $SQLQueryString = "SELECT $Column FROM `$Table` INNER JOIN `$RightTable` ON `$Table`.`$OnColumnLeft` = `$RightTable`.`$OnColumnRight` WHERE `$Table`.`$ConditionKey` = $ConditionValue ";
+                $SQLQueryString = "SELECT `commentaire`.`date`, `commentaire`.`contenu`, `utilisateur`.`nom`
+                FROM `commentaire`
+                INNER JOIN `article` ON `article`.`id_article` = `commentaire`.`id_article`
+                INNER JOIN `utilisateur` ON `utilisateur`.`id_utilisateur` = `commentaire`.`id_utilisateur`
+                WHERE `commentaire`.`id_article` = $ConditionField ;
+                ";
 
                 // var_dump($SQLQueryString);
 
@@ -84,21 +78,32 @@
             try {
                 $ValueAsString = "";
                 $KeyAsString = "";
+                $KeyValuePair = "";
 
                 foreach ($Values as $EachColumn => $EachValue) {
                     // echo "$EachColumn => $EachValue";
                     $KeyAsString .= "`$EachColumn`, ";
                     $ValueAsString .= ($this->Connection->quote($EachValue) . ", ");
+                    $KeyValuePair .= "`$EachColumn` = " . ($this->Connection->quote($EachValue) . ", ");
                 }
                 $KeyAsString = rtrim($KeyAsString, ', ');
                 $ValueAsString = rtrim($ValueAsString, ', ');
+                $KeyValuePair = rtrim($KeyValuePair, ', ');
 
+                // var_dump($KeyValuePair);
+
+                //TODO: you could use count parameter to stop at first iteration
                 /* $SQLQueryString = "INSERT IGNORE INTO $Table (<?>) VALUES (<!>)"; */
-                $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>)";
+                $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>) ON DUPLICATE KEY UPDATE <?=!>";
+                /* $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>)"; */
                 $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
+                $SQLQueryString = str_replace("<?=!>", $KeyValuePair, $SQLQueryString);
+
+                // var_dump($SQLQueryString);      
 
                 $Result = $this->Connection->query($SQLQueryString);
-                return true;
+                // return true;
+                return $this->Connection->lastInsertId();
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();

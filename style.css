@@ -29,7 +29,7 @@ header nav {
     margin-bottom: 2em;
 }
 
-article {
+.chunks {
     background-color: white;
 
     width: 60%;
@@ -59,4 +59,34 @@ article section h2, article section h4 {
     article {
         width: 75%;
     }
+}
+
+#CommentaireForm {
+    display: inline-grid;
+}
+
+#CommentaireForm button {
+    border-radius: 1px;
+    border-color: #000;
+    background-color: #ebe9ea;
+    width: 15em;
+}
+
+footer div {
+    display: block;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+footer div:first-child {
+    background-color: #000;
+    color: #ebe9ea;
+    line-height: 2em;
+}
+
+footer div:last-child {
+    background-color: grey;
+    text-align: center;
 }
