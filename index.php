@@ -92,6 +92,7 @@
     </header>
 
     <main>
+        <!-- entête de la page avec l'introduction de la section -->
         <section class="entete">
             <h1 class="titre">Le blog pour mieux voyager !</h1>
             <p class="presentation">
@@ -105,6 +106,7 @@
             </p>
         </section>
         
+        <!-- affichage des articles -->
         <section class="affichageArticles">
             <?php
             foreach($Result as $display){
