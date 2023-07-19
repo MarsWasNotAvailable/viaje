@@ -22,7 +22,7 @@
 </head>
 <body>
     <header>
-        <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" >
+        <!-- <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" > -->
         <?php include("./components/navbar.php"); ?>
     </header>
 
@@ -49,7 +49,7 @@
                     echo '<img src="' . $Value['photo_principale'] . '" alt="Article picture">';
                     echo '<h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
-                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</button>';
+                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</button></a>';
 
                     echo '</form>';
                 }

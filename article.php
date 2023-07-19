@@ -43,7 +43,7 @@
 </head>
 <body>
     <header>
-        <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" >
+        <!-- <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" > -->
         <?php include("./components/navbar.php"); ?>
     </header>
 
