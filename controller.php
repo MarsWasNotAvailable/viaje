@@ -13,14 +13,46 @@
         include("./components/connexion.php");
         $DatabaseName = "viaje";
         $UsersTableName = "utilisateur";
-        $ContactTableName = "contacts";
+        $CommentsTableName = "commentaire";
         $Redirection = "index.php";
+        $ArticlePageRedirection = './article.php';
 
         $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
         if (isset($_POST['Intention']))
         {
             switch ($_POST['Intention']) {
+                case 'AddComment':
+                    $Values = array(
+                        'nom' => $_POST['nom'],
+                        'email' => $_POST['email'],
+                        'mot_de_passe' => bin2hex(openssl_random_pseudo_bytes(4)),
+                        'role' => 'guest'
+                    );
+
+                    // $Success = $NewConnection->insert($UsersTableName, $Values);
+                    $UserID = $NewConnection->insert($UsersTableName, $Values);
+
+                    // var_dump($UserID);
+
+                    $Comments = array(
+                        'contenu' => $_POST['contenu'],
+                        'id_article' => $_POST['id_article'],
+                        'id_utilisateur' => $UserID
+                    );
+
+                    $CommentsID = $NewConnection->insert($CommentsTableName, $Comments);
+
+                    // var_dump($CommentsID);
+
+                    if ($UserID && $CommentsID)
+                    {
+                        header("Location: " . 'article.php' . "?id_article=" . $_POST['id_article']);
+                        die();
+                    }
+
+                    break;
+
                 case 'Signup':
                     $Values = array(
                         'mail' => $_POST['mail'],
@@ -117,33 +149,33 @@
 
                     break;
 
-                case 'Update':
+                case 'UpdateComment':
                     $Values = array();
                     
-                    $FieldsToUpdate = array('name_last','name_first','email','phone', 'address');
+                    $FieldsToUpdate = array('contenu');
                     foreach ($FieldsToUpdate as $EachKey => $EachValue){
                         if ($_POST[$EachValue]) $Values += array($EachValue => $_POST[$EachValue]);
                     }
 
                     // var_dump($Values);
 
-                    $Condition = array('idContact' => $_POST['idContact']);
+                    $Condition = array('id_commentaire' => $_POST['id_commentaire']);
 
-                    $Success = $NewConnection->update($ContactTableName, $Condition, $Values);
+                    $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
 
                     if ($Success) {
-                        header("Location: " . "./show.php");
+                        header("Location: " . $ArticlePageRedirection);
                         die();
                     }
                     break;
 
-                case 'Remove':
-                    $UpdateFieldCondition = array('idContact' => $_POST['idContact']);
+                case 'DeleteComment':
+                    $UpdateFieldCondition = array('id_commentaire' => $_POST['id_commentaire']);
 
-                    $Success = $NewConnection->delete($ContactTableName, $UpdateFieldCondition);
+                    $Success = $NewConnection->delete($CommentsTableName, $UpdateFieldCondition);
 
                     if ($Success) {
-                        header("Location: " . './show.php');
+                        header("Location: " . $ArticlePageRedirection);
                         die();
                     }
                     break;
