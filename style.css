@@ -6,7 +6,11 @@
     /* box-sizing: content-box; */
 }
 
+
+
+
 body {
+
     display: flex;
     flex-direction: column;
     background-color: #ebe9ea;
@@ -29,9 +33,12 @@ header nav {
     margin-bottom: 2em;
 }
 
+
+
 article {
     background-color: white;
 }
+
 
 section.container {
     display: flex;
