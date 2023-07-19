@@ -15,6 +15,7 @@
         $UsersTableName = "utilisateur";
         $CommentsTableName = "commentaire";
         $Redirection = "index.php";
+        $ArticlePageRedirection = './article.php';
 
         $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
@@ -148,33 +149,33 @@
 
                     break;
 
-                case 'Update':
+                case 'UpdateComment':
                     $Values = array();
                     
-                    $FieldsToUpdate = array('name_last','name_first','email','phone', 'address');
+                    $FieldsToUpdate = array('contenu');
                     foreach ($FieldsToUpdate as $EachKey => $EachValue){
                         if ($_POST[$EachValue]) $Values += array($EachValue => $_POST[$EachValue]);
                     }
 
                     // var_dump($Values);
 
-                    $Condition = array('idContact' => $_POST['idContact']);
+                    $Condition = array('id_commentaire' => $_POST['id_commentaire']);
 
-                    $Success = $NewConnection->update($ContactTableName, $Condition, $Values);
+                    $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
 
                     if ($Success) {
-                        header("Location: " . "./show.php");
+                        header("Location: " . $ArticlePageRedirection);
                         die();
                     }
                     break;
 
-                case 'Remove':
-                    $UpdateFieldCondition = array('idContact' => $_POST['idContact']);
+                case 'DeleteComment':
+                    $UpdateFieldCondition = array('id_commentaire' => $_POST['id_commentaire']);
 
-                    $Success = $NewConnection->delete($ContactTableName, $UpdateFieldCondition);
+                    $Success = $NewConnection->delete($CommentsTableName, $UpdateFieldCondition);
 
                     if ($Success) {
-                        header("Location: " . './show.php');
+                        header("Location: " . $ArticlePageRedirection);
                         die();
                     }
                     break;

@@ -1,26 +1,40 @@
 <?php
     session_start();
-    
+    // var_dump($_SESSION);
+
+    require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
-    // var_dump($_SESSION);
 
     $DatabaseName = "viaje";
 
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    $Result = $NewConnection->select("article", "*", "id_article = 1");
-    // var_dump($Result);
-
     // TODO: change the default 1 at the end
     $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 1;
+    
+    $IsEditingArticle = isset($_GET['edit']) ? CanEditArticles($_SESSION['UserRole']) : false;
+    $IsEditingArticle = true;
+
+    $IsEditingComment = isset($_GET['edit']) ? CanEditComments($_SESSION['UserRole']) : false;
+    $IsEditingComment = true;
+
+    $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
+    // var_dump($SelectedArticle);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje</title>
+    <title>Viaje:
+        <?php
+            foreach ($SelectedArticle as $Key => $Value) {
+                echo $Value['titre'];
+            }
+        ?>
+    </title>
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
@@ -35,7 +49,7 @@
         <article class="chunks">
             <section id="Tete" class="container">
                 <?php
-                    foreach ($Result as $Key => $Value)
+                    foreach ($SelectedArticle as $Key => $Value)
                     {
                         echo '<h2>' . $Value['titre'] . '</h2>';
                         echo '<h6>' . $Value['date'] . '</h6>';
@@ -56,7 +70,7 @@
 
             <section id="Section1" class="container">
                 <?php
-                    foreach ($Result as $Key => $Value)
+                    foreach ($SelectedArticle as $Key => $Value)
                     {
                         echo '<h4>' . $Value['sous_titre_1'] . '</h4>';
                         echo '<p>' . $Value['contenu_1'] . '</p>';
@@ -67,7 +81,7 @@
 
             <section id="Section2" class="container">
                 <?php
-                    foreach ($Result as $Key => $Value)
+                    foreach ($SelectedArticle as $Key => $Value)
                     {
                         echo '<h4>' . $Value['sous_titre_2'] . '</h4>';
                         echo '<p>' . $Value['contenu_2'] . '</p>';
@@ -78,7 +92,7 @@
 
             <section id="Section3" class="container">
                 <?php
-                    foreach ($Result as $Key => $Value)
+                    foreach ($SelectedArticle as $Key => $Value)
                     {
                         echo '<h4>' . $Value['sous_titre_3'] . '</h4>';
                         echo '<p>' . $Value['contenu_3'] . '</p>';
@@ -98,26 +112,50 @@
 
             foreach ($AllComments as $Key => $Value)
             {
+                if ($IsEditingComment)
+                {
+                    echo '<form action="controller.php" method="post" class="article-editor">';
+                    // echo '<input type="hidden" name="id_article" value="' . $CurrentArticleID . '">';
+                    echo '<input type="hidden" name="id_commentaire" value="' . $Value['id_commentaire'] . '">';
+                }
+
                 echo '<fieldset class="comments">';
                 echo '<legend>' . $Value['nom'] .'</legend>';
                 echo '<h6>' . $Value['date'] . '</h6>';
-                echo '<p>' . $Value['contenu'] . '</p>';
+
+                if ($IsEditingComment)
+                {
+                    echo '<textarea name="contenu" rows="5">' . $Value['contenu'] . '</textarea>';
+                }
+                else {
+                    echo '<p>' . $Value['contenu'] . '</p>';
+                }
+
                 echo '</fieldset>';
+
+                if ($IsEditingComment)
+                {
+                    echo '<button name="Intention" value="UpdateComment" type="submit">Mettre à jour</button>';
+                    echo '<button name="Intention" value="DeleteComment" type="submit">Supprimer</button>';
+                    echo '</form>';
+                }
             }
 
         ?>
 
-        <form id="CommentaireForm" action="controller.php" method="POST" >
-            <h3>Laisser un commentaires</h3>
-            <?php
-                echo '<input type="hidden" name="id_article" value="' . $CurrentArticleID . '">';
-            ?>
-            
-            <input type="text" name="nom" placeholder="Insérer votre nom ici" >
-            <input type="email" name="email" placeholder="Insérer votre email ici">
-            <textarea type="text" name="contenu" placeholder="Insérer votre commentaire ici"></textarea>
-            <button name="Intention" value="AddComment" type="submit">Publier le commentaire</button>
-        </form>
+        <?php if (!$IsEditingComment || $IsEditingArticle): ?>
+            <form id="CommentaireForm" action="controller.php" method="POST" >
+                <h3>Laisser un commentaires</h3>
+                <?php
+                    echo '<input type="hidden" name="id_article" value="' . $CurrentArticleID . '">';
+                ?>
+                
+                <input type="text" name="nom" placeholder="Insérer votre nom ici" >
+                <input type="email" name="email" placeholder="Insérer votre email ici">
+                <textarea type="text" name="contenu" placeholder="Insérer votre commentaire ici"></textarea>
+                <button name="Intention" value="AddComment" type="submit">Publier le commentaire</button>
+            </form>
+        <?php endif; ?>
     </section>
 
     <footer>

@@ -27,7 +27,9 @@
         //TODO: working through that, I think 'method chaining' would be a perfect interface, as in:
         //$NewConnection.delete().fromtable("User").where(array( "email" => "example@local") ).execute();
 
-        /**Returns an associative array of the results, or false on error */
+        /**
+         * The ConditionField is a filter to isolate a specific result
+         * Returns an associative array of the results, or false on error */
         public function select($Table, $Column, $ConditionField = 1)
         {
             try {
@@ -49,22 +51,15 @@
         }
 
         /**Returns an associative array of the results, or false on error */
-        public function select_join($Table, $Column, $JoinPredicate, $ConditionField)
+        public function select_comments($ConditionField)
         {
             try {
-                //$SQLQueryString = 'SELECT `date_begin` FROM `reservations`
-                // INNER JOIN `users` ON `reservations`.`fk_user` = `users`.`id` WHERE `users`.`id` = 3 ;'
-
-                //SELECT `date_begin` FROM `reservations` INNER JOIN `users` ON `reservations`.`fk_user` = `users`.`id` WHERE `reservations`.`fk_user` = `3`
-
-                $RightTable = $JoinPredicate['Table'];
-                $OnColumnLeft = $JoinPredicate['OnColumnLeft'];
-                $OnColumnRight = $JoinPredicate['OnColumnRight'];
-                $ConditionKey = $ConditionField['Key'];
-                $ConditionValue = $ConditionField['Value'];
-
-
-                $SQLQueryString = "SELECT $Column FROM `$Table` INNER JOIN `$RightTable` ON `$Table`.`$OnColumnLeft` = `$RightTable`.`$OnColumnRight` WHERE `$Table`.`$ConditionKey` = $ConditionValue ";
+                $SQLQueryString = "SELECT `commentaire`.`id_commentaire`, `commentaire`.`date`, `commentaire`.`contenu`, `utilisateur`.`nom`
+                FROM `commentaire`
+                INNER JOIN `article` ON `article`.`id_article` = `commentaire`.`id_article`
+                INNER JOIN `utilisateur` ON `utilisateur`.`id_utilisateur` = `commentaire`.`id_utilisateur`
+                WHERE `commentaire`.`id_article` = $ConditionField ;
+                ";
 
                 // var_dump($SQLQueryString);
 
@@ -79,7 +74,7 @@
             }
         }
 
-        /**Returns true on sucessful insert */
+        /**Returns the id of inserted row on sucessful insert, false on failure */
         public function insert($Table, $Values)
         {
             try {
