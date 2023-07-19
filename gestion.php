@@ -37,18 +37,19 @@
             </form>
 
             <?php
-                $ArticlePageRedirection = 'article.php';
-                $ArticlePageRedirectionWithParameters = $ArticlePageRedirection .'?id_article=';
+                
 
                 foreach ($AllArticles as $Key => $Value)
                 {
+                    $ArticlePageRedirectionWithParameters = './article.php?edit=true&id_article=' . $Value['id_article'];
+
                     echo '<form action="controller.php" method="post" class="card-gestion">';
                     echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">';
                     echo '<button name="Intention" value="Delete" type="submit" class="floating"></button>';
                     echo '<img src="' . $Value['photo_principale'] . '" alt="Article picture">';
                     echo '<h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
-                    echo '<button onclick="window.location.href="' . $ArticlePageRedirectionWithParameters . $Value['id_article'] . '" type="button">Modifier</button>';
+                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</button>';
 
                     echo '</form>';
                 }

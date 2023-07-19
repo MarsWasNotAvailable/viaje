@@ -5,6 +5,8 @@
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
+    $_SESSION['UserRole'] = 'admin';
+
 
     $DatabaseName = "viaje";
 
