@@ -15,15 +15,36 @@
     // TODO: change the default 1 at the end
     $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 1;
     
-    $IsEditingArticle = isset($_GET['edit']) ? CanEditArticles($_SESSION['UserRole']) : false;
-    $IsEditingArticle = true;
+    $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && CanEditArticles($_SESSION['UserRole']) : false;
+    // $IsEditingArticle = true;
 
-    $IsEditingComment = isset($_GET['edit']) ? CanEditComments($_SESSION['UserRole']) : false;
+    $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && CanEditComments($_SESSION['UserRole']) : false;
     $IsEditingComment = true;
 
     $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
-    // var_dump($SelectedArticle);
 
+    if ($IsEditingArticle && !$SelectedArticle)
+    {
+        // var_dump($SelectedArticle);
+        array_push($SelectedArticle, array(
+            'titre' => 'Sans titre',
+            'date' => '2000-01-01',
+            'photo_principale' => './images/icons_plus.png',
+            'resume' => 'Ajouter un résumé ici.',
+
+            'sous_titre_1' => 'Ajouter un premier sous titre ici',
+            'contenu_1' => 'Ajouter un premier paragraphe ici',
+            'photo_1' => './images/icons_plus.png',
+
+            'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
+            'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
+            'photo_2' => './images/icons_plus.png',
+
+            'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
+            'contenu_3' => 'Ajouter un troisieme paragraphe ici',
+            'photo_3' => './images/icons_plus.png',
+        ));
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +53,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viaje:
         <?php
+            $ArticlesName = "Article";
             foreach ($SelectedArticle as $Key => $Value) {
-                echo $Value['titre'];
+                $ArticlesName .= (' - ' . $Value['titre']);
             }
+            echo $ArticlesName;
         ?>
     </title>
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
@@ -53,10 +76,24 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h2>' . $Value['titre'] . '</h2>';
-                        echo '<h6>' . $Value['date'] . '</h6>';
-                        echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
-                        echo '<p>' . $Value['resume'] . '</p>';
+                        echo '<h2 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['titre'] . '</h2>';
+                        
+                        if ($IsEditingArticle){
+                            echo '<h6>' . date('Y-d-m') . '</h6>';
+
+                            // TODO: need to have image dialog input here
+                            echo '<label for="photo_principale">Selectionner une image:</label>';
+                            echo '<input name="photo_principale" type="file" accept="image/*"> ';
+
+                            //TODO: I'd love a visual representation of the image
+                            // echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
+                        }
+                        else {
+                            echo '<h6>' . $Value['date'] . '</h6>';
+                            echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
+                        }
+                        
+                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['resume'] . '</p>';
                         echo '<div >';
                         echo '<fieldset class="Sommaire">';
                         echo '  <legend >Sommaire:</legend>';
@@ -74,9 +111,20 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h4>' . $Value['sous_titre_1'] . '</h4>';
-                        echo '<p>' . $Value['contenu_1'] . '</p>';
-                        echo '<img src="' . $Value['photo_1'] . '" alt="Fancy contextual image for this section" >';
+                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_1'] . '</h4>';
+                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_1'] . '</p>';
+
+                        if ($IsEditingArticle){
+                            // TODO: need to have image dialog input here
+                            echo '<label for="photo_1">Selectionner une image:</label>';
+                            echo '<input name="photo_1" type="file" accept="image/*"> ';
+
+                            //TODO: I'd love a visual representation of the image
+                            // echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
+                        }
+                        else {
+                            echo '<img src="' . $Value['photo_1'] . '" alt="Fancy contextual image for this section" >';
+                        }
                     }
                 ?>
             </section>
@@ -85,8 +133,8 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h4>' . $Value['sous_titre_2'] . '</h4>';
-                        echo '<p>' . $Value['contenu_2'] . '</p>';
+                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_2'] . '</h4>';
+                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_2'] . '</p>';
                         echo '<img src="' . $Value['photo_2'] . '" alt="Fancy contextual image for this section" >';
                     }
                 ?>
@@ -96,8 +144,8 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h4>' . $Value['sous_titre_3'] . '</h4>';
-                        echo '<p>' . $Value['contenu_3'] . '</p>';
+                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_3'] . '</h4>';
+                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_3'] . '</p>';
                         echo '<img src="' . $Value['photo_3'] . '" alt="Fancy contextual image for this section" >';
                     }
                 ?>

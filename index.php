@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viaje</title>
-    <link rel="icon" href="./cache/favicon.ico" type="image/x-icon" >
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -148,7 +148,7 @@
                         <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
                     </div>
                     <div class= "cardText">
-                        <a href=""class = "cardTitle"><h3>' . $display['titre']. '</h3></a>
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
                         <p class="date">' . $display['date'] . '</p>
                         <p class="resume">' . $display['resume'] . '</p>
                     </div>

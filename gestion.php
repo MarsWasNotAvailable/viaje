@@ -33,7 +33,7 @@
                 <input type="hidden" name="id_article" value="' . $Value['id_article'] . '">
                 <img id="AddNewIcon" src="./images/icons_plus.png" alt="New article picture">
                 <h5>Pour créer un nouvel article:</h5>
-                <button name="Intention" value="Create" type="submit">Clicker ici</button>
+                <a href="./article.php?edit=true&id_article=0" >Clicker ici</a>
             </form>
 
             <?php
@@ -49,7 +49,7 @@
                     echo '<img src="' . $Value['photo_principale'] . '" alt="Article picture">';
                     echo '<h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
-                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</button></a>';
+                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</a>';
 
                     echo '</form>';
                 }
