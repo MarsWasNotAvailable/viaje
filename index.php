@@ -89,6 +89,7 @@
         margin-top: 5%;
     }
 
+    /* version mobile */
     @media (max-width: 900px) {
 
         .titre{
@@ -103,6 +104,7 @@
             font-size: 13px;
             margin-bottom: 10%;
         }
+
         .affichageArticles{
             display: grid;
             justify-items: center;
