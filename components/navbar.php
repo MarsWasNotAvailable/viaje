@@ -100,7 +100,7 @@
 <a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
 
 <nav class="navbar">
-    <a href="#">BLOG VOYAGE</a>
+    <a href="./index.php">BLOG VOYAGE</a>
     <div class="dropdown">
         <a href="#">PRATIQUE</a>
         <div class="dropdown-content">
@@ -150,7 +150,7 @@
         </div>
     </div>
     <div class="dropdown">
-        <a href="#">CONTACT</a>
+        <a href="./contact.php">CONTACT</a>
         <div class="dropdown-content">
             <a href="#">Option 1</a>
             <a href="#">Option 2</a>

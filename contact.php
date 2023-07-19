@@ -21,11 +21,15 @@
 </head>
 
 <style>
-.bg{
-    background-color: #fff;
-    margin: 5% 10%;
-}
-.titre{
+
+/* le background du main  */
+    .bg{
+        background-color: #fff;
+        margin: 5% 10%;
+    }
+
+    /* la partie textuelle */
+    .titre{
         text-transform: uppercase;
         font-weight: bold;
         font-size: 34px;
@@ -46,6 +50,50 @@
         margin-bottom: 1.6%;
     }
 
+    /* le style du formulaire de contact */
+    .contactForm{
+        display: grid;
+    }
+
+    .contactForm input{
+        width: 30%;
+        height: 3em;
+        border: solid 1px #D9D9D9;
+        margin:1% 0 1.5%;
+    }
+
+    .contactForm textarea{
+        border: solid 1px #D9D9D9;
+        margin:1% 0 1.5%;
+    }
+
+    .submit{
+        width: 25%;
+        border: solid 1px #ffff;
+        margin:1% 0;
+    }
+
+        /* version mobile */
+    @media (max-width: 900px) {
+
+        .titre{
+            font-size: 28px;
+        }
+
+        .entete h2{
+            font-size: 24px;
+        }
+
+        .presentation{
+            font-size: 13px;
+            margin-bottom: 10%;
+            line-height: 2em;
+        }
+
+        .contactForm input, .submit{
+            width: 60%;
+        }
+        }
 </style>
 <body>
     <header>
@@ -74,7 +122,7 @@ Si vous jugez que votre question ainsi que ma réponse peuvent être utiles à d
 
             <h2>Vous êtes un annonceur, sponsor ou agence?</h2>
 
-            <p>Vous souhaitez me contacter pour une demande de collaboration, de partenariat ou autre ?
+            <p class="presentation">Vous souhaitez me contacter pour une demande de collaboration, de partenariat ou autre ?
 
 Si c’est le cas, je vous invite à lire cette page dédiée à ce sujet.
 
@@ -85,26 +133,30 @@ Vous pouvez également trouver ici une version allégée du media kit du blog Vo
 
             <h2>Contactez-moi</h2>
             <form action="" method="POST" class="contactForm">
-                <div class="form-example">
-                    <label for="name">Enter your name: </label>
+                <div class="contactForm">
+                    <label for="name"> Nom </label>
                     <input type="text" name="name" id="name" required>
                 </div>
-                <div class="form-example">
-                    <label for="email">Enter your email: </label>
+                <div class="contactForm">
+                    <label for="email">Email </label>
                     <input type="email" name="email" id="email" required>
                 </div>
-                <div class="form-example">
-                    <label for="email">Enter your email: </label>
-                    <input type="email" name="email" id="email" required>
+                <div class="contactForm">
+                    <label for="subject">Sujet</label>
+                    <input type="text" name="subject" id="subject" required>
                 </div>
-                <div class="form-example">
-                    <label for="email">Enter your email: </label>
-                    <input type="email" name="email" id="email" required>
+                <div class="contactForm">
+                    <label for="message">Ecrire</label>
+                    <textarea name="message" id="message" cols="30" rows="10"></textarea>
                 </div>
-                <div class="form-example">
-                    <input type="submit" value="Subscribe!">
+                <div class="contactForm submit">
+                    <input type="submit" value="Envoyer">
                 </div>
             </form>
+        </section>    
     </main>
+    <footer>
+        <?php include_once './components/footer.php' ?>
+    </footer>
 </body>
 </html>
