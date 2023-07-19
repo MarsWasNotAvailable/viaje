@@ -59,6 +59,7 @@
         width: 29%;
         background-color: #fff;
         margin-left: 3.5%;
+        margin-bottom: 3%;
     }
 
     .cardImage{
@@ -69,6 +70,7 @@
         padding:4%;
         height:15em
     }
+
     .cardTitle{
         color: #000;
         font-size: 20px;
@@ -80,10 +82,37 @@
         font-size: 13px;
         margin-top: 1%;
     }
+
     .resume{
         line-height: 1.5;
         font-size: 15px;
         margin-top: 5%;
+    }
+
+    @media (max-width: 900px) {
+
+        .titre{
+            font-size: 28px;
+        }
+
+        .entete h2{
+            font-size: 24px;
+        }
+
+        .presentation, .resume{
+            font-size: 13px;
+            margin-bottom: 10%;
+        }
+        .affichageArticles{
+            display: grid;
+            justify-items: center;
+        }
+
+        .card{
+            width: 97%;
+            margin: 3% 0;
+        }
+
     }
 </style>
 <body>
