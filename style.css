@@ -9,7 +9,7 @@
 body {
     display: flex;
     flex-direction: column;
-    background-color: #ebe9ea;
+    background-image: url(images/body-bg1.png);
 }
 
 header {
