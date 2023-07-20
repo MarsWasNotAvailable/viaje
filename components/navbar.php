@@ -27,8 +27,8 @@
 
     .navbar a {
         color: white;
-        font-size: 18px;
-        margin-right: 50px;
+        font-size: 1em;
+        margin-right: 2em;
         /* Ajuste l'espace entre les onglets */
         text-decoration: none;
     }

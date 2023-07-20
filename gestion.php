@@ -22,7 +22,6 @@
 </head>
 <body>
     <header>
-        <!-- <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" > -->
         <?php include("./components/navbar.php"); ?>
     </header>
 
@@ -37,8 +36,6 @@
             </form>
 
             <?php
-                
-
                 foreach ($AllArticles as $Key => $Value)
                 {
                     $ArticlePageRedirectionWithParameters = './article.php?edit=true&id_article=' . $Value['id_article'];
@@ -55,7 +52,6 @@
                 }
             ?>
         </section>
-
     </main>
 
     <footer>

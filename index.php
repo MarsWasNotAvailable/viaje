@@ -67,8 +67,9 @@
     }
 
     .cardText{
-        padding:4%;
-        height:15em
+        padding: 4%;
+        height: 15em;
+        overflow: hidden;
     }
 
     .cardTitle{
@@ -87,6 +88,7 @@
         line-height: 1.5;
         font-size: 15px;
         margin-top: 5%;
+
     }
 
     /* version mobile */
