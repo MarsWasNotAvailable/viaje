@@ -1,77 +1,164 @@
-<!DOCTYPE html>
-<html lang="fr">
+<style>
+    /* Styles spécifiques pour la navbar */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Viaje</title>
-    <link rel="icon" href="./cache/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Styles spécifiques pour la navbar */
-        .navbar {
-            background-color: #333;
-            padding: 10px;
-            margin-top: 20px;
-        }
+    .logo {
+        width: 200px;
+        /* Largeur de l'image */
+        height: auto;
+        /* Hauteur automatique proportionnelle */
+        display: block;
+        /* Affichage en tant que bloc */
+        margin: 10px auto;
+        /* Marge : 10px haut et bas, centrage horizontal */
+    }
 
-        .navbar a {
-            color: white;
-            font-size: 18px;
-            margin-right: 10px;
-            text-decoration: none;
-        }
+    .navbar {
+        background-color: #333;
+        /* margin-top: 20px; */
 
-        .navbar a:hover {
-            color: #4CAF50;
-        }
+        padding-top: 1em;
+        padding-right: 3em;
+        padding-bottom: 1em;
+        padding-left: 3em;
 
-        .search-container {
-            display: inline-block;
-            margin-left: auto;
-        }
+        position: relative;
+        z-index: 2;
+    }
 
-        .search-container input[type="text"] {
-            padding: 5px;
-            border-radius: 3px;
-            border: none;
-        }
+    .navbar a {
+        color: white;
+        font-size: 18px;
+        margin-right: 50px;
+        /* Ajuste l'espace entre les onglets */
+        text-decoration: none;
+    }
 
-        .search-container button {
-            padding: 5px 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
+    .navbar a:hover {
+        color: #4CAF50;
+    }
 
-<body>
-    <div>
-        <!-- Blason ici -->
-    </div>
-    <nav class="navbar">
-        <a href="">BLOG VOYAGE</a>
-        <a href="">PRATIQUE</a>
-        <a href="">AMÉRIQUE</a>
-        <a href="">ASIE</a>
-        <a href="">EUROPE</a>
-        <a href="">AFRIQUE & MOYEN-ORIENT</a>
-        <a href="">OCÉANIE</a>
-        <a href="">CONTACT</a>
-        <div class="search-container">
-            <input type="text" placeholder="Rechercher...">
-            <button type="submit">Rechercher</button>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        padding: 8px 0;
+        z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        padding: 8px 16px;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .search-container {
+        display: inline-block;
+    }
+
+    .search-container input[type="text"] {
+        padding: 5px;
+        border-radius: 3px;
+        border: none;
+    }
+
+    .search-container button {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* body {
+        background-color: #F0EAD6;
+        margin: 0;
+    } */
+
+    /* Ajuster la valeur pour decaler le texte a droite ou gauche */
+    /* section {
+        padding-left: 15%;
+        padding-right: 15%;
+    } */
+
+</style>
+
+<a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
+
+<nav class="navbar">
+    <a href="./index.php">BLOG VOYAGE</a>
+    <div class="dropdown">
+        <a href="#">PRATIQUE</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
         </div>
-    </nav>
-    <section>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quas totam autem earum cupiditate, eum repellat dolorum veritatis mollitia, natus aperiam debitis provident aliquam magnam optio eius architecto doloribus ipsam?</p>
-    </section>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-
-</html>
-
-
+    </div>
+    <div class="dropdown">
+        <a href="#">AMÉRIQUE</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#">ASIE</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#">EUROPE</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#">AFRIQUE &amp; MOYEN-ORIENT</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#">OCÉANIE</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="./contact.php">CONTACT</a>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Rechercher...">
+        <button type="submit">Rechercher</button>
+    </div>
+</nav>

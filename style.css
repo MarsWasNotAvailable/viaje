@@ -6,16 +6,20 @@
     /* box-sizing: content-box; */
 }
 
+
+
+
 body {
+
     display: flex;
     flex-direction: column;
-    background-color: #ebe9ea;
+    background-image: url(images/body-bg1.png);
 }
 
 header {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 
 header #Blazon {
@@ -29,23 +33,168 @@ header nav {
     margin-bottom: 2em;
 }
 
-article {
+
+
+main article {
     background-color: white;
 }
 
-section.container {
-    display: flex;
+
+.chunks {
     width: 60%;
-    flex-direction: column;
 
     margin-top: 2em;
     margin-left: auto;
     margin-bottom: 2em;
     margin-right: auto;
+
+    padding: 2em;
+}
+
+section.container {
+    display: flex;
+    flex-direction: column;
+}
+
+section.container * {
+    margin-bottom: 1em;
+}
+
+article section h2, article section h4 {
+    color: #d66d40;
 }
 
 @media (max-width: 900px) {
-    section.container {
+    article {
         width: 75%;
     }
+}
+
+#CommentaireForm {
+    display: inline-grid;
+}
+
+#CommentaireForm button {
+    border-radius: 1px;
+    border-color: #000;
+    background-color: #ebe9ea;
+    width: 15em;
+}
+
+footer div {
+    display: block;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+footer div:first-child {
+    background-color: #000;
+    color: #ebe9ea;
+    line-height: 2em;
+}
+
+footer div:last-child {
+    background-color: grey;
+    text-align: center;
+}
+
+
+
+/* Gestion */
+
+form.card-gestion button, form.card-gestion a {
+    display: block;
+    cursor: pointer;
+}
+
+form.card-gestion button.floating {
+    background-image: url('./images/icons_cross_deletion.png');
+    background-size: cover;
+    width: 2em;
+    height: 2em;
+    border-radius: 16px;
+
+    float: right;
+
+    /* using a fixed position would allow for the height of the button to be ignored
+     * but then the positioning would be off, when resizing the page
+     * setting a negative margin-top kinda fix the issue
+     */
+    position: relative;
+    left: 50%;
+    top: 100%;
+
+    margin: -2em 0 0 0;
+    border: 0;
+}
+
+/* form.card-gestion button:last-of-type { */
+form.card-gestion a {
+    background-color: transparent;
+
+    border: 1px solid #000;
+    padding: 1em;
+
+    text-decoration: none;
+}
+
+form.card-gestion button:last-of-type:hover {
+    background-color: #ebe9ea;
+
+    border: 1px solid #000;
+    padding: 1em;
+}
+
+form.card-gestion {
+    background-color: white;
+    width: 25%;
+
+    display: grid;
+    justify-items: center;
+}
+
+form.card-gestion img {
+    width: 100%;
+}
+
+#ArticlesViewerBox {
+    /* display: grid;
+    grid-template-columns: 33% 33% 33%; */
+    display: flex;
+    flex-direction: row;
+
+    /* It doesnt look good with few articles */
+    /* justify-content: space-evenly; */
+}
+
+#ArticlesViewerBox > * {
+    /* see justify-content in #ArticlesViewerBox */
+    margin-right: 0.5em;
+}
+
+#ArticlesViewerBox > *:last-child {
+    /* see justify-content in #ArticlesViewerBox */
+    margin-right: 0;
+}
+
+#ArticlesViewerBox #AddNewIcon {
+    width: 50%;
+    border: 1px solid #000;
+    border-radius: 4em;
+}
+
+
+.article-editor {
+    padding: 0.5em;
+    border: 2px dashed #000;
+}
+
+form.article-editor textarea {
+    resize: vertical;
+    width: 100%;
+    /* height: 100%;  */
+    box-sizing: border-box;
+    display: flex;
 }
