@@ -203,3 +203,24 @@ form.article-editor textarea {
     border: 2px dashed black;
     padding: 1em;
 }
+
+
+button.article-editor-button {
+    display: block;
+    width: 25%;
+    position: relative;
+    bottom: 90%;
+    left: 105%;
+    float: right;
+}
+
+button.update-edit {
+    /* background-color: transparent; */
+    /* width: 100%; */
+    display: block;
+    position: absolute;
+    /* top: 5%; */
+    right: 7%;
+    /* float: right; */
+    width: 8%;
+}

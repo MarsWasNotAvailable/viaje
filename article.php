@@ -9,12 +9,15 @@
     {
         foreach ($SelectedArticle as $Key => $Value)
         {
-            echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
-            echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
+            if (isset($Value['id_article']))
+            {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
+                
+            echo '<h4 name="' . "sous_titre_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
+            echo '<p name="' . "contenu_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
 
             if ($IsEditingArticle){
-                echo '<label for="photo_' . $SectionNumber . '">Selectionner une image:</label>';
-                echo '<input name="photo_' . $SectionNumber . '" class="image-selector" type="file" accept="image/*"> ';
+                echo '<label for="' . "photo_$SectionNumber" . '">Selectionner une image:</label>';
+                echo '<input name="' . "photo_$SectionNumber" . '" class="image-selector" type="file" accept="image/*"> ';
 
                 echo '<img width="256" class="image-preview" src="' . $Value["photo_$SectionNumber"] . '" alt="Image Preview">';
             }
@@ -38,7 +41,7 @@
     // $IsEditingArticle = true;
 
     $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && CanEditComments($_SESSION['UserRole']) : false;
-    $IsEditingComment = true;
+    // $IsEditingComment = true;
 
     $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
 
@@ -126,66 +129,18 @@
             <section id="Section1" class="container">
                 <?php
                     GenerateSection($IsEditingArticle, $SelectedArticle, 1);
-
-                    // foreach ($SelectedArticle as $Key => $Value)
-                    // {
-                    //     echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_1'] . '</h4>';
-                    //     echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_1'] . '</p>';
-
-                    //     if ($IsEditingArticle){
-                    //         echo '<label for="photo_1">Selectionner une image:</label>';
-                    //         echo '<input name="photo_1" class="image-selector" type="file" accept="image/*"> ';
-
-                    //         echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
-                    //     }
-                    //     else {
-                    //         echo '<img src="' . $Value['photo_1'] . '" alt="Fancy contextual image for this section" >';
-                    //     }
-                    // }
                 ?>
             </section>
 
             <section id="Section2" class="container">
                 <?php
                     GenerateSection($IsEditingArticle, $SelectedArticle, 2);
-
-                    // foreach ($SelectedArticle as $Key => $Value)
-                    // {
-                    //     echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_2'] . '</h4>';
-                    //     echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_2'] . '</p>';
-
-                    //     if ($IsEditingArticle){
-                    //         echo '<label for="photo_2">Selectionner une image:</label>';
-                    //         echo '<input name="photo_2" class="image-selector" type="file" accept="image/*"> ';
-
-                    //         echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
-                    //     }
-                    //     else {
-                    //         echo '<img src="' . $Value['photo_2'] . '" alt="Fancy contextual image for this section" >';
-                    //     }
-                    // }
                 ?>
             </section>
 
             <section id="Section3" class="container">
                 <?php
                     GenerateSection($IsEditingArticle, $SelectedArticle, 3);
-
-                    // foreach ($SelectedArticle as $Key => $Value)
-                    // {
-                        // echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_3'] . '</h4>';
-                        // echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_3'] . '</p>';
-
-                        // if ($IsEditingArticle){
-                        //     echo '<label for="photo_3">Selectionner une image:</label>';
-                        //     echo '<input name="photo_3" class="image-selector" type="file" accept="image/*"> ';
-
-                        //     echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
-                        // }
-                        // else {
-                        //     echo '<img src="' . $Value['photo_3'] . '" alt="Fancy contextual image for this section" >';
-                        // }
-                    // }
                 ?>
             </section>
 
@@ -251,19 +206,99 @@
     </footer>
 
     <script>
+        function GetCurrentArticleID()
+        {
+            return <?php echo $CurrentArticleID; ?> ;
+        }
+
         [...document.getElementsByClassName('image-selector')].forEach(Each => {
-            Each.onchange = function (event) {
-                let Section = event.target.parentNode;
+            Each.addEventListener('change', (Event) => {
+                let Section = Event.target.parentNode;
                 // console.log(Section);
 
-                let src = URL.createObjectURL(event.target.files[0]);
+                let src = URL.createObjectURL(Event.target.files[0]);
                 let ImagePreviewPlaceholder = Section.getElementsByClassName('image-preview');
                 if (ImagePreviewPlaceholder)
                 {
                     ImagePreviewPlaceholder[0].src = src;
                 }
-            }
+            });
+        });
+
+        [...document.querySelectorAll('*[contenteditable="true"]')].forEach(Each => {
+
+            let UpdateButton = document.createElement('button');
+            UpdateButton.innerHTML = "Update";
+            UpdateButton.className = 'update-edit';
+
+            //TODO: doesnt work anymore
+            UpdateButton.addEventListener('click', async (Event) => {
+                // console.log("blur: ", Event.target);
+
+                let url = "./controller.php";
+                // let data = {
+                //     'Intention' : 'UpdateArticleField',
+                //     'id_article' : GetCurrentArticleID(),
+                //     'Column' : Event.target.getAttribute('name'),
+                //     'Value' : Event.target.innerHTML
+                // };
+
+                // console.log("blur: data: ", data);
+
+                let form_data = new FormData();
+                form_data.append('Intention', 'UpdateArticleField');
+                form_data.append('id_article', GetCurrentArticleID());
+                form_data.append('Column', Event.target.getAttribute('name'));
+                form_data.append('Value', Event.target.innerHTML);
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    mode: "cors", // no-cors, *cors, same-origin
+                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: "same-origin", // include, *same-origin, omit
+                    // It doesnt work with Content-Type
+                    // headers: {
+                    //     // "Content-Type": "application/json",
+                    //     // 'Content-Type': 'application/x-www-form-urlencoded',
+                    //     // 'Content-Type': 'multipart/form-data'
+                    // },
+                    redirect: "follow", // manual, *follow, error
+                    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+                    body: form_data
+
+                })
+                // .then((response)=>{console.log('response', response);})
+                ;
+
+                // console.log(response);
+            });
+
+            Each.addEventListener('focus', (Event) => {
+                // console.log("focus: ", Event.target);
+
+                // Event.target.append(UpdateButton);
+                Event.target.insertAdjacentElement('beforebegin', UpdateButton);
+            });
+
+            Each.addEventListener('blur', (Event) => {
+                // console.log("focus: ", Event.target);
+
+                //destroy button here
+                UpdateButton.remove();
+                // UpdateButton = null; //we are reusing the same, wasn't the initial intent, but I'm fine with it
+            });
         });
     </script>
+
+    <!-- <form id="form" action="./controller.php" method="post">
+        <input type="hidden" name="id_article" value="1">
+        <input type="hidden" name="Column" value="sous_titre_1">
+        <input type="hidden" name="Value" value="ertetr">
+        <input type="hidden" name="Intention" value="UpdateArticleField">
+
+        <button type="submit" name="Intention" value="UpdateArticleField" >Update</button>
+
+    </form> -->
 </body>
 </html>

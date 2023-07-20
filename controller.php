@@ -14,6 +14,7 @@
         $DatabaseName = "viaje";
         $UsersTableName = "utilisateur";
         $CommentsTableName = "commentaire";
+        $ArticleTableName = "article";
         $Redirection = "index.php";
         $ArticlePageRedirection = './article.php';
 
@@ -178,6 +179,26 @@
                         header("Location: " . $ArticlePageRedirection);
                         die();
                     }
+                    break;
+
+                case 'UpdateArticleField':
+                    $Values = array(
+                        $_POST['Column'] => $_POST['Value']
+                    );
+
+                    $Condition = array('id_article' => $_POST['id_article']);
+
+                    // var_dump($Values);
+                    // var_dump($Condition);
+
+                    $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
+
+                    // echo "success";
+
+                    // if ($Success) {
+                    //     // header("Location: " . $ArticlePageRedirection);
+                        die();
+                    // }
                     break;
                 
                 default:
