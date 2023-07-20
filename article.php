@@ -5,6 +5,25 @@
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
+    function GenerateSection($IsEditingArticle, $SelectedArticle, $SectionNumber)
+    {
+        foreach ($SelectedArticle as $Key => $Value)
+        {
+            echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
+            echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
+
+            if ($IsEditingArticle){
+                echo '<label for="photo_' . $SectionNumber . '">Selectionner une image:</label>';
+                echo '<input name="photo_' . $SectionNumber . '" class="image-selector" type="file" accept="image/*"> ';
+
+                echo '<img width="256" class="image-preview" src="' . $Value["photo_$SectionNumber"] . '" alt="Image Preview">';
+            }
+            else {
+                echo '<img src="' . $Value["photo_$SectionNumber"] . '" alt="Fancy contextual image for this section" >';
+            }
+        }
+    }
+
     $_SESSION['UserRole'] = 'admin';
 
 
@@ -66,7 +85,6 @@
 </head>
 <body>
     <header>
-        <!-- <img id="Blazon" src="./images/icons_site_main.png" alt="L'image principale du site" > -->
         <?php include("./components/navbar.php"); ?>
     </header>
 
@@ -81,12 +99,10 @@
                         if ($IsEditingArticle){
                             echo '<h6>' . date('Y-d-m') . '</h6>';
 
-                            // TODO: need to have image dialog input here
                             echo '<label for="photo_principale">Selectionner une image:</label>';
-                            echo '<input name="photo_principale" type="file" accept="image/*"> ';
+                            echo '<input name="photo_principale" class="image-selector" type="file" accept="image/*"> ';
 
-                            //TODO: I'd love a visual representation of the image
-                            // echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
+                            echo '<img width="256" class="image-preview" src="' . $Value['photo_principale'] . '" alt="Image 1">';
                         }
                         else {
                             echo '<h6>' . $Value['date'] . '</h6>';
@@ -109,45 +125,67 @@
 
             <section id="Section1" class="container">
                 <?php
-                    foreach ($SelectedArticle as $Key => $Value)
-                    {
-                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_1'] . '</h4>';
-                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_1'] . '</p>';
+                    GenerateSection($IsEditingArticle, $SelectedArticle, 1);
 
-                        if ($IsEditingArticle){
-                            // TODO: need to have image dialog input here
-                            echo '<label for="photo_1">Selectionner une image:</label>';
-                            echo '<input name="photo_1" type="file" accept="image/*"> ';
+                    // foreach ($SelectedArticle as $Key => $Value)
+                    // {
+                    //     echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_1'] . '</h4>';
+                    //     echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_1'] . '</p>';
 
-                            //TODO: I'd love a visual representation of the image
-                            // echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
-                        }
-                        else {
-                            echo '<img src="' . $Value['photo_1'] . '" alt="Fancy contextual image for this section" >';
-                        }
-                    }
+                    //     if ($IsEditingArticle){
+                    //         echo '<label for="photo_1">Selectionner une image:</label>';
+                    //         echo '<input name="photo_1" class="image-selector" type="file" accept="image/*"> ';
+
+                    //         echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
+                    //     }
+                    //     else {
+                    //         echo '<img src="' . $Value['photo_1'] . '" alt="Fancy contextual image for this section" >';
+                    //     }
+                    // }
                 ?>
             </section>
 
             <section id="Section2" class="container">
                 <?php
-                    foreach ($SelectedArticle as $Key => $Value)
-                    {
-                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_2'] . '</h4>';
-                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_2'] . '</p>';
-                        echo '<img src="' . $Value['photo_2'] . '" alt="Fancy contextual image for this section" >';
-                    }
+                    GenerateSection($IsEditingArticle, $SelectedArticle, 2);
+
+                    // foreach ($SelectedArticle as $Key => $Value)
+                    // {
+                    //     echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_2'] . '</h4>';
+                    //     echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_2'] . '</p>';
+
+                    //     if ($IsEditingArticle){
+                    //         echo '<label for="photo_2">Selectionner une image:</label>';
+                    //         echo '<input name="photo_2" class="image-selector" type="file" accept="image/*"> ';
+
+                    //         echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
+                    //     }
+                    //     else {
+                    //         echo '<img src="' . $Value['photo_2'] . '" alt="Fancy contextual image for this section" >';
+                    //     }
+                    // }
                 ?>
             </section>
 
             <section id="Section3" class="container">
                 <?php
-                    foreach ($SelectedArticle as $Key => $Value)
-                    {
-                        echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_3'] . '</h4>';
-                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_3'] . '</p>';
-                        echo '<img src="' . $Value['photo_3'] . '" alt="Fancy contextual image for this section" >';
-                    }
+                    GenerateSection($IsEditingArticle, $SelectedArticle, 3);
+
+                    // foreach ($SelectedArticle as $Key => $Value)
+                    // {
+                        // echo '<h4 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['sous_titre_3'] . '</h4>';
+                        // echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['contenu_3'] . '</p>';
+
+                        // if ($IsEditingArticle){
+                        //     echo '<label for="photo_3">Selectionner une image:</label>';
+                        //     echo '<input name="photo_3" class="image-selector" type="file" accept="image/*"> ';
+
+                        //     echo '<img width="256" class="image-preview" src="" alt="Image Preview">';
+                        // }
+                        // else {
+                        //     echo '<img src="' . $Value['photo_3'] . '" alt="Fancy contextual image for this section" >';
+                        // }
+                    // }
                 ?>
             </section>
 
@@ -211,5 +249,21 @@
     <footer>
         <?php include("./components/footer.php"); ?>
     </footer>
+
+    <script>
+        [...document.getElementsByClassName('image-selector')].forEach(Each => {
+            Each.onchange = function (event) {
+                let Section = event.target.parentNode;
+                // console.log(Section);
+
+                let src = URL.createObjectURL(event.target.files[0]);
+                let ImagePreviewPlaceholder = Section.getElementsByClassName('image-preview');
+                if (ImagePreviewPlaceholder)
+                {
+                    ImagePreviewPlaceholder[0].src = src;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
