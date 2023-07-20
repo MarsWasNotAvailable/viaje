@@ -6,15 +6,13 @@
     /* box-sizing: content-box; */
 }
 
-
-
-
 body {
 
     display: flex;
     flex-direction: column;
     background-image: url(images/body-bg1.png);
 }
+
 
 header {
     display: flex;
@@ -197,4 +195,11 @@ form.article-editor textarea {
     /* height: 100%;  */
     box-sizing: border-box;
     display: flex;
+}
+
+
+
+*[contenteditable="true"] {
+    border: 2px dashed black;
+    padding: 1em;
 }
