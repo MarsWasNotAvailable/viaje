@@ -168,6 +168,30 @@
             }
         }
 
+                /**Returns an associative array of the results, or false on error */
+        public function select_article($ConditionField)
+        {
+            try {
+                $SQLQueryString = "SELECT `article`.`categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
+                FROM `article`
+                INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
+                WHERE `article`.`categorie` = $ConditionField ;
+                ";
+
+
+                // var_dump($SQLQueryString);
+
+                $Result = $this->Connection->query($SQLQueryString);
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
     }
 
     // $NewConnection = new MaConnexion("liste_utilisateurs", "root", "", "localhost");
