@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `categorie` int NOT NULL,
   PRIMARY KEY (`id_article`),
   KEY `FK_id_categorie_article` (`categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `article`
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `titre` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   PRIMARY KEY (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `categorie`
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id_commentaire`),
   KEY `commentaire_article` (`id_article`),
   KEY `commentaire_utilisateur` (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `commentaire`
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
   PRIMARY KEY (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `utilisateur`

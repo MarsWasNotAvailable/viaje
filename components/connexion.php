@@ -94,7 +94,9 @@
                 $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
 
                 $Result = $this->Connection->query($SQLQueryString);
-                return true;
+                // return true;
+
+                return $this->Connection->lastInsertId();
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();

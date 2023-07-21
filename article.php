@@ -5,27 +5,7 @@
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
-    function GenerateSection($IsEditingArticle, $SelectedArticle, $SectionNumber)
-    {
-        foreach ($SelectedArticle as $Key => $Value)
-        {
-            // if (isset($Value['id_article']))
-            // {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
-                
-            echo '<h4 name="' . "sous_titre_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
-            echo '<p name="' . "contenu_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
 
-            if ($IsEditingArticle){
-                echo '<label for="' . "photo_$SectionNumber" . '">Selectionner une image:</label>';
-                echo '<input name="' . "photo_$SectionNumber" . '" class="image-selector" type="file" accept="image/*"> ';
-
-                echo '<img width="256" class="image-preview" src="' . $Value["photo_$SectionNumber"] . '" alt="Image Preview">';
-            }
-            else {
-                echo '<img src="' . $Value["photo_$SectionNumber"] . '" alt="Fancy contextual image for this section" >';
-            }
-        }
-    }
 
     $_SESSION['UserRole'] = 'admin';
     $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && CanEditArticles($_SESSION['UserRole']) : false;
@@ -36,41 +16,38 @@
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
     $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 0;
-    
-    switch ($CurrentArticleID)
+
+    $SelectedArticle = null;
+
+    // Create new article
+    if ($CurrentArticleID < 1 || $CurrentArticleID == 'new')
     {
-        case 'new':
-            break;
-        case 0:
-            break;
-        default:
-            break;
+        $SelectedArticle = array();
+
+        // if ($IsEditingArticle)
+        // {
+        //     array_push($SelectedArticle, array(
+        //         'titre' => 'Sans titre',
+        //         'date' => '2000-01-01',
+        //         'photo_principale' => './images/icons_plus.png',
+        //         'resume' => 'Ajouter un résumé ici.',
+
+        //         'sous_titre_1' => 'Ajouter un premier sous titre ici',
+        //         'contenu_1' => 'Ajouter un premier paragraphe ici',
+        //         'photo_1' => './images/icons_plus.png',
+
+        //         'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
+        //         'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
+        //         'photo_2' => './images/icons_plus.png',
+
+        //         'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
+        //         'contenu_3' => 'Ajouter un troisieme paragraphe ici',
+        //         'photo_3' => './images/icons_plus.png',
+        //     ));
+        // }
     }
-
-
-    $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
-
-    if ($IsEditingArticle && !$SelectedArticle)
-    {
-        // var_dump($SelectedArticle);
-        array_push($SelectedArticle, array(
-            'titre' => 'Sans titre',
-            'date' => '2000-01-01',
-            'photo_principale' => './images/icons_plus.png',
-            'resume' => 'Ajouter un résumé ici.',
-
-            'sous_titre_1' => 'Ajouter un premier sous titre ici',
-            'contenu_1' => 'Ajouter un premier paragraphe ici',
-            'photo_1' => './images/icons_plus.png',
-
-            'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
-            'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
-            'photo_2' => './images/icons_plus.png',
-
-            'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
-            'contenu_3' => 'Ajouter un troisieme paragraphe ici',
-            'photo_3' => './images/icons_plus.png',
-        ));
+    else {
+        $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
     }
 ?>
 <!DOCTYPE html>
@@ -92,19 +69,72 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
     <header>
         <?php include("./components/navbar.php"); ?>
     </header>
 
     <main>
         <article class="chunks">
+            <?php
+                function GenerateSection($IsEditingArticle, $SelectedArticle, $SectionNumber)
+                {
+                    foreach ($SelectedArticle as $Key => $Value)
+                    {
+                        // if (isset($Value['id_article']))
+                        // {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
+                            
+                        echo '<h4 name="' . "sous_titre_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
+                        echo '<p name="' . "contenu_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
+
+                        if ($IsEditingArticle){
+                            echo '<label for="' . "photo_$SectionNumber" . '">Selectionner une image:</label>';
+                            echo '<input name="' . "photo_$SectionNumber" . '" class="image-selector" type="file" accept="image/*"> ';
+
+                            
+                            echo '<img width="256" class="image-preview" src="' . $Value["photo_$SectionNumber"] . '" alt="Image Preview">';
+                            // echo '<img width="256" class="image-preview" src="' . GetImagePath($Value["photo_$SectionNumber"], 'Australie') . '" alt="Image Preview">';
+                        }
+                        else {
+                            echo '<img src="' . $Value["photo_$SectionNumber"] . '" alt="Fancy contextual image for this section" >';
+                        }
+                    }
+                }
+
+                function GenerateCategorieSelector($Categories, $Name, $SelectedId)
+                {
+                    $SelectedId--; //zero-based vs one-based
+
+                    $Options = "";
+                    foreach ($Categories as $Key => $Value)
+                    {
+                        $SelectState = ($Key == ($SelectedId)) ? 'selected="true' : '';
+
+                        $Options .= '<option ' . $SelectState . ' value="' . $Value['id_categorie'] . '">' . $Value['nom'] . '</option>';
+                    }
+
+                    
+
+                    echo '
+                        <label for="Categorie">Choose a Categorie:</label>
+                        <select name="' . $Name . '" id="Categorie">'
+                        . $Options .
+                        '</select>
+                    ';
+                }
+            ?>
             <section id="Tete" class="container">
+
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h2 name="titre" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['titre'] . '</h2>';
-                        
+                        $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
+
                         if ($IsEditingArticle){
+                            
+                            GenerateCategorieSelector($SelectedCategories, 'Categorie', $Value['categorie']);
+                            
+                            echo '<h2 name="titre" contenteditable="true">' . $Value['titre'] . '</h2>';
                             echo '<h6>' . date('Y-d-m') . '</h6>';
 
                             echo '<label for="photo_principale">Selectionner une image:</label>';
@@ -113,6 +143,8 @@
                             echo '<img width="256" class="image-preview" src="' . $Value['photo_principale'] . '" alt="Image 1">';
                         }
                         else {
+                            echo '<h1 name="categorie">Categorie: ' . $SelectedCategories[$Value['categorie'] - 1]['nom'] . '</h1>';
+                            echo '<h2 name="titre">' . $Value['titre'] . '</h2>';
                             echo '<h6>' . $Value['date'] . '</h6>';
                             echo '<img src="' . $Value['photo_principale'] . '" alt="Image 1">';
                         }
@@ -188,7 +220,6 @@
                     echo '</form>';
                 }
             }
-
         ?>
 
         <?php if (!$IsEditingComment || $IsEditingArticle): ?>
@@ -236,10 +267,15 @@
             UpdateButton.className = 'update-edit';
             UpdateButton.type = 'button';
 
-        [...document.querySelectorAll('*[contenteditable="true"]')].forEach(Each => {
+        ;
+
+        [...document.querySelectorAll('*[contenteditable="true"]')]
+        .concat([...document.querySelectorAll('.image-selector')])
+        .concat(document.querySelector("#Categorie"))
+        .forEach(Each => {
 
             async function SendUpdateArticleField (Event) {
-                console.log("SendUpdateArticleField: ", Event.target);
+                // console.log("SendUpdateArticleField: ", Event.target);
 
                 let url = "./controller.php";
 
@@ -247,11 +283,16 @@
                 form_data.append('Intention', 'UpdateArticleField');
                 form_data.append('id_article', GetCurrentArticleID());
                 form_data.append('Column', Each.getAttribute('name'));
-                form_data.append('Value', Each.innerHTML);
 
+                form_data.append('Value', Each.value || Each.innerHTML);
+                //for images we need to cut the directory name off
+                // form_data.append('Value', (Each.value.split('\\').pop() || Each.innerHTML));
+
+
+                
                 console.log(form_data);
 
-                const response = await fetch(url, {
+                const Request = await fetch(url, {
                     method: "POST",
                     mode: "cors", // no-cors, *cors, same-origin
                     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -264,47 +305,35 @@
                     body: form_data
 
                 })
-                .then((response)=>{
-                    // console.log('response', response);
+                .then((Response)=>{
 
                     UpdateButton.remove();
                     UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
                 })
                 ;
 
-                // console.log(response);
-
                 return true;
             }
 
             Each.addEventListener('focus', (Event) => {
-                // console.log("focus: ", Event.target);
 
                 // Event.target.append(UpdateButton);
                 Event.target.insertAdjacentElement('afterend', UpdateButton);
-                // UpdateButton.setAttribute('name', Event.target.getAttribute('name'));
-
-                // UpdateButton.FieldToUpdate = Each;
 
                 UpdateButton.addEventListener('click', SendUpdateArticleField);
                 // UpdateButton.onclick = SendUpdateArticleField;
 
                 UpdateButton.style.display = 'block';
-
-
-                // console.log(UpdateButton);
             });
 
             Each.addEventListener('blur', (Event) => {
-                // console.log("focus: ", Event.target);
-
                 //Because the button click causes a blur event on the editable element,
                 //we cannot remove the button here: otherwise we cripple the async fetch
-                UpdateButton.style.display = 'none';
-                // UpdateButton.setAttribute('disabled');
-                // UpdateButton.remove();
-                // UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
-                // // UpdateButton.onclick = null;
+                //NOTE: the button is still there existing, and can be clicked by a (malicious?) script
+                // setTimeout(()=>{
+                //     UpdateButton.style.display = 'none';
+                // }, 3600);
+
             });
         });
     </script>
@@ -314,9 +343,7 @@
         <input type="hidden" name="Column" value="sous_titre_1">
         <input type="hidden" name="Value" value="ertetr">
         <input type="hidden" name="Intention" value="UpdateArticleField">
-
         <button type="submit" name="Intention" value="UpdateArticleField" >Update</button>
-
     </form> -->
 </body>
 </html>
