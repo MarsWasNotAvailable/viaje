@@ -7,11 +7,7 @@
 
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    $CurrentCategorieID = isset($_GET['id_categorie']) ? $_GET['id_categorie'] : 1;
-
-    $SelectedCategorie = $NewConnection->select("categorie", "*", "id_categorie = $CurrentCategorieID");
-
-    $Result = $NewConnection->select_article($CurrentCategorieID);
+    // $Result = $NewConnection->select("article", "*");
 
     // var_dump($_SESSION);
 ?>
@@ -40,11 +36,17 @@
         padding: 0 3.5%;
     }
 
+    .entete h2 {
+        color:#D66D40;
+        font-size: 28px;
+        margin-bottom: 1.5%;
+    }
+
     .presentation{
         margin-bottom: 1.6%;
     }
-    /*style de la section contenant les categories*/
-    .affichagecategories{
+    /*style de la section contenant les articles*/
+    .affichageArticles{
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -96,12 +98,16 @@
             font-size: 28px;
         }
 
+        .entete h2{
+            font-size: 24px;
+        }
+
         .presentation, .resume{
             font-size: 13px;
             margin-bottom: 10%;
         }
 
-        .affichagecategories{
+        .affichageArticles{
             display: grid;
             justify-items: center;
         }
@@ -121,21 +127,13 @@
     <main>
         <!-- entête de la page avec l'introduction de la section -->
         <section class="entete">
-        <?php
-            foreach($SelectedCategorie as $value){
-                
-                echo 
-                '<h1 class="titre">' .$value['titre'] . '</h1>
-            <p class="presentation">
-                Bienvenue sur le blog ! Sur Voyage Way, je partage plus d’une décennie de voyage. Des conseils, récits ou retours d’expérience sur des destinations multiples et variées. Du city trip dans une ville française à un road trip à l’autre bout du monde. Ce blog voyage devrait vous aider à préparer vos prochains séjours en France ou l’étranger !
-            </p>';
+            <h1 class="titre">Résultats de la recherche</h1>
 
-            }
-            ?>
+            <h2>il faudra un get des recherches pour afficher le mot recherché</h2>
         </section>
-        
-        <!-- affichage des categories -->
-        <section class="affichagecategories">
+
+ <!--               // affichage des articles il faudra un select pour récupérer les infos de l'article
+        <section class="affichageArticles">
             <?php
             foreach($Result as $display){
                 
@@ -145,19 +143,34 @@
                         <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
                     </div>
                     <div class= "cardText">
-                        <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
                         <p class="date">' . $display['date'] . '</p>
                         <p class="resume">' . $display['resume'] . '</p>
                     </div>
                 </div>';
             }
             ?>
-        </section>        
+        </section>    
+        <section class="affichageArticles">
+            <?php
+            foreach($Result as $display){
+                
+                echo 
+                '<div class="card">
+                    <div>
+                        <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
+                    </div>
+                    <div class= "cardText">
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                        <p class="date">' . $display['date'] . '</p>
+                        <p class="resume">' . $display['resume'] . '</p>
+                    </div>
+                </div>';
+            }
+            ?>
+            -->
+        </section>    
     </main>
- 
-<footer>
-    <?php include_once './components/footer.php' ?>
-</footer>
-
 </body>
 </html>
+        
