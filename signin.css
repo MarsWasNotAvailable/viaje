@@ -1,16 +1,11 @@
 /* les marges et les paddings */
-body, h1, p, form, input {
+/* body, h1, p, form, input {
     margin: 1%;
     padding: 1%;
-}
+} */
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-}
-
-.container {
-    max-width: 400px;
+.login-box {
+    /* max-width: 400px; */
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -18,58 +13,57 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    color: blue;
-    font-size: 24px;
+.login-box h1 {
+    color: #1c69a5;
+    /* font-size: 24px; */
+    font-size: 2em;
     text-align: center;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    margin-bottom: 1em;
 }
 
-.error {
-    color: red;
-    margin-bottom: 10px;
-}
-
-.input-group {
+.login-box .input-group {
     margin-bottom: 15px;
 }
 
-label {
+.login-box .input-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="password"] {
+/* .login-box .input-group input[type="text"],
+.login-box .input-group input[type="password"] { */
+.login-box .input-group input {
     width: 94%;
-    padding: 10px;
+    /* padding: 10px; */
+    padding: 1em;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-input[type="submit"] {
+.login-box .input-group input[type="submit"] {
     width: 100%;
-    padding: 10px;
+    /* padding: 10px; */
+    /* border: none; */
+    /* border-radius: 3px; */
+    cursor: pointer;
     background-color: #007bff;
     color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
 }
 
-input[type="submit"]:hover {
+.login-box .input-group input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-.social-login {
-    margin-top: 20px;
+.login-box .social-login {
+    /* margin-top: 20px; */
+    margin-top: 2em;
 }
 
-.social-login a {
+.login-box .social-login a {
     display: block;
     text-align: center;
     margin-bottom: 10px;
     color: #007bff;
 }
-

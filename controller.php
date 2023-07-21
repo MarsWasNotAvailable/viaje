@@ -85,16 +85,16 @@
                     // break;
                     
                 case 'Login':
-                    $Condition = '(`mail` = "' . $_POST['mail'] . '" AND `password` = "' . $_POST['password'] . '")';
+                    $Condition = '(`email` = "' . $_POST['email'] . '" AND `mot_de_passe` = "' . $_POST['mot_de_passe'] . '")';
                     $UniqueUser = $NewConnection->select($UsersTableName, "*", $Condition);
 
                     // var_dump($UniqueUser[0]);
                     session_start();
 
                     if ($UniqueUser) {
-                        $_SESSION['CurrentUser'] = $UniqueUser[0]['nickname'];
+                        $_SESSION['CurrentUser'] = $UniqueUser[0]['nom'];
                         $_SESSION['UserRole'] = $UniqueUser[0]['role'];
-                        $_SESSION['UserID'] = $UniqueUser[0]['id'];
+                        $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
                         // if (isset($_SESSION['HasFailedSignedUp']))
                         //     unset($_SESSION['HasFailedSignedUp']);
@@ -102,7 +102,7 @@
                         // if (isset($_SESSION['HasFailedLogin']))
                         //     unset($_SESSION['HasFailedLogin']);
 
-                        header("Location: " . $Redirection);
+                        header("Location: " . 'login.php');
                         die();
                     }
                     else {

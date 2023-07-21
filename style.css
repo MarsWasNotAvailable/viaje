@@ -7,10 +7,10 @@
 }
 
 body {
-
     display: flex;
     flex-direction: column;
-    background-image: url(images/body-bg1.png);
+    background-image: url('./images/body-bg1.png');
+    background-color: #f0f0f0;
 }
 
 

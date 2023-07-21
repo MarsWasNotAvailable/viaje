@@ -23,28 +23,6 @@
     if ($CurrentArticleID < 1 || $CurrentArticleID == 'new')
     {
         $SelectedArticle = array();
-
-        // if ($IsEditingArticle)
-        // {
-        //     array_push($SelectedArticle, array(
-        //         'titre' => 'Sans titre',
-        //         'date' => '2000-01-01',
-        //         'photo_principale' => './images/icons_plus.png',
-        //         'resume' => 'Ajouter un résumé ici.',
-
-        //         'sous_titre_1' => 'Ajouter un premier sous titre ici',
-        //         'contenu_1' => 'Ajouter un premier paragraphe ici',
-        //         'photo_1' => './images/icons_plus.png',
-
-        //         'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
-        //         'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
-        //         'photo_2' => './images/icons_plus.png',
-
-        //         'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
-        //         'contenu_3' => 'Ajouter un troisieme paragraphe ici',
-        //         'photo_3' => './images/icons_plus.png',
-        //     ));
-        // }
     }
     else {
         $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
@@ -113,8 +91,6 @@
                         $Options .= '<option ' . $SelectState . ' value="' . $Value['id_categorie'] . '">' . $Value['nom'] . '</option>';
                     }
 
-                    
-
                     echo '
                         <label for="Categorie">Choose a Categorie:</label>
                         <select name="' . $Name . '" id="Categorie">'
@@ -180,14 +156,12 @@
                     GenerateSection($IsEditingArticle, $SelectedArticle, 3);
                 ?>
             </section>
-
         </article>
     </main>
 
     <section id="Commentaires" class="container chunks">
         <?php
             $AllComments = $NewConnection->select_comments($CurrentArticleID);
-
             // var_dump($AllComments);
 
             foreach ($AllComments as $Key => $Value)
@@ -266,7 +240,6 @@
             UpdateButton.innerHTML = "Update";
             UpdateButton.className = 'update-edit';
             UpdateButton.type = 'button';
-
         ;
 
         [...document.querySelectorAll('*[contenteditable="true"]')]
@@ -284,12 +257,12 @@
                 form_data.append('id_article', GetCurrentArticleID());
                 form_data.append('Column', Each.getAttribute('name'));
 
+                //TODO: still aint perfect, I do want to preserve the generic code but we have a specific with the file paths
                 form_data.append('Value', Each.value || Each.innerHTML);
                 //for images we need to cut the directory name off
                 // form_data.append('Value', (Each.value.split('\\').pop() || Each.innerHTML));
 
 
-                
                 console.log(form_data);
 
                 const Request = await fetch(url, {
@@ -317,11 +290,9 @@
 
             Each.addEventListener('focus', (Event) => {
 
-                // Event.target.append(UpdateButton);
                 Event.target.insertAdjacentElement('afterend', UpdateButton);
 
                 UpdateButton.addEventListener('click', SendUpdateArticleField);
-                // UpdateButton.onclick = SendUpdateArticleField;
 
                 UpdateButton.style.display = 'block';
             });
@@ -337,13 +308,5 @@
             });
         });
     </script>
-
-    <!-- <form id="form" action="./controller.php" method="post">
-        <input type="hidden" name="id_article" value="1">
-        <input type="hidden" name="Column" value="sous_titre_1">
-        <input type="hidden" name="Value" value="ertetr">
-        <input type="hidden" name="Intention" value="UpdateArticleField">
-        <button type="submit" name="Intention" value="UpdateArticleField" >Update</button>
-    </form> -->
 </body>
 </html>
