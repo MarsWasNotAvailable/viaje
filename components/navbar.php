@@ -1,6 +1,4 @@
 <?php
-session_start();
-// var_dump($_SESSION);
 require_once("./components/commons.php");
 require_once("./components/connexion.php");
 $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
@@ -140,8 +138,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         }
 
         .topnav.responsive a,
-        .topnav.responsive input,
-        .topnav.responsive button {
+        .topnav.responsive input {
             float: none;
             display: block;
             text-align: left;
@@ -202,31 +199,19 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             <div class="dropdown-content">
                 <a href="contact.php">Contact</a>
             </div>
-        </div>
-<<<<<<< Updated upstream
-        <div class="dropdown">
-            <a href="./gestion.php">GESTION</a>
-        </div>
-        <a  href="javascript:void(0);" class="icon" onclick="burgerMenu()">
-=======
-        <div class="search-container">
-        <form method="GET" action="recherche.php">
-            <label for="search_query"></label>
-            <input type="text" name="search_query" id="search_query" placeholder="Entrez votre recherche ici">
-            <button type="submit">Rechercher</button>
-        </form>
-    </div>
+        </div>   
         <a href="javascript:void(0);" class="icon" onclick="burgerMenu()">
->>>>>>> Stashed changes
             <i class="fa fa-bars"></i>
         </a>
     </div>
     <div class="topnav" id="search">
-        <input type="text" placeholder="Rechercher...">
-        <button type="submit">Rechercher</button>
-        <a href="javascript:void(0);" class="icon" onclick="searchLogo()">
-            <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
-        </a>
+        <form method="GET" action="recherche.php">
+            <input type="text" name="search_query" id="search_query" placeholder="Entrez votre recherche ici">
+            <button type="submit">Rechercher</button>
+            <a href="javascript:void(0);" class="icon" onclick="searchLogo()">
+                <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+            </a>
+        </form>
     </div>
 </nav>
 
@@ -249,34 +234,3 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         }
     }
 </script> 
-
-<?php
-    // Vérifier si le formulaire a été soumis
-    if ($_SERVER["REQUEST_METHOD"] === "GET") {
-        // Récupérer la valeur de la requête de recherche
-        $searchQuery = $_GET["search_query"];
-        $trouver = $NewConnection->select("article", "*", "`resume` LIKE '%$searchQuery%'");
-        foreach ($trouver as $display) {
-            echo
-            '<div class="card">
-        <div>
-            <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
-        </div>
-        <div class= "cardText">
-            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
-            <p class="date">' . $display['date'] . '</p>
-            <p class="resume">' . $display['resume'] . '</p>
-        </div>
-    </div>';
-        }
-        // Vérifier si la requête de recherche n'est pas vide
-        if (!empty($searchQuery)) {
-            // Effectuer votre traitement de recherche ici (par exemple, interroger une base de données)
-
-            // Afficher les résultats (exemple : afficher simplement la requête de recherche pour le test)
-            echo "Vous avez recherché : " . htmlspecialchars($searchQuery);
-        } else {
-            echo "Veuillez entrer un terme de recherche.";
-        }
-    }
-    ?>

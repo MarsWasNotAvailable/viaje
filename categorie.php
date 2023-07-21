@@ -134,9 +134,9 @@
                 
                 echo 
                 '<h1 class="titre">' .$value['titre'] . '</h1>
-            <p class="presentation">
-                Bienvenue sur le blog ! Sur Voyage Way, je partage plus d’une décennie de voyage. Des conseils, récits ou retours d’expérience sur des destinations multiples et variées. Du city trip dans une ville française à un road trip à l’autre bout du monde. Ce blog voyage devrait vous aider à préparer vos prochains séjours en France ou l’étranger !
-            </p>';
+            <p class="presentation">'
+                .$value['description'].
+            '</p>';
 
             }
             ?>
