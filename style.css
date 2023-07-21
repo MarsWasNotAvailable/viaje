@@ -198,10 +198,21 @@ form.article-editor textarea {
 }
 
 
-
 *[contenteditable="true"] {
-    border: 2px dashed black;
     padding: 1em;
+    outline: none;
+    border: 2px dashed transparent;
+
+}
+
+*[contenteditable="true"]:hover {
+    padding: 1em;
+    border: 2px dashed #d66d40;
+}
+
+*[contenteditable="true"]:focus {
+    border: 2px dashed #d66d40;
+    outline-color: #d66d40;
 }
 
 
@@ -215,12 +226,17 @@ button.article-editor-button {
 }
 
 button.update-edit {
+    display: block;
+
     /* background-color: transparent; */
     /* width: 100%; */
-    display: block;
-    position: absolute;
+    /* position: absolute; */
     /* top: 5%; */
-    right: 7%;
+    /* right: 7%; */
     /* float: right; */
-    width: 8%;
+    /* width: 8%; */
+
+    background-color: transparent;
+    border: 1px solid #000;
+    cursor: pointer;
 }

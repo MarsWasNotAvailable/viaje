@@ -9,8 +9,8 @@
     {
         foreach ($SelectedArticle as $Key => $Value)
         {
-            if (isset($Value['id_article']))
-            {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
+            // if (isset($Value['id_article']))
+            // {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
                 
             echo '<h4 name="' . "sous_titre_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
             echo '<p name="' . "contenu_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
@@ -28,20 +28,25 @@
     }
 
     $_SESSION['UserRole'] = 'admin';
+    $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && CanEditArticles($_SESSION['UserRole']) : false;
+    $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && CanEditComments($_SESSION['UserRole']) : false;
 
 
     $DatabaseName = "viaje";
-
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    // TODO: change the default 1 at the end
-    $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 1;
+    $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 0;
     
-    $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && CanEditArticles($_SESSION['UserRole']) : false;
-    // $IsEditingArticle = true;
+    switch ($CurrentArticleID)
+    {
+        case 'new':
+            break;
+        case 0:
+            break;
+        default:
+            break;
+    }
 
-    $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && CanEditComments($_SESSION['UserRole']) : false;
-    // $IsEditingComment = true;
 
     $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
 
@@ -97,7 +102,7 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        echo '<h2 contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['titre'] . '</h2>';
+                        echo '<h2 name="titre" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['titre'] . '</h2>';
                         
                         if ($IsEditingArticle){
                             echo '<h6>' . date('Y-d-m') . '</h6>';
@@ -225,31 +230,26 @@
             });
         });
 
-        [...document.querySelectorAll('*[contenteditable="true"]')].forEach(Each => {
-
-            let UpdateButton = document.createElement('button');
+        // We're using the same button for all ajax submit
+        let UpdateButton = document.createElement('button');
             UpdateButton.innerHTML = "Update";
             UpdateButton.className = 'update-edit';
+            UpdateButton.type = 'button';
 
-            //TODO: doesnt work anymore
-            UpdateButton.addEventListener('click', async (Event) => {
-                // console.log("blur: ", Event.target);
+        [...document.querySelectorAll('*[contenteditable="true"]')].forEach(Each => {
+
+            async function SendUpdateArticleField (Event) {
+                console.log("SendUpdateArticleField: ", Event.target);
 
                 let url = "./controller.php";
-                // let data = {
-                //     'Intention' : 'UpdateArticleField',
-                //     'id_article' : GetCurrentArticleID(),
-                //     'Column' : Event.target.getAttribute('name'),
-                //     'Value' : Event.target.innerHTML
-                // };
-
-                // console.log("blur: data: ", data);
 
                 let form_data = new FormData();
                 form_data.append('Intention', 'UpdateArticleField');
                 form_data.append('id_article', GetCurrentArticleID());
-                form_data.append('Column', Event.target.getAttribute('name'));
-                form_data.append('Value', Event.target.innerHTML);
+                form_data.append('Column', Each.getAttribute('name'));
+                form_data.append('Value', Each.innerHTML);
+
+                console.log(form_data);
 
                 const response = await fetch(url, {
                     method: "POST",
@@ -257,36 +257,54 @@
                     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                     credentials: "same-origin", // include, *same-origin, omit
                     // It doesnt work with Content-Type
-                    // headers: {
-                    //     // "Content-Type": "application/json",
-                    //     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    //     // 'Content-Type': 'multipart/form-data'
-                    // },
+                    // headers: { 'Content-Type': 'multipart/form-data' },
                     redirect: "follow", // manual, *follow, error
                     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 
                     body: form_data
 
                 })
-                // .then((response)=>{console.log('response', response);})
+                .then((response)=>{
+                    // console.log('response', response);
+
+                    UpdateButton.remove();
+                    UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
+                })
                 ;
 
                 // console.log(response);
-            });
+
+                return true;
+            }
 
             Each.addEventListener('focus', (Event) => {
                 // console.log("focus: ", Event.target);
 
                 // Event.target.append(UpdateButton);
-                Event.target.insertAdjacentElement('beforebegin', UpdateButton);
+                Event.target.insertAdjacentElement('afterend', UpdateButton);
+                // UpdateButton.setAttribute('name', Event.target.getAttribute('name'));
+
+                // UpdateButton.FieldToUpdate = Each;
+
+                UpdateButton.addEventListener('click', SendUpdateArticleField);
+                // UpdateButton.onclick = SendUpdateArticleField;
+
+                UpdateButton.style.display = 'block';
+
+
+                // console.log(UpdateButton);
             });
 
             Each.addEventListener('blur', (Event) => {
                 // console.log("focus: ", Event.target);
 
-                //destroy button here
-                UpdateButton.remove();
-                // UpdateButton = null; //we are reusing the same, wasn't the initial intent, but I'm fine with it
+                //Because the button click causes a blur event on the editable element,
+                //we cannot remove the button here: otherwise we cripple the async fetch
+                UpdateButton.style.display = 'none';
+                // UpdateButton.setAttribute('disabled');
+                // UpdateButton.remove();
+                // UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
+                // // UpdateButton.onclick = null;
             });
         });
     </script>
