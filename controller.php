@@ -165,7 +165,7 @@
                     $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
 
                     if ($Success) {
-                        header("Location: " . $ArticlePageRedirection);
+                        header("Location: " . $ArticlePageRedirection . '?edit=true#Commentaires');
                         die();
                     }
                     break;
