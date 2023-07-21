@@ -120,10 +120,11 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             display: none;
         }
 
-        .topnav a.icon,
-        .search-container a.icon {
+        .topnav a.icon {
             float: right;
             display: block;
+            margin-right: 0%;
+            color: #000000;
         }
 
         .topnav.responsive {
@@ -142,6 +143,13 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             float: none;
             display: block;
             text-align: left;
+        }
+
+        #search{
+            width: 30%;
+        }
+        .topnav.responsive input{
+            width: 3em;
         }
     }
 </style>
@@ -205,16 +213,17 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             <a href="./gestion.php">GESTION</a>
         </div>
 
-        <div class="search-container">
+        <!--  je ne pense pas qu'on ai besoin de deux barre de recherche -->
+        <!-- <div class="search-container">
             <form method="GET" action="recherche.php">
                 <label for="search_query"></label>
                 <input type="text" name="search_query" id="search_query" placeholder="Entrez votre recherche ici">
                 <button type="submit">Rechercher</button>
             </form>
-        </div>
+        </div>-->
         <a href="javascript:void(0);" class="icon" onclick="burgerMenu()">
             <i class="fa fa-bars"></i>
-        </a>
+        </a> 
     </div>
     <div class="topnav" id="search">
         <form method="GET" action="recherche.php">
@@ -247,7 +256,8 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
     }
 </script> 
 
-<?php
+<!-- il n'y a pas besoin de ça, action du form envoie vers la page d'affichage des recherches (recherche.php)!!!!!!!!!!!! -->
+<!-- <?php
     // Vérifier si le formulaire a été soumis
     if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["search_query"])) {
         // Récupérer la valeur de la requête de recherche
@@ -276,4 +286,4 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             echo "Veuillez entrer un terme de recherche.";
         }
     }
-?>
+?> -->

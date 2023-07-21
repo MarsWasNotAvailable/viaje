@@ -20,34 +20,34 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
 </head>
 
 <style>
-    /*style du texte de presentation de la catégorie*/
-    .titre {
+/*style du texte de presentation de la catégorie*/
+.titre{
         text-transform: uppercase;
         font-weight: bold;
         font-size: 34px;
         margin-bottom: 1.5%;
     }
 
-    .entete {
+    .entete{
         padding: 0 3.5%;
     }
 
-    .entete h2 {
-        color: #D66D40;
-        font-size: 28px;
-        margin-bottom: 1.5%;
-    }
-
-    .presentation {
+    .presentation{
         margin-bottom: 1.6%;
     }
+    /*style de la section contenant les cartes*/
+    .searched {
+        color:#D66D40;
+        font-size: 28px;
+        margin-bottom: 1.5%;
+        margin-left: 3.5%;
+    }
 
-    /*style de la section contenant les articles*/
-    .affichageArticles {
+    .affichagecategories{
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        padding: 1% 0;
+        padding: 1% 0 ;
     }
 
     .card {
@@ -59,62 +59,59 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         margin-bottom: 3%;
     }
 
-    .cardImage {
+    .cardImage{
         width: 100%;
     }
 
-    .cardText {
+    .cardText{
         padding: 4%;
         height: 15em;
         overflow: hidden;
     }
 
-    .cardTitle {
+    .cardTitle{
         color: #000;
         font-size: 20px;
         text-decoration: none;
     }
 
-    .date {
+    .date{
         color: #6B6B6B;
         font-size: 13px;
         margin-top: 1%;
     }
 
-    .resume {
+    .resume{
         line-height: 1.5;
         font-size: 15px;
         margin-top: 5%;
-
     }
 
     /* version mobile */
     @media (max-width: 900px) {
 
-        .titre {
+        .titre{
             font-size: 28px;
         }
 
-        .entete h2 {
-            font-size: 24px;
-        }
-
-        .presentation,
-        .resume {
+        .presentation, .resume{
             font-size: 13px;
             margin-bottom: 10%;
         }
 
-        .affichageArticles {
+        .searched{
+            font-size: 24px;
+        }
+
+        .affichagecategories{
             display: grid;
             justify-items: center;
         }
 
-        .card {
+        .card{
             width: 97%;
             margin: 3% 0;
         }
-
     }
 </style>
 
@@ -143,7 +140,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
                     // Effectuer votre traitement de recherche ici (par exemple, interroger une base de données)
 
                     // Afficher les résultats (exemple : afficher simplement la requête de recherche pour le test)
-                    echo "<h2>Vous avez recherché : " . htmlspecialchars($searchQuery) . "</h2>";
+                    echo "<h2 class='searched'>Vous avez recherché : " . htmlspecialchars($searchQuery) . "</h2>";
                 } else {
                     echo "Veuillez entrer un terme de recherche.";
                 }
