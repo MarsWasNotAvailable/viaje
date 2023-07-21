@@ -112,49 +112,42 @@
     <div class="dropdown">
         <a href="#">AMÉRIQUE</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="categorie.php?id_categorie=1">Canada</a>
         </div>
     </div>
     <div class="dropdown">
         <a href="#">ASIE</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="categorie.php?id_categorie=2">Chine</a>
+            <a href="categorie.php?id_categorie=8">Japon</a>
         </div>
     </div>
     <div class="dropdown">
         <a href="#">EUROPE</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="categorie.php?id_categorie=3">Allemagne</a>
+            <a href="categorie.php?id_categorie=7">Islande</a>
         </div>
     </div>
     <div class="dropdown">
         <a href="#">AFRIQUE &amp; MOYEN-ORIENT</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="categorie.php?id_categorie=10">Afrique du Sud</a>
+            <a href="categorie.php?id_categorie=4">Bahrein</a>
+            <a href="categorie.php?id_categorie=5">Egypte</a>
+            <a href="categorie.php?id_categorie=9">Emirats Arabes Unies</a>
         </div>
     </div>
     <div class="dropdown">
         <a href="#">OCÉANIE</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="categorie.php?id_categorie=6">Australie</a>
         </div>
     </div>
     <div class="dropdown">
         <a href="./contact.php">CONTACT</a>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
+            <a href="contact.php">Contact</a>
         </div>
     </div>
     <div class="search-container">
