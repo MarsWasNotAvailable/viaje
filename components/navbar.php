@@ -1,6 +1,12 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-crossorigin="anonymous" referrerpolicy="no-referrer" />
+<?php
+session_start();
+// var_dump($_SESSION);
+require_once("./components/commons.php");
+require_once("./components/connexion.php");
+$NewConnection = new MaConnexion("viaje", "root", "", "localhost");
+?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
     /* Styles spécifiques pour la navbar */
@@ -87,6 +93,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         border: none;
         cursor: pointer;
     }
+
     .icon {
         display: none;
     }
@@ -103,40 +110,46 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     } */
     @media (max-width:1023px) {
 
-    .navbar{
-        padding: 3% 0;
-        display: flex;
-        justify-content: space-between;
-    }
-    .topnav a, input, button{
-        display: none;
-    }
+        .navbar {
+            padding: 3% 0;
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .topnav a.icon, .search-container a.icon{
-        float: right;
-        display: block;
-    }
+        .topnav a,
+        input,
+        button {
+            display: none;
+        }
 
-    .topnav.responsive {
-        position: relative;
-        display: grid;
-    }
+        .topnav a.icon,
+        .search-container a.icon {
+            float: right;
+            display: block;
+        }
 
-    .topnav.responsive .icon {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
+        .topnav.responsive {
+            position: relative;
+            display: grid;
+        }
 
-    .topnav.responsive a, .topnav.responsive input, .topnav.responsive button {
-        float: none;
-        display: block;
-        text-align: left;
-    }
+        .topnav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .topnav.responsive a,
+        .topnav.responsive input,
+        .topnav.responsive button {
+            float: none;
+            display: block;
+            text-align: left;
+        }
     }
 </style>
 
-<a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
+<a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site"></a>
 
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
@@ -190,17 +203,28 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <a href="contact.php">Contact</a>
             </div>
         </div>
+<<<<<<< Updated upstream
         <div class="dropdown">
             <a href="./gestion.php">GESTION</a>
         </div>
         <a  href="javascript:void(0);" class="icon" onclick="burgerMenu()">
+=======
+        <div class="search-container">
+        <form method="GET" action="recherche.php">
+            <label for="search_query"></label>
+            <input type="text" name="search_query" id="search_query" placeholder="Entrez votre recherche ici">
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+        <a href="javascript:void(0);" class="icon" onclick="burgerMenu()">
+>>>>>>> Stashed changes
             <i class="fa fa-bars"></i>
         </a>
     </div>
     <div class="topnav" id="search">
         <input type="text" placeholder="Rechercher...">
         <button type="submit">Rechercher</button>
-        <a  href="javascript:void(0);" class="icon" onclick="searchLogo()">
+        <a href="javascript:void(0);" class="icon" onclick="searchLogo()">
             <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
         </a>
     </div>
@@ -208,20 +232,51 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <script>
     function burgerMenu() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
     }
-}
 
     function searchLogo() {
-    var x = document.getElementById("search");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
+        var x = document.getElementById("search");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
     }
-}
-</script>
+</script> 
+
+<?php
+    // Vérifier si le formulaire a été soumis
+    if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        // Récupérer la valeur de la requête de recherche
+        $searchQuery = $_GET["search_query"];
+        $trouver = $NewConnection->select("article", "*", "`resume` LIKE '%$searchQuery%'");
+        foreach ($trouver as $display) {
+            echo
+            '<div class="card">
+        <div>
+            <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
+        </div>
+        <div class= "cardText">
+            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+            <p class="date">' . $display['date'] . '</p>
+            <p class="resume">' . $display['resume'] . '</p>
+        </div>
+    </div>';
+        }
+        // Vérifier si la requête de recherche n'est pas vide
+        if (!empty($searchQuery)) {
+            // Effectuer votre traitement de recherche ici (par exemple, interroger une base de données)
+
+            // Afficher les résultats (exemple : afficher simplement la requête de recherche pour le test)
+            echo "Vous avez recherché : " . htmlspecialchars($searchQuery);
+        } else {
+            echo "Veuillez entrer un terme de recherche.";
+        }
+    }
+    ?>
