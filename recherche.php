@@ -150,24 +150,6 @@
                 </div>';
             }
             ?>
-        </section>    
-        <section class="affichageArticles">
-            <?php
-            foreach($Result as $display){
-                
-                echo 
-                '<div class="card">
-                    <div>
-                        <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
-                    </div>
-                    <div class= "cardText">
-                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
-                        <p class="date">' . $display['date'] . '</p>
-                        <p class="resume">' . $display['resume'] . '</p>
-                    </div>
-                </div>';
-            }
-            ?>
             -->
         </section>    
     </main>
