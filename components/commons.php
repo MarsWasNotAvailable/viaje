@@ -31,4 +31,10 @@
         // return $Boolean ? 'true' : 'false';
         return var_export($Boolean, true);
     }
+
+    function GetImagePath($Filename, $Categorie)
+    {
+        return './images/' . strtolower($Categorie) . '/' . $Filename;
+    }
+
 ?>

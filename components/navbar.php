@@ -190,6 +190,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <a href="contact.php">Contact</a>
             </div>
         </div>
+        <div class="dropdown">
+            <a href="./gestion.php">GESTION</a>
+        </div>
         <a  href="javascript:void(0);" class="icon" onclick="burgerMenu()">
             <i class="fa fa-bars"></i>
         </a>

@@ -133,18 +133,30 @@
 
                     break;
 
-                case 'Add':
-                    $Success = $NewConnection->insert( 'contacts', array(
-                        'name_last' => $_POST['name_last'],
-                        'name_first' => $_POST['name_first'],
-                        'email' => $_POST['email'],
-                        'phone' => $_POST['phone'],
-                        'address' => $_POST['address'],
+                case 'AddArticle':
+                    $ArticleID = $NewConnection->insert( 'article', array(
+                        'titre' => 'Sans titre',
+                        'date' => '2000-01-01',
+                        'photo_principale' => './images/icons_plus.png',
+                        'resume' => 'Ajouter un résumé ici.',
+        
+                        'sous_titre_1' => 'Ajouter un premier sous titre ici',
+                        'contenu_1' => 'Ajouter un premier paragraphe ici',
+                        'photo_1' => './images/icons_plus.png',
+        
+                        'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
+                        'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
+                        'photo_2' => './images/icons_plus.png',
+        
+                        'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
+                        'contenu_3' => 'Ajouter un troisieme paragraphe ici',
+                        'photo_3' => './images/icons_plus.png',
+                        'categorie' => 1
                     ));
             
-                    if ($Success)
+                    if ($ArticleID)
                     {
-                        header("Location: " . './add.php');
+                        header("Location: " . "./article.php?edit=true&id_article=$ArticleID");
                         die();
                     }
 

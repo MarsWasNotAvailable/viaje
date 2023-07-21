@@ -15,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje</title>
+    <title>Viaje: Gestion</title>
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
@@ -32,7 +32,8 @@
                 <input type="hidden" name="id_article" value="' . $Value['id_article'] . '">
                 <img id="AddNewIcon" src="./images/icons_plus.png" alt="New article picture">
                 <h5>Pour créer un nouvel article:</h5>
-                <a href="./article.php?edit=true&id_article=0" >Clicker ici</a>
+                <button name="Intention" value="AddArticle" type="submit">Clicker ici</button>
+                <!-- href="./article.php?edit=true&id_article=0" -->
             </form>
 
             <?php
