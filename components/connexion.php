@@ -172,7 +172,7 @@
         public function select_article($ConditionField)
         {
             try {
-                $SQLQueryString = "SELECT `article`.`categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
+                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
                 FROM `article`
                 INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
                 WHERE `article`.`categorie` = $ConditionField ;

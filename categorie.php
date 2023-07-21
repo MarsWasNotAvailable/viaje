@@ -20,7 +20,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje</title>
+    <title>Viaje:
+        <?php
+            $categorie = "Categorie";
+            foreach ($SelectedCategorie as $Key => $Value) {
+                $categorie .= (' - ' . $Value['nom']);
+            }
+            echo $categorie;
+        ?>
+    </title>
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
@@ -145,7 +153,7 @@
                         <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
                     </div>
                     <div class= "cardText">
-                        <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
                         <p class="date">' . $display['date'] . '</p>
                         <p class="resume">' . $display['resume'] . '</p>
                     </div>

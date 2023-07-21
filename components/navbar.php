@@ -128,7 +128,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         top: 0;
     }
 
-    .topnav.responsive a, .topnav.responsive input, .topnav.responsive button {
+    .topnav.responsive a, .topnav.responsive input {
         float: none;
         display: block;
         text-align: left;
