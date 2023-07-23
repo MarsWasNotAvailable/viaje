@@ -1,7 +1,14 @@
 <?php
-require_once("./components/commons.php");
-require_once("./components/connexion.php");
-$NewConnection = new MaConnexion("viaje", "root", "", "localhost");
+    require_once("./components/commons.php");
+    require_once("./components/connexion.php");
+    $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
+
+    if (session_id() == "")
+    {
+        session_start();
+    }
+
+    $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,6 +39,10 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         position: relative;
         z-index: 2;
     }
+
+    /* .topnav > * {
+        margin-right: 2em;
+    } */
 
     .navbar a {
         color: white;
@@ -115,8 +126,8 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         }
 
         .topnav a,
-        input,
-        button {
+        .topnav input,
+        .topnav button {
             display: none;
         }
 
@@ -152,9 +163,27 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             width: 3em;
         }
     }
+
+    .float-login {
+        float: right;
+    }
 </style>
 
-<a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site"></a>
+<div id="SiteHead">
+    <a z-index="1" href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site">
+    </a>
+    <div z-index="2" class="float-login">
+        <?php if ($IsUserLoggedIn): $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
+            ?>
+            <form method="POST" action="controller.php"><input type="submit" name="Intention" value="Logout" class="ConnexionButtons" ></form>
+            <img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;">
+        <?php else: ?>
+            <button class="ConnexionButtons" onclick="window.location='./login.php'">Login</button>
+        <?php endif ?>
+    </div>
+</div>
+
+
 
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
@@ -209,9 +238,11 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             </div>
         </div>
 
-        <div class="dropdown">
-            <a href="./gestion.php">GESTION</a>
-        </div>
+        <?php if($IsUserLoggedIn): ?>
+            <div class="dropdown">
+                <a href="./gestion.php">GESTION</a>
+            </div>
+        <?php endif; ?>
 
         <!--  je ne pense pas qu'on ai besoin de deux barre de recherche -->
         <!-- <div class="search-container">

@@ -31,6 +31,51 @@ header nav {
     margin-bottom: 2em;
 }
 
+/* header a {
+    
+} */
+
+header #SiteHead {
+    display: inline-flex;
+    text-align: center;
+    align-items: center;
+}
+
+header #SiteHead > a {
+    width: 100%;
+}
+
+@media (max-width:900px) {
+    header #SiteHead > a {
+        scale: 1.25;
+
+        /* to give the login button some pressability on mobile view */
+        width: 70%;
+        margin: auto;
+    }
+}
+
+@media (max-width:600px) {
+    header #SiteHead > a {
+        scale: 1.5;
+    }
+}
+
+header .ConnexionButtons {
+    border-radius: 0;
+    padding: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    background-color: transparent;
+    border: 1px solid #000;
+
+    cursor: pointer;
+}
+
+header .ConnexionButtons:hover {
+    background-color: #1d6eabb9;
+}
+
 
 
 main article {
@@ -47,6 +92,12 @@ main article {
     margin-right: auto;
 
     padding: 2em;
+}
+
+@media (max-width:900px) {
+    .chunks {
+        width: 80%;
+    }
 }
 
 section.container {

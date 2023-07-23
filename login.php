@@ -5,11 +5,6 @@
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
-    var_dump($_SESSION);
-    session_destroy();
-
-    $_SESSION['UserRole'] = 'admin';
-
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 

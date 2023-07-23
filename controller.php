@@ -102,7 +102,7 @@
                         // if (isset($_SESSION['HasFailedLogin']))
                         //     unset($_SESSION['HasFailedLogin']);
 
-                        header("Location: " . 'login.php');
+                        header("Location: " . 'index.php');
                         die();
                     }
                     else {
@@ -160,6 +160,17 @@
                         die();
                     }
 
+                    break;
+
+                case 'DeleteArticle':
+                    $UpdateFieldCondition = array('id_article' => $_POST['id_article']);
+
+                    $Success = $NewConnection->delete($ArticleTableName, $UpdateFieldCondition);
+
+                    if ($Success) {
+                        header("Location: " . 'gestion.php');
+                        die();
+                    }
                     break;
 
                 case 'UpdateComment':
