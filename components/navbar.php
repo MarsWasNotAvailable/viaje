@@ -50,6 +50,7 @@
         margin-right: 2em;
         /* Ajuste l'espace entre les onglets */
         text-decoration: none;
+        text-transform: uppercase;
     }
 
     .navbar a:hover {
@@ -197,53 +198,53 @@
         </div>
         <div class="dropdown">
             <a href="#">AMÉRIQUE</a>
-           <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Amérique'");
-           foreach ($Nav as $display) {
-                echo'<div class="dropdown-content">
-                        <a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>
-                    </div>';
-                }
-            ?>
+            <div class="dropdown-content">
+                <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Amérique'");
+                foreach ($Nav as $display) {
+                        echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                        }
+                    ?>
+            </div>
         </div>
         <div class="dropdown">
             <a href="#">ASIE</a>
-            <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Asie'");
-           foreach ($Nav as $display) {
-                echo'<div class="dropdown-content">
-                        <a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>
-                    </div>';
-                }
-            ?>
+            <div class="dropdown-content">
+                <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Asie'");
+                foreach ($Nav as $display) {
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                    }
+                ?>
+            </div>
         </div>
         <div class="dropdown">
             <a href="#">EUROPE</a>
-            <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Europe'");
-           foreach ($Nav as $display) {
-                echo'<div class="dropdown-content">
-                        <a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>
-                    </div>';
-                }
-            ?>
+            <div class="dropdown-content">
+                <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Europe'");
+                foreach ($Nav as $display) {
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                    }
+                ?>
+            </div>
         </div>
         <div class="dropdown">
             <a href="#">AFRIQUE &amp; MOYEN-ORIENT</a>
-            <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Afrique et Moyen-Orient'");
-           foreach ($Nav as $display) {
-                echo'<div class="dropdown-content">
-                        <a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>
-                    </div>';
-                }
-            ?>
+            <div class="dropdown-content">
+                <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Afrique et Moyen-Orient'");
+                foreach ($Nav as $display) {
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                    }
+                ?>
+            </div>
         </div>
         <div class="dropdown">
             <a href="#">OCÉANIE</a>
-            <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Océanie'");
-           foreach ($Nav as $display) {
-                echo'<div class="dropdown-content">
-                        <a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>
-                    </div>';
-                }
-            ?>
+            <div class="dropdown-content">
+                <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Océanie'");
+                foreach ($Nav as $display) {
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                    }
+                ?>                        
+            </div>
         </div>
         <div class="dropdown">
             <a href="./contact.php">CONTACT</a>
