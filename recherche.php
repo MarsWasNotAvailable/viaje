@@ -43,7 +43,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         margin-left: 3.5%;
     }
 
-    .affichagecategories{
+    .affichageArticles{
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -103,7 +103,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
             font-size: 24px;
         }
 
-        .affichagecategories{
+        .affichageArticles{
             display: grid;
             justify-items: center;
         }
@@ -132,7 +132,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         <section class="affichageArticles">
             <?php
             // Vérifier si le formulaire a été soumis
-            if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            if ($_GET) {
                 // Récupérer la valeur de la requête de recherche
                 $searchQuery = $_GET["search_query"];
                 // Vérifier si la requête de recherche n'est pas vide
@@ -140,23 +140,23 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
                     // Effectuer votre traitement de recherche ici (par exemple, interroger une base de données)
 
                     // Afficher les résultats (exemple : afficher simplement la requête de recherche pour le test)
-                    echo "<h2 class='searched'>Vous avez recherché : " . htmlspecialchars($searchQuery) . "</h2>";
+                    echo "<div><h2 class='searched'>Vous avez recherché : " . htmlspecialchars($searchQuery) . "</h2></div>";
                 } else {
                     echo "Veuillez entrer un terme de recherche.";
                 }
-                $trouver = $NewConnection->select("article", "*", "`resume` LIKE '%$searchQuery%'");
+                $trouver = $NewConnection->select("article", "*", "titre LIKE '%$searchQuery%' OR resume LIKE '%$searchQuery%'");
                 foreach ($trouver as $display) {
                     echo
                     '<div class="card">
-        <div>
-            <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
-        </div>
-        <div class= "cardText">
-            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
-            <p class="date">' . $display['date'] . '</p>
-            <p class="resume">' . $display['resume'] . '</p>
-        </div>
-    </div>';
+                        <div>
+                            <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
+                        </div>
+                        <div class= "cardText">
+                            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                            <p class="date">' . $display['date'] . '</p>
+                            <p class="resume">' . $display['resume'] . '</p>
+                        </div>
+                    </div>';
                 }
             }
             ?>

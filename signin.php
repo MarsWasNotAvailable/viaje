@@ -1,36 +1,35 @@
 <?php
-// Fichier de connexion à la base de données
-include('components/connexion.php');
+    session_start();
+    // var_dump($_SESSION);
 
-// Vérifier si le formulaire a été soumis
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupérer les données du formulaire
-    $username_email = $_POST['username_email'];
-    $motDePasse = $_POST['mot_de_passe'];
+    require_once("./components/commons.php");
+    require_once("./components/connexion.php");
 
-    // Vérifier si l'utilisateur existe dans la base de données
-    $requete = "SELECT * FROM utilisateurs WHERE email = :email";
-    $statement = $connexion->prepare($requete);
-    $statement->bindValue(':email', $username_email);
-    $statement->execute();
+    $DatabaseName = "viaje";
+    $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    $utilisateur = $statement->fetch();
+    if ($_SERVER["REQUEST_METHOD"] === "POST"){
+        $UsersTableName = 'utilisateur';
+        $userName = $_POST['username'];
+        $email = $_POST['email'];
+        $mdp = $_POST['mot_de_passe'];
 
-    // Vérifier le mot de passe
-    if ($utilisateur && password_verify($motDePasse, $utilisateur['mot_de_passe'])) {
-        // Authentification réussie
-        session_start();
-        $_SESSION['utilisateur_id'] = $utilisateur['id'];
-        $_SESSION['utilisateur_email'] = $utilisateur['email'];
+        $selectUser = $NewConnection->select($UsersTableName, 'email', "email ='$email'");
 
-        // Rediriger vers la page de profil par exemple
-        header('Location: profil.php');
-        exit;
-    } else {
-        // Authentification échouée, afficher un message d'erreur
-        $erreur = 'Identifiants invalides';
-    }
-}
+
+        if(!empty($selectUser)){
+
+            echo '<a href="login.php">Cette adresse email est déja utilisée, connectez-vous ici ! </a>';
+
+        }else{    
+            $Values = array(
+                'nom'=>$userName,
+                'email'=>$email,
+                'mot_de_passe'=>$mdp,
+                'role'=>'guest'
+            );
+            $NewConnection->insert($UsersTableName, $Values);
+    }}
 ?>
 
 <!DOCTYPE html>
@@ -39,28 +38,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje - Connexion</title>
+    <title>Viaje - Inscription</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="signin.css">
 </head>
 
 <body>
-    <a href="index.php">Retour à la page d'accueil</a>
-    <h1>Connexion</h1>
-    <?php if (isset($erreur)) : ?>
-        <p><?php echo $erreur; ?></p>
-    <?php endif; ?>
-    <form action="signin.php" method="POST">
-        <label for="username_email">Nom d'utilisateur/Adresse e-mail :</label>
-        <input type="text" name="username_email" required><br>
 
-        <label for="mot_de_passe">Mot de passe :</label>
-        <input type="password" name="mot_de_passe" required><br>
+<section class="login-box">
+        <a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
+        <h1>Inscription</h1>
 
-        <input type="submit" value="Se connecter">
-    </form>
+        <form action="signin.php" method="POST">
+            <div class="input-group">
+                <label for="username">Nom :</label>
+                <input type="text" name="username" required>
+            </div>
 
-    <a href="https://www.facebook.com/login">Se connecter avec Facebook</a>
-    <a href="https://twitter.com/login">Se connecter avec Twitter</a>
+            <div class="input-group">
+                <label for="email">Adresse e-mail :</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="mot_de_passe">Mot de passe :</label>
+                <input type="password" name="mot_de_passe" required>
+            </div>
+
+            <div class="input-group">
+                <input name="Intention" value="Inscrire" type="submit" value="S'inscrire'">
+            </div>
+        </form>
+
+        <div class="social-login">
+            <!-- Ici, le lien Facebook -->
+            <a href="https://www.facebook.com/login">Se connecter avec Facebook</a>
+            <!-- Ici, le lien Twitter -->
+            <a href="https://twitter.com/login">Se connecter avec Twitter</a>
+        </div>
+    </section>
 </body>
 
 </html>
