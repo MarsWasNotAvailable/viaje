@@ -8,28 +8,28 @@
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        $UsersTableName = 'utilisateur';
-        $userName = $_POST['username'];
-        $email = $_POST['email'];
-        $mdp = $_POST['mot_de_passe'];
+    // if ($_SERVER["REQUEST_METHOD"] === "POST"){
+    //     $UsersTableName = 'utilisateur';
+    //     $userName = $_POST['username'];
+    //     $email = $_POST['email'];
+    //     $mdp = $_POST['mot_de_passe'];
 
-        $selectUser = $NewConnection->select($UsersTableName, 'email', "email ='$email'");
+    //     $selectUser = $NewConnection->select($UsersTableName, 'email', "email ='$email'");
 
 
-        if(!empty($selectUser)){
+    //     if(!empty($selectUser)){
 
-            echo '<a href="login.php">Cette adresse email est déja utilisée, connectez-vous ici ! </a>';
+    //         echo '<a href="login.php">Cette adresse email est déja utilisée, connectez-vous ici ! </a>';
 
-        }else{    
-            $Values = array(
-                'nom'=>$userName,
-                'email'=>$email,
-                'mot_de_passe'=>$mdp,
-                'role'=>'guest'
-            );
-            $NewConnection->insert($UsersTableName, $Values);
-    }}
+    //     }else{    
+    //         $Values = array(
+    //             'nom'=>$userName,
+    //             'email'=>$email,
+    //             'mot_de_passe'=>$mdp,
+    //             'role'=>'guest'
+    //         );
+    //         $NewConnection->insert($UsersTableName, $Values);
+    // }}
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +39,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viaje - Inscription</title>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" >
 </head>
 
 <body>
@@ -48,11 +51,19 @@
 <section class="login-box">
         <a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
         <h1>Inscription</h1>
+        <?php
+            if (isset($_SESSION['HasFailedSignedUp']) && $_SESSION['HasFailedSignedUp'])
+            {
+                echo '<h4 class="animate__animated animate__shakeX" >Impossible de vous inscrire.</h4>';
+                
+                unset($_SESSION['HasFailedSignedUp']);
+            }
+        ?>
 
-        <form action="signin.php" method="POST">
+        <form action="controller.php" method="POST">
             <div class="input-group">
-                <label for="username">Nom :</label>
-                <input type="text" name="username" required>
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" required>
             </div>
 
             <div class="input-group">
@@ -66,14 +77,15 @@
             </div>
 
             <div class="input-group">
-                <input name="Intention" value="Inscrire" type="submit" value="S'inscrire'">
+                <input name="Intention" value="Signup" type="submit" >
             </div>
         </form>
 
+        <h5>Do you mean to <a href="./login.php">log in</a> ?</h5>
+
+        <!-- Ici, les liens sociaux -->
         <div class="social-login">
-            <!-- Ici, le lien Facebook -->
             <a href="https://www.facebook.com/login">Se connecter avec Facebook</a>
-            <!-- Ici, le lien Twitter -->
             <a href="https://twitter.com/login">Se connecter avec Twitter</a>
         </div>
     </section>

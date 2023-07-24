@@ -56,18 +56,12 @@
 
                 case 'Signup':
                     $Values = array(
-                        'mail' => $_POST['mail'],
-                        'password' => $_POST['password'],
-                        'role' => 'Admin',
-                        'current_ip' => $_SERVER['REMOTE_ADDR']
+                        'email' => $_POST['email'],
+                        'nom' => $_POST['nom'],
+                        'mot_de_passe' => $_POST['mot_de_passe'],
+                        'role' => 'guest'
                     );
-
-                    if (isset($_POST['nickname']))
-                    {
-                        $Values += array('nickname' => $_POST['nickname']);
-                    }
-                    
-                    // var_dump($Values);
+                    var_dump($Values);
 
                     $Success = $NewConnection->insert($UsersTableName, $Values);
 
@@ -77,11 +71,11 @@
 
                         $_SESSION['HasFailedSignedUp'] = true;
 
-                        header("Location: " . 'signup.php');
+                        header("Location: " . 'signin.php');
                         die();
-                        // break;
                     }
 
+                    // we let fall through from signup to login, so it automatically logs in
                     // break;
                     
                 case 'Login':
@@ -204,19 +198,44 @@
                     }
                     break;
 
+                case 'UploadImage':
                 case 'UpdateArticleField':
+
+                    if (isset($_FILES) && $_FILES)
+                    {
+                        var_dump($_FILES);
+                        var_dump($_POST);
+
+                        $Category = strtolower($_POST['Category']);
+                        $CategoryFolderName = './images/' . $Category;
+
+                        $LocalTempName = $_FILES[$_POST['Column']]['tmp_name'];
+                        // $ProjectDirectory = realpath(dirname(getcwd()));
+                        // $DestinationName = $ProjectDirectory . "/viaje/images/" . strtolower($_POST['Category']) . '/' . $_FILES[$_POST['Column']]['name'] ;
+                        $DestinationName = './images/' . $Category . '/' . $_FILES[$_POST['Column']]['name'] ;
+                        var_dump($LocalTempName);
+                        var_dump($DestinationName);
+
+                        if ((file_exists( $CategoryFolderName ) && is_dir( $CategoryFolderName )) || mkdir($CategoryFolderName))
+                        {
+                            if (!file_exists($DestinationName))
+                            {
+                                move_uploaded_file($LocalTempName, $DestinationName);
+                            }
+                        }
+
+                        $_POST[$_POST['Column']] = $DestinationName;
+                    }
+
                     $Values = array(
-                        $_POST['Column'] => $_POST['Value']
+                        $_POST['Column'] => $_POST[$_POST['Column']]
                     );
 
                     $Condition = array('id_article' => $_POST['id_article']);
 
-                    // var_dump($Values);
-                    // var_dump($Condition);
-
                     $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
 
-                    // echo "success";
+                    // echo $_POST['Value'];
 
                     // if ($Success) {
                     //     // header("Location: " . $ArticlePageRedirection);
@@ -226,6 +245,38 @@
                 
                 default:
                     # code...
+                    break;
+            }
+        }
+        else if (isset($_PUT['Intention']))
+        {
+            switch ($_PUT['Intention']) {
+                case 'UpdateArticleField':
+                    $Values = array(
+                        $_PUT['Column'] => $_PUT['Value']
+                    );
+
+                    $Condition = array('id_article' => $_PUT['id_article']);
+
+                    echo "yellow";
+
+                    // $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
+
+                    die();
+                    break;
+
+                // case 'UploadImage':
+                //     $Values = array(
+                //         $_PUT['Column'] => $_PUT['Value']
+                //     );
+
+                //     $Condition = array('id_article' => $_PUT['id_article']);
+
+                //     $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
+
+                //     die();
+                //     break;
+                default:
                     break;
             }
         }

@@ -43,13 +43,13 @@
             </div>
         </form>
 
+        <h5>New here ? Do you want to <a href="./signin.php">signup</a> ?</h5>
+
+        <!-- Ici, le lien Facebook -->
         <div class="social-login">
-            <!-- Ici, le lien Facebook -->
             <a href="https://www.facebook.com/login">Se connecter avec Facebook</a>
-            <!-- Ici, le lien Twitter -->
             <a href="https://twitter.com/login">Se connecter avec Twitter</a>
         </div>
     </section>
 </body>
-
 </html>

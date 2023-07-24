@@ -253,20 +253,12 @@
             </div>
         </div>
 
-        <?php if($IsUserLoggedIn): ?>
+        <?php if($IsUserLoggedIn && (isset($_SESSION['UserRole']) && $_SESSION['UserRole'] == 'admin')): ?>
             <div class="dropdown">
                 <a href="./gestion.php">GESTION</a>
             </div>
         <?php endif; ?>
 
-        <!--  je ne pense pas qu'on ai besoin de deux barre de recherche -->
-        <!-- <div class="search-container">
-            <form method="GET" action="recherche.php">
-                <label for="search_query"></label>
-                <input type="text" name="search_query" id="search_query" placeholder="Entrez votre recherche ici">
-                <button type="submit">Rechercher</button>
-            </form>
-        </div>-->
         <a href="javascript:void(0);" class="icon" onclick="burgerMenu()">
             <i class="fa fa-bars"></i>
         </a> 
@@ -301,35 +293,3 @@
         }
     }
 </script> 
-
-<!-- il n'y a pas besoin de ça, action du form envoie vers la page d'affichage des recherches (recherche.php)!!!!!!!!!!!! -->
-<!-- <?php
-    // Vérifier si le formulaire a été soumis
-    if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["search_query"])) {
-        // Récupérer la valeur de la requête de recherche
-        $searchQuery = $_GET["search_query"];
-        $trouver = $NewConnection->select("article", "*", "`resume` LIKE '%$searchQuery%'");
-        foreach ($trouver as $display) {
-            echo
-            '<div class="card">
-                <div>
-                    <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
-                </div>
-                <div class= "cardText">
-                    <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
-                    <p class="date">' . $display['date'] . '</p>
-                    <p class="resume">' . $display['resume'] . '</p>
-                </div>
-            </div>';
-        }
-        // Vérifier si la requête de recherche n'est pas vide
-        if (!empty($searchQuery)) {
-            // Effectuer votre traitement de recherche ici (par exemple, interroger une base de données)
-
-            // Afficher les résultats (exemple : afficher simplement la requête de recherche pour le test)
-            echo "Vous avez recherché : " . htmlspecialchars($searchQuery);
-        } else {
-            echo "Veuillez entrer un terme de recherche.";
-        }
-    }
-?> -->

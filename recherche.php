@@ -1,10 +1,10 @@
 <?php
-session_start();
-// var_dump($_SESSION);
+    session_start();
+    // var_dump($_SESSION);
 
-require_once("./components/commons.php");
-require_once("./components/connexion.php");
-$NewConnection = new MaConnexion("viaje", "root", "", "localhost");
+    require_once("./components/commons.php");
+    require_once("./components/connexion.php");
+    $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
 
 <style>
 /*style du texte de presentation de la catégorie*/
-.titre{
+    .titre {
         text-transform: uppercase;
         font-weight: bold;
         font-size: 34px;
@@ -48,31 +48,6 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         justify-content: flex-start;
         flex-wrap: wrap;
         padding: 1% 0 ;
-    }
-
-    .card {
-        display: grid;
-        justify-items: center;
-        width: 29%;
-        background-color: #fff;
-        margin-left: 3.5%;
-        margin-bottom: 3%;
-    }
-
-    .cardImage{
-        width: 100%;
-    }
-
-    .cardText{
-        padding: 4%;
-        height: 15em;
-        overflow: hidden;
-    }
-
-    .cardTitle{
-        color: #000;
-        font-size: 20px;
-        text-decoration: none;
     }
 
     .date{
@@ -106,11 +81,6 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
         .affichageArticles{
             display: grid;
             justify-items: center;
-        }
-
-        .card{
-            width: 97%;
-            margin: 3% 0;
         }
     }
 </style>
@@ -149,10 +119,10 @@ $NewConnection = new MaConnexion("viaje", "root", "", "localhost");
                     echo
                     '<div class="card">
                         <div>
-                            <img src="' . $display['photo_principale'] . '" class="cardImage" alt="">
+                            <img src="' . $display['photo_principale'] . '" class="card-image" alt="">
                         </div>
-                        <div class= "cardText">
-                            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                        <div class= "card-text">
+                            <a href="categorie.php?id_categorie=' . $display['categorie'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
                             <p class="date">' . $display['date'] . '</p>
                             <p class="resume">' . $display['resume'] . '</p>
                         </div>

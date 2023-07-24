@@ -17,7 +17,10 @@
 
     $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 0;
 
+
+    $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
     $SelectedArticle = null;
+    $CurrentArticleCategorie = "none";
 
     // Create new article
     if ($CurrentArticleID < 1 || $CurrentArticleID == 'new')
@@ -26,6 +29,13 @@
     }
     else {
         $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
+
+        foreach ($SelectedArticle as $Key => $Value)
+        {
+            // $CurrentArticleCategorie = $Value['categorie'];
+            $CurrentArticleCategorie = strtolower( $SelectedCategories[$Value['categorie'] - 1]['nom'] );
+            // var_dump($CurrentArticleCategorie);
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -104,7 +114,7 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
+                        // $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
 
                         if ($IsEditingArticle){
                             
@@ -218,13 +228,54 @@
     <script>
         function GetCurrentArticleID()
         {
-            return <?php echo $CurrentArticleID; ?> ;
+            return Number( <?php echo $CurrentArticleID; ?> );
+        }
+
+        function GetCurrentArticleCategory()
+        {
+            return <?php echo '"' . $CurrentArticleCategorie . '"'; ?> ;
         }
 
         [...document.getElementsByClassName('image-selector')].forEach(Each => {
             Each.addEventListener('change', (Event) => {
                 let Section = Event.target.parentNode;
                 // console.log(Section);
+
+                let url = "./controller.php";
+                // const Category = GetCurrentArticleCategory();
+                // console.log(Category);
+                // let FileNameRelativeToDatabse = "./" + Category + "/" + Each.value.split('\\').pop();
+                // console.log(FileNameRelativeToDatabse);
+
+
+                // let form_data = new FormData();
+                // form_data.append('Intention', 'UploadImage');
+                // form_data.append('id_article', GetCurrentArticleID());
+                // form_data.append('Column', Each.getAttribute('name'));
+                // // form_data.append('Value', FileNameRelativeToDatabse);
+                // // form_data.append('Value', Each );
+                // form_data.append('Value', Each.files[0] );
+
+                // console.log(form_data);
+
+                // const Request = fetch(url, {
+                //     method: "POST",
+                //     mode: "cors", // no-cors, *cors, same-origin
+                //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                //     credentials: "same-origin", // include, *same-origin, omit
+                //     // It doesnt work with Content-Type
+                //     // headers: { 'Content-Type': 'multipart/form-data' },
+                //     redirect: "follow", // manual, *follow, error
+                //     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+                //     body: form_data
+                // })
+                // .then(function (Response) { return Response.text(); })
+                //     .then(function (ResponseText) {
+                //         console.log(ResponseText);
+                //     })
+                // ;
+
 
                 let src = URL.createObjectURL(Event.target.files[0]);
                 let ImagePreviewPlaceholder = Section.getElementsByClassName('image-preview');
@@ -252,18 +303,25 @@
 
                 let url = "./controller.php";
 
+
                 let form_data = new FormData();
                 form_data.append('Intention', 'UpdateArticleField');
                 form_data.append('id_article', GetCurrentArticleID());
+                form_data.append('Category', GetCurrentArticleCategory());
                 form_data.append('Column', Each.getAttribute('name'));
 
                 //TODO: still aint perfect, I do want to preserve the generic code but we have a specific with the file paths
-                form_data.append('Value', Each.value || Each.innerHTML);
+                // form_data.append('Value', File || Each.value || Each.innerHTML);
                 //for images we need to cut the directory name off
                 // form_data.append('Value', (Each.value.split('\\').pop() || Each.innerHTML));
 
+                // Either a file, the content of the form value, or the actual editable text content
+                const File = Each.files ? Each.files[0] : null;
+                // console.log(File);
+                form_data.append(Each.getAttribute('name'), File || Each.value || Each.innerHTML );
 
-                console.log(form_data);
+
+                // console.log(form_data);
 
                 const Request = await fetch(url, {
                     method: "POST",
@@ -278,11 +336,16 @@
                     body: form_data
 
                 })
-                .then((Response)=>{
-
+                .then(function (Response) { 
+                    
                     UpdateButton.remove();
                     UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
+
+                    return Response.text();
                 })
+                    .then(function (ResponseText) {
+                        console.log(ResponseText);
+                    })
                 ;
 
                 return true;
@@ -308,5 +371,16 @@
             });
         });
     </script>
+
+    <!-- <form id="form" action="./controller.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id_article" value="1">
+        <input type="hidden" name="Column" value="photo_principale">
+        <input type="hidden" name="Value" value="ertetr">
+        <input type="hidden" name="Categorie" value="Allemagne">
+
+        <input name="photo_principale" type="file" accept="image/*">
+        <button type="submit" name="Intention" value="UploadImage" >Update</button>
+    </form> -->
+
 </body>
 </html>
