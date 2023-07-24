@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 21 juil. 2023 à 04:43
+-- Généré le : lun. 24 juil. 2023 à 07:44
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.1.13
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `categorie` int NOT NULL,
   PRIMARY KEY (`id_article`),
   KEY `FK_id_categorie_article` (`categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `article`
@@ -75,24 +75,25 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `nom` varchar(50) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
+  `continent` varchar(50) NOT NULL,
   PRIMARY KEY (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `categorie`
 --
 
-INSERT INTO `categorie` (`id_categorie`, `nom`, `titre`, `description`) VALUES
-(1, 'Canada', 'Blog voyage Canada', 'Le Canada, un vaste pays.\r\nPour mes premiers pas au Canada, ce fut le Québec.\r\nUn pays qui a beaucoup à offrir et qui me reverra sans aucun doute !'),
-(2, 'Chine', 'Blog voyage Chine', 'La Chine. L’Asie. Muraille de Chine, Cité interdite, paysages fabuleux. Pays moderne et pays traditionnel. Chine des villes, Chine des campagnes. Vous trouverez ici des articles pour préparer votre voyage en Chine ou pour juste découvrir la Chine en quelques mots. Découvrir quoiqu’il arrive une infime partie de la Chine.\r\n\r\n'),
-(3, 'Allemagne', 'Blog voyage Allemagne', 'L’Allemagne est une destination parfaite pour des vacances originales. Ce pays d’Europe centrale vous promet une expérience inoubliable !'),
-(4, 'Bahreïn', 'Blog Bahreïn', 'Pays méconnu, le royaume du Bahreïn est un petit pays insulaire, situé à l’est de l’Arabie Saoudite. Sa capitale est Manama.\r\n\r\nBien qu’oublié par le tourisme, le Bahreïn est un pays digne d’intérêt. Plages avec eau turquoise et température supérieure à 30 degrés, ville historique comme Muharraq, souq ou encore îles, le Bahreïn a de nombreux atouts.'),
-(5, 'Egypte', 'Blog voyage Egypte', 'Egypte. Pays des pharaons. Vaste pays. Le Caire, plus grande ville d’Afrique. Pays mythique que j’ai toujours voulu visiter. Cette catégorie vous permettra de préparer votre voyage pour découvrir l’Egypte antique, l’Egypte islamique, la gastronomie égyptienne, …'),
-(6, 'Australie', 'Blog voyage Australie', 'Australie, un pays immense. Peut-être plus proche d’un continent que d’un simple pays. Voyager en Australie demande pas mal de préparatifs, ne serait-ce que pour définir son itinéraire de voyage. Le pays est tellement vaste, il y a tellement de choses à faire qu’il est nécessaire de trancher et faire des choix. C’est l’un des objectifs de ce blog voyage sur l’Australie !'),
-(7, 'Islande', 'Blog voyage Islande', 'L’Islande offre surement les paysages les plus étonnants à quelques heures de vol de la France. Glaciers, volcan, cascades immenses, champs de lave, … les paysages islandais sont étonnants.\r\n\r\nVoyager en Islande offre de bien nombreuses expériences. Et si vous savez pas encore à quoi vous attendre si vous comptez partir en Islande, vous devriez en avoir une vision plus précise avec ces articles du blog.'),
-(8, 'Japon', 'Blog voyage Japon', 'Japon. L’un de mes pays préférés en Asie.\r\n\r\nTokyo et son animation perpétuelle. Le Mont Fuji. Kyoto et ses centaines de temples.\r\nSans oublier la cuisine japonaise, variée et raffinée.'),
-(9, 'Emirats Arabes Unis', 'Blog voyage Emirats Arabes Unies', 'Bien trop souvent, on résume un voyage aux Emirats Arabes Unis à la ville de Dubaï. C’est bien évidemment la ville la plus touristique du pays. Mais nous verrons sur le blog qu’il y a d’autres endroits à voir aux EAU. En effet, voyager aux Emirats Arabes Unis ne se limite absolument pas à Dubai. On peut déjà citer Abu Dhabi, capitale du pays, qui figure également parmi les incontournables, notamment pour la célèbre mosquée Sheikh Zayed ainsi que le musée du Louvre d’Abu Dhabi.'),
-(10, 'Afrique du Sud', 'Blog voyage Afrique du Sud', 'L’Afrique du Sud est le pays parfait pour un safari par soi-même, avec sa voiture et sans passer par une agence. Mais il serait dommage de résumer le pays à cela.\r\n\r\nVoyager en Afrique du Sud offre bien d’autres expériences. Une destination aux multiples atouts. Sur le blog, je partage mes retours d’expérience, conseils pratiques et guide pour voyager en Afrique du Sud.');
+INSERT INTO `categorie` (`id_categorie`, `nom`, `titre`, `description`, `continent`) VALUES
+(1, 'Canada', 'Blog voyage Canada', 'Le Canada, un vaste pays.\r\nPour mes premiers pas au Canada, ce fut le Québec.\r\nUn pays qui a beaucoup à offrir et qui me reverra sans aucun doute !', 'Amérique'),
+(2, 'Chine', 'Blog voyage Chine', 'La Chine. L’Asie. Muraille de Chine, Cité interdite, paysages fabuleux. Pays moderne et pays traditionnel. Chine des villes, Chine des campagnes. Vous trouverez ici des articles pour préparer votre voyage en Chine ou pour juste découvrir la Chine en quelques mots. Découvrir quoiqu’il arrive une infime partie de la Chine.\r\n\r\n', 'Asie'),
+(3, 'Allemagne', 'Blog voyage Allemagne', 'L’Allemagne est une destination parfaite pour des vacances originales. Ce pays d’Europe centrale vous promet une expérience inoubliable !', 'Europe'),
+(4, 'Bahreïn', 'Blog Bahreïn', 'Pays méconnu, le royaume du Bahreïn est un petit pays insulaire, situé à l’est de l’Arabie Saoudite. Sa capitale est Manama.\r\n\r\nBien qu’oublié par le tourisme, le Bahreïn est un pays digne d’intérêt. Plages avec eau turquoise et température supérieure à 30 degrés, ville historique comme Muharraq, souq ou encore îles, le Bahreïn a de nombreux atouts.', 'Afrique et Moyen-Orient'),
+(5, 'Egypte', 'Blog voyage Egypte', 'Egypte. Pays des pharaons. Vaste pays. Le Caire, plus grande ville d’Afrique. Pays mythique que j’ai toujours voulu visiter. Cette catégorie vous permettra de préparer votre voyage pour découvrir l’Egypte antique, l’Egypte islamique, la gastronomie égyptienne, …', 'Afrique et Moyen-Orient'),
+(6, 'Australie', 'Blog voyage Australie', 'Australie, un pays immense. Peut-être plus proche d’un continent que d’un simple pays. Voyager en Australie demande pas mal de préparatifs, ne serait-ce que pour définir son itinéraire de voyage. Le pays est tellement vaste, il y a tellement de choses à faire qu’il est nécessaire de trancher et faire des choix. C’est l’un des objectifs de ce blog voyage sur l’Australie !', 'Océanie'),
+(7, 'Islande', 'Blog voyage Islande', 'L’Islande offre surement les paysages les plus étonnants à quelques heures de vol de la France. Glaciers, volcan, cascades immenses, champs de lave, … les paysages islandais sont étonnants.\r\n\r\nVoyager en Islande offre de bien nombreuses expériences. Et si vous savez pas encore à quoi vous attendre si vous comptez partir en Islande, vous devriez en avoir une vision plus précise avec ces articles du blog.', 'Europe'),
+(8, 'Japon', 'Blog voyage Japon', 'Japon. L’un de mes pays préférés en Asie.\r\n\r\nTokyo et son animation perpétuelle. Le Mont Fuji. Kyoto et ses centaines de temples.\r\nSans oublier la cuisine japonaise, variée et raffinée.', 'Asie'),
+(9, 'Emirats Arabes Unis', 'Blog voyage Emirats Arabes Unies', 'Bien trop souvent, on résume un voyage aux Emirats Arabes Unis à la ville de Dubaï. C’est bien évidemment la ville la plus touristique du pays. Mais nous verrons sur le blog qu’il y a d’autres endroits à voir aux EAU. En effet, voyager aux Emirats Arabes Unis ne se limite absolument pas à Dubai. On peut déjà citer Abu Dhabi, capitale du pays, qui figure également parmi les incontournables, notamment pour la célèbre mosquée Sheikh Zayed ainsi que le musée du Louvre d’Abu Dhabi.', 'Afrique et Moyen-Orient'),
+(10, 'Afrique du Sud', 'Blog voyage Afrique du Sud', 'L’Afrique du Sud est le pays parfait pour un safari par soi-même, avec sa voiture et sans passer par une agence. Mais il serait dommage de résumer le pays à cela.\r\n\r\nVoyager en Afrique du Sud offre bien d’autres expériences. Une destination aux multiples atouts. Sur le blog, je partage mes retours d’expérience, conseils pratiques et guide pour voyager en Afrique du Sud.', 'Afrique et Moyen-Orient');
 
 -- --------------------------------------------------------
 
@@ -110,14 +111,14 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id_commentaire`),
   KEY `commentaire_article` (`id_article`),
   KEY `commentaire_utilisateur` (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `commentaire`
 --
 
 INSERT INTO `commentaire` (`id_commentaire`, `date`, `contenu`, `id_utilisateur`, `id_article`) VALUES
-(1, '2019-01-21 09:38:09', `Bonjour,\r\nNous allons au Québec cet été (fin du mois de juin) et nous souhaitez faire une excursion pour observer des baleines. Nous sommes tombés sur ton blog et nous avons encore plus envie d\'aller à Tadoussac.\r\nMerci pour ce beau partage, ton blog est très bien organisé !\r\nCécile`, 4, 1);
+(1, '2019-01-21 09:38:09', 'Bonjour,\r\nNous allons au Québec cet été (fin du mois de juin) et nous souhaitez faire une excursion pour observer des baleines. Nous sommes tombés sur ton blog et nous avons encore plus envie d\'aller à Tadoussac.\r\nMerci pour ce beau partage, ton blog est très bien organisé !\r\nCécile', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
   PRIMARY KEY (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -143,7 +144,8 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `role`, `nom`, `email`, `mot_de_pas
 (1, 'admin', 'admin', 'admin@voyage', 'superpower'),
 (2, 'moderator', 'Nostradamus', 'nosotros@damus', 'somos'),
 (3, 'redactor', 'Jane', 'jane@doe', 'ohdear'),
-(4, 'guest', 'Cécile', 'notafakemail@all', 'cilou');
+(4, 'guest', 'Cécile', 'notafakemail@all', 'cilou'),
+(13, 'guest', '', '', '');
 
 --
 -- Contraintes pour les tables déchargées
