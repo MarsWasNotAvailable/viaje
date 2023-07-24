@@ -2,6 +2,13 @@
     session_start();
     // var_dump($_SESSION);
 
+    // Redirect unregistered users
+    if (!isset($_SESSION['UserRole']) || $_SESSION['UserRole'] != 'admin')
+    {
+        header("Location: " . 'index.php');
+        die();
+    }
+
     require_once("./components/connexion.php");
 
     $DatabaseName = "viaje";
@@ -25,14 +32,19 @@
         <?php include("./components/navbar.php"); ?>
     </header>
 
-    <main class="chunks">
+    <!-- <main class="chunks"> -->
+    <main >
         <h3>Tout les articles</h3>
-        <section id="ArticlesViewerBox">
-            <form action="controller.php" method="post" class="card-gestion">
+        <section id="ArticlesViewerBox" class="card-container">
+            <form action="controller.php" method="post" class="card gestion">
                 <input type="hidden" name="id_article" value="' . $Value['id_article'] . '">
-                <img id="AddNewIcon" src="./images/icons_plus.png" alt="New article picture">
-                <h5>Pour créer un nouvel article:</h5>
-                <button name="Intention" value="AddArticle" type="submit">Clicker ici</button>
+                <div class="card-image-container">
+                    <img id="AddNewIcon" src="./images/icons_plus.png" alt="New article picture">
+                </div>
+                <div class="card-text">
+                    <h5>Pour créer un nouvel article:</h5>
+                    <button name="Intention" value="AddArticle" type="submit">Clicker ici</button>
+                </div>
                 <!-- href="./article.php?edit=true&id_article=0" -->
             </form>
 
@@ -41,13 +53,13 @@
                 {
                     $ArticlePageRedirectionWithParameters = './article.php?edit=true&id_article=' . $Value['id_article'];
 
-                    echo '<form action="controller.php" method="post" class="card-gestion">';
+                    echo '<form action="controller.php" method="post" class="card gestion">';
                     echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">';
                     echo '<button name="Intention" value="DeleteArticle" type="submit" class="floating"></button>';
-                    echo '<img src="' . $Value['photo_principale'] . '" alt="Article picture">';
-                    echo '<h5>' . $Value['titre'] . '</h5>';
+                    echo '<div class="card-image-container"><img src="' . $Value['photo_principale'] . '" alt="Article picture"></div>';
+                    echo '<div class="card-text"><h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
-                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</a>';
+                    echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</a></div>';
 
                     echo '</form>';
                 }

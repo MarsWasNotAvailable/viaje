@@ -45,38 +45,6 @@
     .presentation{
         margin-bottom: 1.6%;
     }
-    /*style de la section contenant les articles*/
-    .affichageArticles{
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding: 1% 0 ;
-    }
-
-    .card {
-        display: grid;
-        justify-items: center;
-        width: 29%;
-        background-color: #fff;
-        margin-left: 3.5%;
-        margin-bottom: 3%;
-    }
-
-    .cardImage{
-        width: 100%;
-    }
-
-    .cardText{
-        padding: 4%;
-        height: 15em;
-        overflow: hidden;
-    }
-
-    .cardTitle{
-        color: #000;
-        font-size: 20px;
-        text-decoration: none;
-    }
 
     .date{
         color: #6B6B6B;
@@ -106,17 +74,6 @@
             font-size: 13px;
             margin-bottom: 10%;
         }
-
-        .affichageArticles{
-            display: grid;
-            justify-items: center;
-        }
-
-        .card{
-            width: 97%;
-            margin: 3% 0;
-        }
-
     }
 </style>
 <body>
@@ -140,17 +97,17 @@
         </section>
         
         <!-- affichage des articles -->
-        <section class="affichageArticles">
+        <section class="card-container">
             <?php
             foreach($Result as $display){
                 
                 echo 
                 '<div class="card">
                     <div>
-                        <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
+                        <img src="' .$display['photo_principale']. '" class="card-image" alt="">
                     </div>
-                    <div class= "cardText">
-                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                    <div class= "card-text">
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
                         <p class="date">' . $display['date'] . '</p>
                         <p class="resume">' . $display['resume'] . '</p>
                     </div>
