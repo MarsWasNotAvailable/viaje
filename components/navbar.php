@@ -189,12 +189,11 @@
     <div class="topnav" id="myTopnav">
         <a href="./index.php">BLOG VOYAGE</a>
         <div class="dropdown">
-            <a href="#">PRATIQUE</a>
-            <div class="dropdown-content">
-                <a href="#">Option 1</a>
-                <a href="#">Option 2</a>
-                <a href="#">Option 3</a>
-            </div>
+            <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Pratique'");
+           foreach ($Nav as $display) {
+                echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                }
+            ?>
         </div>
         <div class="dropdown">
             <a href="#">AMÉRIQUE</a>
