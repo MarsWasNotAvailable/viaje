@@ -46,3 +46,37 @@ Idées de fonctionnalités optionnelles si vous avez le temps et/ou l'envie.
 
 Poster des commentaires sur les articles
 Noter les articles
+
+
+
+## Présentation du projet ##
+
+
+Les données de notre projet web utilise des styles CSS pour la mise en page et inclut des éléments tels qu'une barre de navigation comprenant des articles par categorie, une barre de recherche par mots clé également un login et d'autre fonctionnalités si rapportent.
+
+
+
+1. La ligne require_once("components/connexion.php") inclut un fichier de connexion à la base de données. Cela permet au code d'accéder à la base de données et d'exécuter des requêtes.
+
+2. La classe MaConnexion est utilisée pour créer une instance de connexion à la base de données. Les informations de connexion sont passées en paramètres lors de l'instanciation de la classe.
+
+3. La méthode select de la classe MaConnexion est utilisée pour récupérer tous les enregistrements de la table "article" dans la base de données. Le résultat de cette requête est stocké dans la variable $Result.
+
+4. Le code HTML et CSS définit la structure et le style de la page. Des balises telles que <header>, <main>, <section>, <div>, <img>, <a>, <h1>, <h2>, <h3>, <p>, etc. sont utilisées pour structurer le contenu et appliquer le style.
+
+5. À l'intérieur de la boucle foreach, chaque article est affiché dans une carte (<div class="card">). Les données de chaque article, telles que le titre, la date et le résumé, sont extraites de la variable $display et affichées à l'aide de balises HTML.
+
+6. Les images des articles sont affichées à l'aide de la balise <img> avec la source spécifiée dans $display['photo_principale'].
+
+
+  ## PROBLEMES ET SOLUTIONS ##
+ 
+
+1. Transfert d'informations de PHP à JavaScript : Il semble y avoir des difficultés à transférer des informations de PHP à JavaScript dans ce code. Pour résoudre ce problème, des fonctions pourraient être créées en tant qu'interfaces entre les deux technologies. Ces fonctions pourraient être utilisées pour échanger des données entre PHP et JavaScript.
+
+2. Script SQL de la base de données : L'implémentation du script SQL de la base de données a été un défi. Une solution pourrait être d'automatiser le processus en utilisant un script PHP, bien que cela n'ait pas été réalisé dans ce cas. Un script PHP pourrait être créé pour exécuter le script SQL et mettre en place la structure de la base de données.
+
+3. Conflits Git : Des conflits de fusion Git ont ralenti la progression du travail. Une solution consiste à travailler sur des parties distinctes du code pour éviter les conflits. En travaillant sur des branches distinctes, les développeurs peuvent fusionner leur travail sans rencontrer de conflits. L'utilisation d'outils de gestion de version, tels que des clients Git avec une interface utilisateur graphique, peut également aider à résoudre les conflits plus facilement.
+
+4. Création d'un éditeur d'article : La création d'un éditeur d'article a été difficile en raison de la structure de la base de données où les contenus sont séparés. Une solution envisagée a été de stocker les contenus au format HTML pour permettre plus d'options de formatage, mais cela aurait augmenté la taille du contenu. Finalement, une solution plus simple a été adoptée pour une démonstration. Pour simplifier l'éditeur d'article, il est possible de limiter les options de formatage ou de stocker les contenus dans un format simplifié, puis de les formater lors de l'affichage sur la page.
+
