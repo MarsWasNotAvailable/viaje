@@ -5,6 +5,4 @@
     Bien sûr, vous pouvez également me suivre sur les réseaux sociaux. Le blog voyage est présent sur Twitter, Facebook et Instagram ! 
     </p>
 </div>
-<div>
-    Mentions Legales - Tout droit réservés
-</div>
+<div>Mentions Legales - Tout droit réservés</div>

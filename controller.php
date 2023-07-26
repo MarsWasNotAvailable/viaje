@@ -296,7 +296,9 @@
                             }
                         }
 
-                        $_POST[$_POST['Column']] = $DestinationName;
+                        // We should only store the filename below
+                        // $_POST[$_POST['Column']] = $DestinationName;
+                        $_POST[$_POST['Column']] = $_FILES[$_POST['Column']]['name'];
                     }
 
                     $Values = array(

@@ -7,9 +7,9 @@
 
 
 
-    // $_SESSION['UserRole'] = 'admin';
-    $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && CanEditArticles($_SESSION['UserRole']) : false;
-    $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && CanEditComments($_SESSION['UserRole']) : false;
+    $IsLoggedIn = isset($_SESSION['UserRole']);
+    $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && $IsLoggedIn && CanEditArticles($_SESSION['UserRole']) : false;
+    $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && $IsLoggedIn && CanEditComments($_SESSION['UserRole']) : false;
 
 
     $DatabaseName = "viaje";
@@ -43,6 +43,12 @@
             // var_dump($CurrentArticleCategorieSub);
 
         }
+    }
+
+    if (!$IsEditingArticle && ($CurrentArticleCategorie == "brouillon" || $CurrentArticleCategorieSub == "brouillon" ))
+    {
+        header("Location: " . 'index.php');
+        die();
     }
 ?>
 <!DOCTYPE html>
@@ -154,7 +160,7 @@
                             echo '<img src="' . GetImagePath( $Value['photo_principale'], $CurrentArticleCategorieSub ) . '" alt="Image 1">';
                         }
                         
-                        echo '<p contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['resume'] . '</p>';
+                        echo '<p name="resume" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value['resume'] . '</p>';
                         echo '<div >';
                         echo '<fieldset class="Sommaire">';
                         echo '  <legend >Sommaire:</legend>';

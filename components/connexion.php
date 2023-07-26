@@ -25,24 +25,45 @@
         }
 
         //TODO: working through that, I think 'method chaining' would be a perfect interface, as in:
-        //$NewConnection.delete().fromtable("User").where(array( "email" => "example@local") ).execute();
+        //$NewConnection.prepare().delete().fromtable("User").where(array( "email" => "example@local") ).execute();
 
         /**
          * The ConditionField is a filter to isolate a specific result
          * Returns an associative array of the results, or false on error */
         public function select($Table, $Column, $ConditionField = 1)
         {
+            // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
+            // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
             try {
-                // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
-                //TODO: that $ConditionField is extremely dangerous, but yet we want the power
-                //NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+                // TODO: that $ConditionField is extremely dangerous, but yet we needed the power while prototyping
+                // I think below can give us more control on the condition field
+                // $ConditionField = array(
+                //     array("=" => array("id_article" => "1")),
+                //     array("<>" => array("sous_categorie" => "not_that_one")),
+                //     array("LIKE" => array("content" => "%keyword%"))
+                // );
+
+                // // What a terrible language: so much words for such a simple thing
+                // $ConditionAsString = "";
+                // foreach ($ConditionField as $Index => $EachConditionsPair) {
+                //     foreach ($EachConditionsPair as $EachOperation => $EachPair) {
+                //         foreach($EachPair as $EachKey => $EachValue) {
+                //             $ConditionAsString .= "(`$Table`.`" . $EachKey . '` ' . $EachOperation . ' "' . $EachValue . '") AND ';
+                //              break; //there should only be one pair per operations
+                //         }
+                //     }
+                // }
+                // $ConditionAsString = rtrim($ConditionAsString, ' AND ');
+                // // var_dump($ConditionAsString);
+                // $ConditionField = $ConditionAsString;
+
+                
+                // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
-                // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
 
                 $Result = $this->Connection->query($SQLQueryString);
 
-               
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
             } catch (PDOException $e) {
@@ -236,10 +257,10 @@
             }
         }
 
-        public function execute_file($ConditionField)
+        public function execute_file($FilePath)
         {
             try {
-                $ScriptCreateDatabase = file_get_contents('./viaje.sql');
+                $ScriptCreateDatabase = file_get_contents($FilePath);
                 $Statement = $this->Connection->prepare($ScriptCreateDatabase);
 
                 return $Statement->execute();

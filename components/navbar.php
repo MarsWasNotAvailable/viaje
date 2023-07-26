@@ -11,6 +11,11 @@
     $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
 ?>
 
+<!-- Because this link element is set as rel stylesheet, it is body-ok
+    That means, it does not need to be placed in the head of each documents:
+    https://webmasters.stackexchange.com/questions/55130/can-i-use-link-tags-in-the-body-of-an-html-document/137977#137977
+    It is clearer to have it there
+ -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
@@ -18,13 +23,9 @@
 
     .logo {
         width: 200px;
-        /* Largeur de l'image */
         height: auto;
-        /* Hauteur automatique proportionnelle */
         display: block;
-        /* Affichage en tant que bloc */
         margin: 10px auto;
-        /* Marge : 10px haut et bas, centrage horizontal */
     }
 
     .navbar {
@@ -40,8 +41,8 @@
         z-index: 2;
     }
 
-    /* .topnav > * {
-        margin-right: 2em;
+    /* #myTopnav > * {
+        margin-right: 7%;
     } */
 
     .navbar a {
@@ -60,6 +61,12 @@
     .dropdown {
         position: relative;
         display: inline-block;
+    }
+
+    @media (max-width:1023px) {
+        .topnav.responsive .dropdown {
+            margin-left: 7%;
+        }
     }
 
     .dropdown-content {
@@ -159,6 +166,8 @@
 
         #search{
             width: 30%;
+            display: inline-grid;
+            justify-content: center;
         }
         .topnav.responsive input{
             width: 3em;
@@ -188,7 +197,10 @@
 
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
-        <a href="./index.php">BLOG VOYAGE</a>
+        <div class="dropdown">
+            <a href="./index.php">BLOG VOYAGE</a>
+        </div>
+
         <div class="dropdown">
             <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Pratique'");
            foreach ($Nav as $display) {

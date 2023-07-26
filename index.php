@@ -43,6 +43,8 @@
         <!-- Cette section contient tout les articles -->
         <section class="card-container">
             <?php
+                // TODO: currently checking on sous_categorie to hide the drafts, but we should use categorie (makes more sense)
+                // will require a INNER JOIN here, replacing the select call
                 $AllVisibleArticles = $NewConnection->select("article", "*", '`article`.`sous_categorie` <> "brouillon"');
                 foreach($AllVisibleArticles as $display)
                 {    

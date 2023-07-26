@@ -26,6 +26,12 @@ header #Blazon {
     margin-top: 1em;
 }
 
+@media (max-width:900px) {
+    header #Blazon {
+        scale: 2;
+    }
+}
+
 header nav {
     margin-top: 1em;
     margin-bottom: 2em;
@@ -52,7 +58,7 @@ header #SiteHead > a {
         scale: 1.25;
 
         /* to give the login button some pressability on mobile view */
-        width: 70%;
+        width: 50%;
         margin: auto;
     }
 }
@@ -473,10 +479,21 @@ button.update-edit {
 .login-box {
     /* max-width: 400px; */
     margin: 0 auto;
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 1em 0 1em 0;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-box > * {
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+.login-box .logo {
+    width: 90%;
+    margin: auto;
 }
 
 .login-box h1 {
