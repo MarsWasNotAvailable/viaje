@@ -8,74 +8,18 @@
     $DatabaseName = "viaje";
 
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
-
-    $AllVisibleArticles = $NewConnection->select("article", "*", '`article`.`sous_categorie` <> "brouillon"');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje</title>
+    <title>Viaje: Welcome</title>
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
-<style>
-
-/*style du texte de presentation de la catégorie*/
-    .titre{
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 34px;
-        margin-bottom: 1.5%;
-    }
-
-    .entete{
-        padding: 0 3.5%;
-    }
-
-    .entete h2 {
-        color:#D66D40;
-        font-size: 28px;
-        margin-bottom: 1.5%;
-    }
-
-    .presentation{
-        margin-bottom: 1.6%;
-    }
-
-    .date{
-        color: #6B6B6B;
-        font-size: 13px;
-        margin-top: 1%;
-    }
-
-    .resume{
-        line-height: 1.5;
-        font-size: 15px;
-        margin-top: 5%;
-
-    }
-
-    /* version mobile */
-    @media (max-width: 900px) {
-
-        .titre{
-            font-size: 28px;
-        }
-
-        .entete h2{
-            font-size: 24px;
-        }
-
-        .presentation, .resume{
-            font-size: 13px;
-            margin-bottom: 10%;
-        }
-    }
-</style>
 <body>
     <header>
         <?php include_once './components/navbar.php' ?>
@@ -96,23 +40,24 @@
             </p>
         </section>
         
-        <!-- affichage des articles -->
+        <!-- Cette section contient tout les articles -->
         <section class="card-container">
             <?php
-            foreach($AllVisibleArticles as $display){
-                
-                echo
-                '<div class="card">
-                    <div>
-                        <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="card-image" alt="">
-                    </div>
-                    <div class= "card-text">
-                        <a href="article.php?id_article=' . $display['id_article'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
-                        <p class="date">' . $display['date'] . '</p>
-                        <p class="resume">' . $display['resume'] . '</p>
-                    </div>
-                </div>';
-            }
+                $AllVisibleArticles = $NewConnection->select("article", "*", '`article`.`sous_categorie` <> "brouillon"');
+                foreach($AllVisibleArticles as $display)
+                {    
+                    echo
+                    '<div class="card">
+                        <div>
+                            <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="card-image" alt="">
+                        </div>
+                        <div class= "card-text">
+                            <a href="article.php?id_article=' . $display['id_article'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
+                            <p class="date">' . $display['date'] . '</p>
+                            <p class="resume">' . $display['resume'] . '</p>
+                        </div>
+                    </div>';
+                }
             ?>
         </section> 
     </main>

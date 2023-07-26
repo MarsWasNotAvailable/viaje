@@ -7,7 +7,6 @@
 
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
-
 ?>
 
 <!DOCTYPE html>

@@ -31,6 +31,12 @@ header nav {
     margin-bottom: 2em;
 }
 
+
+.fa-bars::before, .fa-navicon::before, .fa-magnifying-glass::before, .fa-search::before {
+    color: white;
+}
+
+
 header #SiteHead {
     display: inline-flex;
     text-align: center;
@@ -78,6 +84,10 @@ main article {
     background-color: white;
 }
 
+.wide-chunks {
+    background-color: #fff;
+    margin: 5% 10%;
+}
 
 .chunks {
     width: 60%;
@@ -343,6 +353,175 @@ button.update-edit {
 }
 
 
-.fa-bars::before, .fa-navicon::before, .fa-magnifying-glass::before, .fa-search::before {
-    color: white;
+
+
+/*  */
+
+.titre{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 34px;
+    margin-bottom: 1.5%;
+}
+
+.entete {
+    padding: 0 3.5%;
+}
+
+.entete h2 {
+    color:#D66D40;
+    font-size: 28px;
+    margin-bottom: 1.5%;
+}
+
+.presentation{
+    margin-bottom: 1.6%;
+}
+
+.date {
+    color: #6B6B6B;
+    font-size: 13px;
+    margin-top: 1%;
+}
+
+.resume{
+    line-height: 1.5;
+    font-size: 15px;
+    margin-top: 5%;
+}
+
+.searched {
+    color:#D66D40;
+    font-size: 28px;
+    margin-bottom: 1.5%;
+    margin-left: 3.5%;
+}
+
+.display-result {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 1% 0 ;
+}
+
+/* version mobile */
+@media (max-width: 900px) {
+
+    .titre{
+        font-size: 28px;
+    }
+
+    .entete h2{
+        font-size: 24px;
+    }
+
+    .presentation, .resume{
+        font-size: 13px;
+        margin-bottom: 10%;
+    }
+
+    .presentation{
+        line-height: 2em;
+    }
+
+    .searched{
+        font-size: 24px;
+    }
+
+    .display-result {
+        display: grid;
+        justify-items: center;
+    }
+}
+
+
+/* le style du formulaire de contact */
+.contact-form, .input-field {
+    display: grid;
+}
+
+.contact-form input {
+    width: 30%;
+    height: 3em;
+    border: solid 1px #D9D9D9;
+    margin:1% 0 1.5%;
+}
+
+.contact-form textarea {
+    border: solid 1px #D9D9D9;
+    margin:1% 0 1.5%;
+}
+
+.submit {
+    width: 25%;
+    border: solid 1px #ffff;
+    margin: 1% 0;
+}
+
+/* version mobile */
+@media (max-width: 900px) {
+
+    .contact-form input, .submit{
+        width: 60%;
+    }
+}
+
+
+
+/* Signin page */
+
+.login-box {
+    /* max-width: 400px; */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h1 {
+    color: #1c69a5;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.login-box .input-group {
+    margin-bottom: 15px;
+}
+
+.login-box .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-box .input-group input {
+    width: 94%;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.login-box .input-group input[type="submit"] {
+    width: 100%;
+    /* border: none; */
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.login-box .input-group input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.login-box .social-login {
+    margin-top: 2em;
+}
+
+.login-box .social-login a {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #007bff;
 }

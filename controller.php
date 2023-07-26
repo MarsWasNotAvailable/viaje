@@ -250,18 +250,9 @@
                     $CurrentCategorySub = $NewConnection->select('article', 'sous_categorie', $Condition);
                     $CurrentCategorySub = $CurrentCategorySub ? $CurrentCategorySub[0]['sous_categorie'] : '';
 
-                    // $Category = strtolower($_POST['CategorySub']);
-
-                    //TODO: there's issue if you do two edits, without reloading the page
-
-                    
-                    // if ( $_POST['sous_categorie'] != $Category )
-                    // if ( $CurrentCategorySub != $Category )
-                    if (isset($_POST['sous_categorie']) /* && $CurrentCategorySub */)
+                    if (isset($_POST['sous_categorie']) )
                     {
                         $NewCategorySub = strtolower($_POST['sous_categorie']);
-                        // $CurrentCategorySub = $CurrentCategorySub[0]['sous_categorie'];
-                        // var_dump($CurrentCategorySub);
 
                         if ($NewCategorySub != $CurrentCategorySub)
                         {
@@ -270,19 +261,15 @@
                             $Source = './images/' . $CurrentCategorySub;
                             $Destination = './images/' . $NewCategorySub;
 
-                            // var_dump($Source);
-                            // var_dump($Destination);
                             CopyFolder($Source, $Destination);
     
                             //TODO: I'm wondering: could there be two articles storing in same folder (sub-category)
                             //technically no, but there's those articles that have bad subcategory, like China instead of a city Beijing
-                            // DeleteFolder($Source);
-    
+
                             //if the rest of the code uses the sub categorie to point to folder we got nothing else to do,
                             //except delete source folder
-                            // $Values = array('sous-' => $_POST[$EachValue]);
-                            // $Condition = array('id_commentaire' => $_POST['id_commentaire']);
-                            // $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
+                            //TODO: I'm not yet confident to uncomment that, but the function works
+                            // DeleteFolder($Source);
                         }
                     }
 
@@ -291,8 +278,6 @@
                         // var_dump($_FILES);
                         // var_dump($_POST);
 
-                        // $Category = strtolower($_POST['Category']);
-                        
                         $CategoryFolderName = './images/' . $CurrentCategorySub;
                         $CurrentCategorySubFolder = $CurrentCategorySub ? $CurrentCategorySub . '/' : '';
 

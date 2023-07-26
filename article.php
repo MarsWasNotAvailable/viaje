@@ -307,6 +307,8 @@
         .concat(document.querySelector("#Categorie"))
         .forEach(Each => {
 
+            if (!Each) return;
+
             async function SendUpdateArticleField (Event) {
 
                 let url = "./controller.php";

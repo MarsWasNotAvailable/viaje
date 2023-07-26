@@ -11,8 +11,6 @@
 
     $SelectedCategorie = $NewConnection->select("categorie", "*", "id_categorie = $CurrentCategorieID");
 
-    $Result = $NewConnection->select_article($CurrentCategorieID);
-
     // var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
@@ -34,93 +32,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<style>
-
-/*style du texte de presentation de la catégorie*/
-    .titre{
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 34px;
-        margin-bottom: 1.5%;
-    }
-
-    .entete{
-        padding: 0 3.5%;
-    }
-
-    .presentation{
-        margin-bottom: 1.6%;
-    }
-    /*style de la section contenant les categories*/
-    .affichagecategories{
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding: 1% 0 ;
-    }
-
-    .card {
-        display: grid;
-        justify-items: center;
-        width: 29%;
-        background-color: #fff;
-        margin-left: 3.5%;
-        margin-bottom: 3%;
-    }
-
-    .cardImage{
-        width: 100%;
-    }
-
-    .cardText{
-        padding: 4%;
-        height: 15em;
-        overflow: hidden;
-    }
-
-    .cardTitle{
-        color: #000;
-        font-size: 20px;
-        text-decoration: none;
-    }
-
-    .date{
-        color: #6B6B6B;
-        font-size: 13px;
-        margin-top: 1%;
-    }
-
-    .resume{
-        line-height: 1.5;
-        font-size: 15px;
-        margin-top: 5%;
-
-    }
-
-    /* version mobile */
-    @media (max-width: 900px) {
-
-        .titre{
-            font-size: 28px;
-        }
-
-        .presentation, .resume{
-            font-size: 13px;
-            margin-bottom: 10%;
-        }
-
-        .affichagecategories{
-            display: grid;
-            justify-items: center;
-        }
-
-        .card{
-            width: 97%;
-            margin: 3% 0;
-        }
-
-    }
-</style>
 <body>
     <header>
         <?php include_once './components/navbar.php' ?>
@@ -130,30 +41,29 @@
         <!-- entête de la page avec l'introduction de la section -->
         <section class="entete">
         <?php
-            foreach($SelectedCategorie as $value){
-                
+            foreach($SelectedCategorie as $value)
+            {    
                 echo 
-                '<h1 class="titre">' .$value['titre'] . '</h1>
-            <p class="presentation">'
-                .$value['description'].
-            '</p>';
-
+                '<h1 class="titre">' . $value['titre'] . '</h1>
+                <p class="presentation">' . $value['description'] . '</p>'
+                ;
             }
             ?>
         </section>
         
         <!-- affichage des categories -->
-        <section class="affichagecategories">
+        <section class="display-result">
             <?php
+            $Result = $NewConnection->select_article($CurrentCategorieID);
             foreach($Result as $display){
                 
                 echo 
                 '<div class="card">
                     <div>
-                        <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="cardImage" alt="">
+                        <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="card-image" alt="Image principale">
                     </div>
-                    <div class= "cardText">
-                        <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>
+                    <div class= "card-text">
+                        <a href="article.php?id_article=' . $display['id_article'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
                         <p class="date">' . $display['date'] . '</p>
                         <p class="resume">' . $display['resume'] . '</p>
                     </div>
