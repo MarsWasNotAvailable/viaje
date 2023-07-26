@@ -17,42 +17,13 @@
         $ArticleTableName = "article";
         $Redirection = "index.php";
         $ArticlePageRedirection = './article.php';
+        $NotAllowedRedirection = './index.php';
 
         $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
         if (isset($_POST['Intention']))
         {
             switch ($_POST['Intention']) {
-                case 'AddComment':
-                    $Values = array(
-                        'nom' => $_POST['nom'],
-                        'email' => $_POST['email'],
-                        'mot_de_passe' => bin2hex(openssl_random_pseudo_bytes(4)),
-                        'role' => 'guest'
-                    );
-
-                    // $Success = $NewConnection->insert($UsersTableName, $Values);
-                    $UserID = $NewConnection->insert($UsersTableName, $Values);
-
-                    // var_dump($UserID);
-
-                    $Comments = array(
-                        'contenu' => $_POST['contenu'],
-                        'id_article' => $_POST['id_article'],
-                        'id_utilisateur' => $UserID
-                    );
-
-                    $CommentsID = $NewConnection->insert($CommentsTableName, $Comments);
-
-                    // var_dump($CommentsID);
-
-                    if ($UserID && $CommentsID)
-                    {
-                        header("Location: " . 'article.php' . "?id_article=" . $_POST['id_article']);
-                        die();
-                    }
-
-                    break;
 
                 case 'Signup':
                     $Values = array(
@@ -86,7 +57,8 @@
                     session_start();
 
                     if ($UniqueUser) {
-                        $_SESSION['CurrentUser'] = $UniqueUser[0]['nom'];
+                        $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
+                        $_SESSION['CurrentUserName'] = $UniqueUser[0]['nom'];
                         $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                         $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
@@ -128,24 +100,30 @@
                     break;
 
                 case 'AddArticle':
+                    $Condition = '(`nom` = "Brouillon")';
+                    $CategoryID = $NewConnection->select('categorie', "id_categorie", $Condition);
+                    $CategoryID = $CategoryID ? $CategoryID[0]['id_categorie'] : '1';
+                    // var_dump($CategoryID);
+
                     $ArticleID = $NewConnection->insert( 'article', array(
                         'titre' => 'Sans titre',
                         'date' => '2000-01-01',
-                        'photo_principale' => './images/icons_plus.png',
+                        'photo_principale' => '',
                         'resume' => 'Ajouter un résumé ici.',
         
                         'sous_titre_1' => 'Ajouter un premier sous titre ici',
                         'contenu_1' => 'Ajouter un premier paragraphe ici',
-                        'photo_1' => './images/icons_plus.png',
+                        'photo_1' => '',
         
                         'sous_titre_2' => 'Ajouter un deuxieme sous titre ici',
                         'contenu_2' => 'Ajouter un deuxieme paragraphe ici',
-                        'photo_2' => './images/icons_plus.png',
+                        'photo_2' => '',
         
                         'sous_titre_3' => 'Ajouter un troisieme sous titre ici',
                         'contenu_3' => 'Ajouter un troisieme paragraphe ici',
-                        'photo_3' => './images/icons_plus.png',
-                        'categorie' => 1
+                        'photo_3' => '',
+                        'categorie' => $CategoryID,
+                        'sous_categorie' => 'brouillon'
                     ));
             
                     if ($ArticleID)
@@ -167,54 +145,163 @@
                     }
                     break;
 
-                case 'UpdateComment':
-                    $Values = array();
-                    
-                    $FieldsToUpdate = array('contenu');
-                    foreach ($FieldsToUpdate as $EachKey => $EachValue){
-                        if ($_POST[$EachValue]) $Values += array($EachValue => $_POST[$EachValue]);
-                    }
+                case 'AddComment':
 
-                    // var_dump($Values);
+                    session_start();
+                    // var_dump($_POST);
 
-                    $Condition = array('id_commentaire' => $_POST['id_commentaire']);
+                    $Values = array(
+                        'nom' => $_POST['nom'],
+                        'email' => $_POST['email'],
+                        'mot_de_passe' => bin2hex(openssl_random_pseudo_bytes(4)),
+                        'role' => 'guest'
+                    );
 
-                    $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
+                    // $Condition = '(`email` = "' . $Values['email'] . '")';
+                    // $UniqueUser = $NewConnection->select($UsersTableName, "id_utilisateur", $Condition);
+                    // $UserID = ($UniqueUser) ? $UniqueUser[0]['id_utilisateur'] : $NewConnection->insert($UsersTableName, $Values);
 
-                    if ($Success) {
-                        header("Location: " . $ArticlePageRedirection . '?edit=true#Commentaires');
+                    $UserID = $NewConnection->insert_update($UsersTableName, $Values, array('Key' => 'nom', 'Value' => $Values['nom']));
+                    // var_dump($UserID);
+
+                    $Comments = array(
+                        'contenu' => $_POST['contenu'],
+                        'id_article' => $_POST['id_article'],
+                        'id_utilisateur' => $UserID
+                    );
+
+                    var_dump($Comments);
+
+                    $CommentsID = $NewConnection->insert($CommentsTableName, $Comments);
+                    var_dump($CommentsID);
+
+                    if ($UserID && $CommentsID)
+                    {
+                        require_once('./components/commons.php');
+
+                        $CanEditToken = CanEditComments($_SESSION['UserRole']) ? 'edit=true&' : '&';
+                        // header("Location: " . 'article.php' . "?id_article=" . $_POST['id_article']);
+                        header("Location: " . $ArticlePageRedirection . '?' . $CanEditToken . 'id_article=' . $_POST['id_article'] . '#Commentaires');
                         die();
                     }
+
+                    break;
+
+                case 'UpdateComment':
+                    require_once('./components/commons.php');
+                    session_start();
+
+                    if (CanEditComments($_SESSION['UserRole']))
+                    {
+                        $Values = array();
+                    
+                        $FieldsToUpdate = array('contenu');
+                        foreach ($FieldsToUpdate as $EachKey => $EachValue){
+                            if ($_POST[$EachValue]) $Values += array($EachValue => $_POST[$EachValue]);
+                        }
+                        // var_dump($Values);
+    
+                        $Condition = array('id_commentaire' => $_POST['id_commentaire']);
+    
+                        $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
+    
+                        if ($Success) {
+                            // header("Location: " . $ArticlePageRedirection . '?edit=true#Commentaires');
+                            header("Location: " . $ArticlePageRedirection . '?edit=true&id_article=' . $_POST['id_article'] . '#Commentaires');
+                            die();
+                        }
+                    }
+                    else
+                    {
+                        header("Location: " . $NotAllowedRedirection . '?edit=failed&id_article=' . $_POST['id_article'] . '#Commentaires');
+                        die();
+                    }
+
                     break;
 
                 case 'DeleteComment':
-                    $UpdateFieldCondition = array('id_commentaire' => $_POST['id_commentaire']);
+                    require_once('./components/commons.php');
+                    session_start();
 
-                    $Success = $NewConnection->delete($CommentsTableName, $UpdateFieldCondition);
+                    if (CanEditComments($_SESSION['UserRole']))
+                    {
+                        $UpdateFieldCondition = array('id_commentaire' => $_POST['id_commentaire']);
 
-                    if ($Success) {
-                        header("Location: " . $ArticlePageRedirection);
+                        $Success = $NewConnection->delete($CommentsTableName, $UpdateFieldCondition);
+    
+                        if ($Success) {
+                            header("Location: " . $ArticlePageRedirection . '?edit=true&id_article=' . $_POST['id_article'] . '#Commentaires');
+                            die();
+                        }
+                    }
+                    else
+                    {
+                        header("Location: " . $NotAllowedRedirection . '?edit=failed&id_article=' . $_POST['id_article'] . '#Commentaires');
                         die();
                     }
+
                     break;
 
                 case 'UploadImage':
                 case 'UpdateArticleField':
 
-                    if (isset($_FILES) && $_FILES)
-                    {
-                        var_dump($_FILES);
-                        var_dump($_POST);
+                    //'id_article' => $_POST['id_article']
+                    $Condition = '(`id_article` = "' . $_POST['id_article'] . '")';
+                    $CurrentCategorySub = $NewConnection->select('article', 'sous_categorie', $Condition);
+                    $CurrentCategorySub = $CurrentCategorySub ? $CurrentCategorySub[0]['sous_categorie'] : '';
 
-                        $Category = strtolower($_POST['Category']);
-                        $CategoryFolderName = './images/' . $Category;
+                    // $Category = strtolower($_POST['CategorySub']);
+
+                    //TODO: there's issue if you do two edits, without reloading the page
+
+                    
+                    // if ( $_POST['sous_categorie'] != $Category )
+                    // if ( $CurrentCategorySub != $Category )
+                    if (isset($_POST['sous_categorie']) /* && $CurrentCategorySub */)
+                    {
+                        $NewCategorySub = strtolower($_POST['sous_categorie']);
+                        // $CurrentCategorySub = $CurrentCategorySub[0]['sous_categorie'];
+                        // var_dump($CurrentCategorySub);
+
+                        if ($NewCategorySub != $CurrentCategorySub)
+                        {
+                            require_once('./components/commons.php');
+
+                            $Source = './images/' . $CurrentCategorySub;
+                            $Destination = './images/' . $NewCategorySub;
+
+                            // var_dump($Source);
+                            // var_dump($Destination);
+                            CopyFolder($Source, $Destination);
+    
+                            //TODO: I'm wondering: could there be two articles storing in same folder (sub-category)
+                            //technically no, but there's those articles that have bad subcategory, like China instead of a city Beijing
+                            // DeleteFolder($Source);
+    
+                            //if the rest of the code uses the sub categorie to point to folder we got nothing else to do,
+                            //except delete source folder
+                            // $Values = array('sous-' => $_POST[$EachValue]);
+                            // $Condition = array('id_commentaire' => $_POST['id_commentaire']);
+                            // $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
+                        }
+                    }
+
+                    else if (isset($_FILES) && $_FILES)
+                    {
+                        // var_dump($_FILES);
+                        // var_dump($_POST);
+
+                        // $Category = strtolower($_POST['Category']);
+                        
+                        $CategoryFolderName = './images/' . $CurrentCategorySub;
+                        $CurrentCategorySubFolder = $CurrentCategorySub ? $CurrentCategorySub . '/' : '';
 
                         $LocalTempName = $_FILES[$_POST['Column']]['tmp_name'];
                         // $ProjectDirectory = realpath(dirname(getcwd()));
                         // $DestinationName = $ProjectDirectory . "/viaje/images/" . strtolower($_POST['Category']) . '/' . $_FILES[$_POST['Column']]['name'] ;
-                        $DestinationName = './images/' . $Category . '/' . $_FILES[$_POST['Column']]['name'] ;
-                        var_dump($LocalTempName);
-                        var_dump($DestinationName);
+                        $DestinationName = './images/' . $CurrentCategorySubFolder . $_FILES[$_POST['Column']]['name'] ;
+                        // var_dump($LocalTempName);
+                        // var_dump($DestinationName);
 
                         if ((file_exists( $CategoryFolderName ) && is_dir( $CategoryFolderName )) || mkdir($CategoryFolderName))
                         {
@@ -235,12 +322,7 @@
 
                     $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
 
-                    // echo $_POST['Value'];
-
-                    // if ($Success) {
-                    //     // header("Location: " . $ArticlePageRedirection);
-                        die();
-                    // }
+                    die();
                     break;
                 
                 default:

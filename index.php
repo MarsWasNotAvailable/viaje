@@ -1,15 +1,15 @@
 <?php
     // session_start();
-    
-    require_once("components/connexion.php");
+    // var_dump($_SESSION);
+
+    require_once("./components/connexion.php");
+    require_once('./components/commons.php');
 
     $DatabaseName = "viaje";
 
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
 
-    $Result = $NewConnection->select("article", "*");
-
-    // var_dump($_SESSION);
+    $AllVisibleArticles = $NewConnection->select("article", "*", '`article`.`sous_categorie` <> "brouillon"');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,12 +99,12 @@
         <!-- affichage des articles -->
         <section class="card-container">
             <?php
-            foreach($Result as $display){
+            foreach($AllVisibleArticles as $display){
                 
-                echo 
+                echo
                 '<div class="card">
                     <div>
-                        <img src="' .$display['photo_principale']. '" class="card-image" alt="">
+                        <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="card-image" alt="">
                     </div>
                     <div class= "card-text">
                         <a href="article.php?id_article=' . $display['id_article'] . '" class="card-title"><h3>' . $display['titre'] . '</h3></a>
@@ -114,7 +114,7 @@
                 </div>';
             }
             ?>
-        </section>        
+        </section> 
     </main>
  
 <footer>

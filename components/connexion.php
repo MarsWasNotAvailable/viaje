@@ -35,7 +35,9 @@
             try {
                 // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
                 //TODO: that $ConditionField is extremely dangerous, but yet we want the power
-                $SQLQueryString = "SELECT $Column FROM $Table WHERE $ConditionField";
+                //NOTE: we cannot wrap Column in `` because it could be a regex like '*'
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+                // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
                 // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
 
                 $Result = $this->Connection->query($SQLQueryString);
@@ -84,6 +86,7 @@
                 foreach ($Values as $EachColumn => $EachValue) {
                     // echo "$EachColumn => $EachValue";
                     $KeyAsString .= "`$EachColumn`, ";
+                    // var_dump($EachValue);
                     $ValueAsString .= ($this->Connection->quote($EachValue) . ", ");
                 }
                 $KeyAsString = rtrim($KeyAsString, ', ');
@@ -96,6 +99,45 @@
                 $Result = $this->Connection->query($SQLQueryString);
                 // return true;
 
+                return $this->Connection->lastInsertId();
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        /** INSERT ON DUPLICATE UPDATE version */
+        public function insert_update($Table, $Values, $UpdateField)
+        {
+            try {
+                $UpdateKey = $UpdateField['Key'];
+                $UpdateValue = $UpdateField['Value'];
+
+
+                $ValueAsString = "";
+                $KeyAsString = "";
+
+                foreach ($Values as $EachColumn => $EachValue) {
+                    // echo "$EachColumn => $EachValue";
+                    $KeyAsString .= "`$EachColumn`, ";
+                    $ValueAsString .= ($this->Connection->quote($EachValue) . ", ");
+                }
+                $KeyAsString = rtrim($KeyAsString, ', ');
+                $ValueAsString = rtrim($ValueAsString, ', ');
+
+                /* $SQLQueryString = "INSERT IGNORE INTO $Table (<?>) VALUES (<!>)"; */
+                $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>) ON DUPLICATE KEY UPDATE `id_utilisateur` = LAST_INSERT_ID(`id_utilisateur`), `$UpdateKey` = '$UpdateValue'";
+                $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
+
+                var_dump($SQLQueryString);
+
+                $Result = $this->Connection->query($SQLQueryString);
+                // var_dump($Result);
+                // return true;
+
+                // TODO: We need to find a way to return the id in case of a failed update:
                 return $this->Connection->lastInsertId();
 
             } catch (PDOException $e) {
@@ -174,7 +216,7 @@
         public function select_article($ConditionField)
         {
             try {
-                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
+                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`,`article`.`sous_categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
                 FROM `article`
                 INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
                 WHERE `article`.`categorie` = $ConditionField ;
@@ -186,6 +228,21 @@
                 $Result = $this->Connection->query($SQLQueryString);
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        public function execute_file($ConditionField)
+        {
+            try {
+                $ScriptCreateDatabase = file_get_contents('./viaje.sql');
+                $Statement = $this->Connection->prepare($ScriptCreateDatabase);
+
+                return $Statement->execute();
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();

@@ -10,6 +10,7 @@
     }
 
     require_once("./components/connexion.php");
+    require_once('./components/commons.php');
 
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
@@ -56,7 +57,7 @@
                     echo '<form action="controller.php" method="post" class="card gestion">';
                     echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">';
                     echo '<button name="Intention" value="DeleteArticle" type="submit" class="floating"></button>';
-                    echo '<div class="card-image-container"><img src="' . $Value['photo_principale'] . '" alt="Article picture"></div>';
+                    echo '<div class="card-image-container"><img src="' . GetImagePath( $Value['photo_principale'], $Value['sous_categorie'] )  . '" alt="Article picture"></div>';
                     echo '<div class="card-text"><h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
                     echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</a></div>';

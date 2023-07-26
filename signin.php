@@ -7,29 +7,6 @@
 
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
-
-    // if ($_SERVER["REQUEST_METHOD"] === "POST"){
-    //     $UsersTableName = 'utilisateur';
-    //     $userName = $_POST['username'];
-    //     $email = $_POST['email'];
-    //     $mdp = $_POST['mot_de_passe'];
-
-    //     $selectUser = $NewConnection->select($UsersTableName, 'email', "email ='$email'");
-
-
-    //     if(!empty($selectUser)){
-
-    //         echo '<a href="login.php">Cette adresse email est déja utilisée, connectez-vous ici ! </a>';
-
-    //     }else{    
-    //         $Values = array(
-    //             'nom'=>$userName,
-    //             'email'=>$email,
-    //             'mot_de_passe'=>$mdp,
-    //             'role'=>'guest'
-    //         );
-    //         $NewConnection->insert($UsersTableName, $Values);
-    // }}
 ?>
 
 <!DOCTYPE html>

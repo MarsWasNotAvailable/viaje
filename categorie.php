@@ -150,7 +150,7 @@
                 echo 
                 '<div class="card">
                     <div>
-                        <img src="' .$display['photo_principale']. '" class="cardImage" alt="">
+                        <img src="' . GetImagePath( $display['photo_principale'], $display['sous_categorie'] ) . '" class="cardImage" alt="">
                     </div>
                     <div class= "cardText">
                         <a href="article.php?id_article=' . $display['id_article'] . '" class="cardTitle"><h3>' . $display['titre'] . '</h3></a>

@@ -343,3 +343,6 @@ button.update-edit {
 }
 
 
+.fa-bars::before, .fa-navicon::before, .fa-magnifying-glass::before, .fa-search::before {
+    color: white;
+}
