@@ -35,7 +35,10 @@
 
     <!-- <main class="chunks"> -->
     <main >
-        <h3>Tout les articles</h3>
+        <section class="entete">
+            <h1 class="titre">Tout les articles</h1>
+        </section>
+
         <section id="ArticlesViewerBox" class="card-container">
             <form action="controller.php" method="post" class="card gestion">
                 <input type="hidden" name="id_article" value="' . $Value['id_article'] . '">
@@ -61,7 +64,6 @@
                     echo '<div class="card-text"><h5>' . $Value['titre'] . '</h5>';
                     // echo '<button name="Intention" value="UpdateArticle" type="button">Modifier</button>';
                     echo '<a href="' . $ArticlePageRedirectionWithParameters . '" >Modifier</a></div>';
-
                     echo '</form>';
                 }
             ?>

@@ -65,7 +65,7 @@
                     <textarea name="message" id="message" cols="30" rows="10"></textarea>
                 </div>
                 <div class="input-field submit">
-                    <input type="submit" value="Envoyer">
+                    <input class="green-button" type="submit" value="Envoyer">
                 </div>
             </form>
         </section>    

@@ -9,6 +9,7 @@
     }
 
     $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
+    $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
 ?>
 
 <!-- Because this link element is set as rel stylesheet, it is body-ok
@@ -30,7 +31,6 @@
 
     .navbar {
         background-color: #333;
-        /* margin-top: 20px; */
 
         padding-top: 1em;
         padding-right: 3em;
@@ -40,10 +40,6 @@
         position: relative;
         z-index: 2;
     }
-
-    /* #myTopnav > * {
-        margin-right: 7%;
-    } */
 
     .navbar a {
         color: white;
@@ -115,16 +111,6 @@
         display: none;
     }
 
-    /* body {
-        background-color: #F0EAD6;
-        margin: 0;
-    } */
-
-    /* Ajuster la valeur pour decaler le texte a droite ou gauche */
-    /* section {
-        padding-left: 15%;
-        padding-right: 15%;
-    } */
     @media (max-width:1023px) {
 
         .navbar {
@@ -193,8 +179,6 @@
     </div>
 </div>
 
-
-
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
         <div class="dropdown">
@@ -203,8 +187,8 @@
 
         <div class="dropdown">
             <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Pratique'");
-           foreach ($Nav as $display) {
-                echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                foreach ($Nav as $display) {
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
                 }
             ?>
         </div>
@@ -213,9 +197,9 @@
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Amérique'");
                 foreach ($Nav as $display) {
-                        echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
-                        }
-                    ?>
+                    echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
+                    }
+                ?>
             </div>
         </div>
         <div class="dropdown">
@@ -265,7 +249,7 @@
             </div>
         </div>
 
-        <?php if($IsUserLoggedIn && (isset($_SESSION['UserRole']) && $_SESSION['UserRole'] == 'admin')): ?>
+        <?php if($IsUserLoggedIn && $CanEditArticles): ?>
             <div class="dropdown">
                 <a href="./gestion.php">GESTION</a>
             </div>
@@ -305,3 +289,32 @@
         }
     }
 </script> 
+
+<?php    
+/* TODO: Can you auto generate those section based on the categorie table
+* I dont like the multiple selects
+* UD: well, it will require a change on the database about categories and sub categories
+    because we want to list unique continent at top level, and countries as sub level
+* I tried: GROUP BY, didn't work
+*/
+
+    // $AllCategories = $NewConnection->select("categorie", "*", '(`nom` <> "Brouillon" AND `nom` <> "Pratique")');
+    
+    // foreach ($AllCategories as $Each) {
+    //     $HasDropDownContent = !($Each['continent'] == '' || $Each['continent'] == 'NA' || $Each['continent'] == 'Pratique');
+
+    //     echo '<div class="dropdown">';
+    //     if ($HasDropDownContent)
+    //     {
+    //         echo '<a href="#">' . $Each['continent'] . '</a>';
+    //         echo '<div class="dropdown-content">';
+    //         echo '<a href="categorie.php?id_categorie='. $Each['id_categorie'] . '">' .$Each['nom'] . '</a>';
+    //         echo '</div>';
+    //     }
+    //     else
+    //     {
+    //         echo '<a href="categorie.php?id_categorie='. $Each['id_categorie'] . '">' .$Each['nom'] . '</a>';
+    //     }
+    //     echo '</div>';
+    // }
+?>

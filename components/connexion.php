@@ -35,32 +35,119 @@
             // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
             // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
             try {
-                // TODO: that $ConditionField is extremely dangerous, but yet we needed the power while prototyping
-                // I think below can give us more control on the condition field
+                // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
+                // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+
+                $Result = $this->Connection->query($SQLQueryString);
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        /** Original select was having a entry point at the WHERE clause
+         * I think below can give us more control on the condition field
+         * ConditionField expects a multidimentional array containing an operations and a pair of operands
+         */
+        public function select_safe($Table, $Column, $ConditionField = 1)
+        {
+            try {
                 // $ConditionField = array(
                 //     array("=" => array("id_article" => "1")),
                 //     array("<>" => array("sous_categorie" => "not_that_one")),
                 //     array("LIKE" => array("content" => "%keyword%"))
                 // );
 
-                // // What a terrible language: so much words for such a simple thing
-                // $ConditionAsString = "";
-                // foreach ($ConditionField as $Index => $EachConditionsPair) {
-                //     foreach ($EachConditionsPair as $EachOperation => $EachPair) {
-                //         foreach($EachPair as $EachKey => $EachValue) {
-                //             $ConditionAsString .= "(`$Table`.`" . $EachKey . '` ' . $EachOperation . ' "' . $EachValue . '") AND ';
-                //              break; //there should only be one pair per operations
-                //         }
-                //     }
-                // }
-                // $ConditionAsString = rtrim($ConditionAsString, ' AND ');
-                // // var_dump($ConditionAsString);
-                // $ConditionField = $ConditionAsString;
+                // What a terrible language: so much words for such a simple thing
+                $ConditionAsString = "";
+                foreach ($ConditionField as $Index => $EachConditionsPair) {
+                    foreach ($EachConditionsPair as $EachOperation => $EachPair) {
+                        foreach($EachPair as $EachKey => $EachValue) {
+                            $ConditionAsString .= "(`$Table`.`" . $EachKey . '` ' . $EachOperation . ' "' . $EachValue . '") AND ';
+                             break; //there should only be one pair per operations
+                        }
+                    }
+                }
+                $ConditionField = rtrim($ConditionAsString, ' AND ');
+                var_dump($ConditionField);
 
-                
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-                // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
+                $Column = (preg_match($Column, null) === false) ? ('`' . $Column . '`') : $Column;
                 $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+
+                $Result = $this->Connection->query($SQLQueryString);
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        public function select_full_article_all($Condition = 1)
+        {
+            try {
+                $SQLQueryString = "SELECT *
+                FROM `article`
+                INNER JOIN `categorie` ON `article`.`categorie` = `categorie`.`id_categorie`
+                WHERE $Condition ;
+                ";
+
+                // var_dump($SQLQueryString);
+
+                $Result = $this->Connection->query($SQLQueryString);
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        public function select_full_article($ArticleID)
+        {
+            try {
+                $SQLQueryString = "SELECT *
+                FROM `article`
+                INNER JOIN `categorie` ON `article`.`categorie` = `categorie`.`id_categorie`
+                WHERE `article`.`id_article` = '$ArticleID' ;
+                ";
+
+                // var_dump($SQLQueryString);
+
+                $Result = $this->Connection->query($SQLQueryString);
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        //TODO: update the name on database, so we can include more of categorie's fields without conflict
+        /**Returns an associative array of the results, or false on error */
+        public function select_article($ConditionField)
+        {
+            try {
+                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`,`article`.`sous_categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`, `categorie`.`nom`
+                FROM `article`
+                INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
+                WHERE `article`.`categorie` = $ConditionField ;
+                ";
+
+
+                // var_dump($SQLQueryString);
 
                 $Result = $this->Connection->query($SQLQueryString);
 
@@ -225,30 +312,6 @@
                 $query->execute();
 
                 return true;
-
-            } catch (PDOException $e) {
-                echo "Erreur: " . $e->getMessage();
-
-                return false;
-            }
-        }
-
-                /**Returns an associative array of the results, or false on error */
-        public function select_article($ConditionField)
-        {
-            try {
-                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`,`article`.`sous_categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`
-                FROM `article`
-                INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
-                WHERE `article`.`categorie` = $ConditionField ;
-                ";
-
-
-                // var_dump($SQLQueryString);
-
-                $Result = $this->Connection->query($SQLQueryString);
-
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();

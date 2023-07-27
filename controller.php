@@ -46,14 +46,14 @@
                         die();
                     }
 
-                    // we let fall through from signup to login, so it automatically logs in
+                    // NOTE: we let fall through from signup to login, so it automatically logs in
                     // break;
                     
                 case 'Login':
                     $Condition = '(`email` = "' . $_POST['email'] . '" AND `mot_de_passe` = "' . $_POST['mot_de_passe'] . '")';
                     $UniqueUser = $NewConnection->select($UsersTableName, "*", $Condition);
-
                     // var_dump($UniqueUser[0]);
+                    
                     session_start();
 
                     if ($UniqueUser) {
