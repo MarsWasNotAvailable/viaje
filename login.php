@@ -43,7 +43,7 @@
 
         <h5>New here ? Do you want to <a href="./signin.php">signup</a> ?</h5>
 
-        <!-- Ici, le lien Facebook -->
+        <!-- Ici, le lien Facebook + Twiter X -->
         <div class="social-login">
             <a href="https://www.facebook.com/login">Se connecter avec Facebook</a>
             <a href="https://twitter.com/login">Se connecter avec Twitter</a>

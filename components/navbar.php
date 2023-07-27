@@ -87,9 +87,11 @@
         padding: 8px 16px;
     }
 
-    .dropdown-content a:hover {
+    /* enleve le fond gris dans le texte exemple:chine ,japon etcc pour les autres */  
+    /*.dropdown-content a:hover {
         background-color: #f1f1f1;
     }
+    */
 
     #search {
         display: inline-block;
