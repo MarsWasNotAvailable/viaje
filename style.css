@@ -37,12 +37,12 @@ header nav {
     margin-bottom: 2em;
 }
 
-
+/* The navbar icons: hamburger and research */
 .fa-bars::before, .fa-navicon::before, .fa-magnifying-glass::before, .fa-search::before {
     color: white;
 }
 
-
+/* This is the images on top of the nav bar */
 header #SiteHead {
     display: inline-flex;
     text-align: center;
@@ -57,7 +57,7 @@ header #SiteHead > a {
     header #SiteHead > a {
         scale: 1.25;
 
-        /* to give the login button some pressability on mobile view */
+        /* reduce it's size to give the login button some pressability on mobile view */
         width: 50%;
         margin: auto;
     }
@@ -84,7 +84,27 @@ header .ConnexionButtons:hover {
     background-color: #1d6eabb9;
 }
 
+footer div {
+    display: block;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
 
+footer div:first-child {
+    background-color: #000;
+    color: #ebe9ea;
+    line-height: 2em;
+}
+
+footer div:last-child {
+    background-color: grey;
+    text-align: center;
+}
+
+
+/* Presentation canvas */
 
 main article {
     background-color: white;
@@ -131,43 +151,26 @@ article section h2, article section h4 {
     }
 }
 
+
+/* Comments section */
+
 #CommentaireForm {
     display: inline-grid;
 }
 
-#CommentaireForm button {
-    border-radius: 1px;
-    border-color: #000;
-    background-color: #ebe9ea;
+#CommentaireForm button, .green-button {
+    border: 1px solid black;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+
+    padding: 0.4em;
     width: 15em;
 }
 
-footer div {
-    display: block;
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-top: 1.5em;
-    padding-bottom: 1.5em;
-}
 
-footer div:first-child {
-    background-color: #000;
-    color: #ebe9ea;
-    line-height: 2em;
-}
+/* Cartes: utilisé par index, gestion */
 
-footer div:last-child {
-    background-color: grey;
-    text-align: center;
-}
-
-
-
-
-
-/* Cartes: index, gestion */
-
-/*style de la section contenant les articles*/
 .card-container {
     display: flex;
     justify-content: flex-start;
@@ -215,11 +218,9 @@ footer div:last-child {
         width: 97%;
         margin: 3% 0;
     }
-
 }
 
-
-/* Card : Gestion */
+/* Card : Gestion specific */
 
 form.card.gestion button, form.card.gestion a {
     display: block;
@@ -281,9 +282,6 @@ form.card.gestion .card-text {
     height: 100%;
     /* width: 100%; */
     text-align: center;
-    /* justify-items: center;
-    align-content: center;
-    display: grid; */
 
     display: flex;
     flex-direction: column;
@@ -299,7 +297,7 @@ form.card.gestion button, form.card.gestion a {
 }
 
 
-
+/* Edition */
 
 .article-editor {
     padding: 0.5em;
@@ -313,7 +311,6 @@ form.article-editor textarea {
     box-sizing: border-box;
     display: flex;
 }
-
 
 *[contenteditable="true"] {
     padding: 1em;
@@ -332,7 +329,6 @@ form.article-editor textarea {
     outline-color: #d66d40;
 }
 
-
 button.article-editor-button {
     display: block;
     width: 25%;
@@ -345,25 +341,15 @@ button.article-editor-button {
 button.update-edit {
     display: block;
 
-    /* background-color: transparent; */
-    /* width: 100%; */
-    /* position: absolute; */
-    /* top: 5%; */
-    /* right: 7%; */
-    /* float: right; */
-    /* width: 8%; */
-
     background-color: transparent;
     border: 1px solid #000;
     cursor: pointer;
 }
 
 
+/* Presentation des articles et cartes: contact, categorie, index, recherche, secton */
 
-
-/*  */
-
-.titre{
+.titre {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 34px;
@@ -380,7 +366,7 @@ button.update-edit {
     margin-bottom: 1.5%;
 }
 
-.presentation{
+.presentation {
     margin-bottom: 1.6%;
 }
 
@@ -390,7 +376,7 @@ button.update-edit {
     margin-top: 1%;
 }
 
-.resume{
+.resume {
     line-height: 1.5;
     font-size: 15px;
     margin-top: 5%;
@@ -410,27 +396,26 @@ button.update-edit {
     padding: 1% 0 ;
 }
 
-/* version mobile */
 @media (max-width: 900px) {
 
-    .titre{
+    .titre {
         font-size: 28px;
     }
 
-    .entete h2{
+    .entete h2 {
         font-size: 24px;
     }
 
-    .presentation, .resume{
+    .presentation, .resume {
         font-size: 13px;
         margin-bottom: 10%;
     }
 
-    .presentation{
+    .presentation {
         line-height: 2em;
     }
 
-    .searched{
+    .searched {
         font-size: 24px;
     }
 
@@ -464,7 +449,6 @@ button.update-edit {
     margin: 1% 0;
 }
 
-/* version mobile */
 @media (max-width: 900px) {
 
     .contact-form input, .submit{

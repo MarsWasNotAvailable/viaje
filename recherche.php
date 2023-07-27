@@ -39,34 +39,32 @@
             </h2>
         </section>
 
-        <!-- Cette section contient les articles qui correspondent aux mots de la recherche -->
+        <!-- Cette section contient les articles qui correspondent aux mots de la recherche. -->
+        <?php if ($HaveKeywords): ?>
         <section class="display-result">
             <?php
-                // On créer des cartes seulement pour chacun des articles correspondants au mots clé fourni.
-                if ($HaveKeywords)
+                // On créer des cartes pour chaque article correspondant au mots clé fourni.
+                if (!empty($MotsRecherche))
                 {
-                    if (!empty($MotsRecherche))
+                    $ArticlesCorrespondants = $NewConnection->select("article", "*", "`titre` LIKE '%$MotsRecherche%' OR `resume` LIKE '%$MotsRecherche%'");
+                    foreach ($ArticlesCorrespondants as $Each)
                     {
-                        $ArticlesCorrespondants = $NewConnection->select("article", "*", "titre LIKE '%$MotsRecherche%' OR resume LIKE '%$MotsRecherche%'");
-                        foreach ($ArticlesCorrespondants as $Each)
-                        {
-                            echo
-                            '<div class="card">
-                                <div>
-                                    <img src="' . GetImagePath( $Each['photo_principale'], $Each['sous_categorie'] ) . '" class="card-image" alt="">
-                                </div>
-                                <div class= "card-text">
-                                    <a href="categorie.php?id_categorie=' . $Each['categorie'] . '" class="card-title"><h3>' . $Each['titre'] . '</h3></a>
-                                    <p class="date">' . $Each['date'] . '</p>
-                                    <p class="resume">' . $Each['resume'] . '</p>
-                                </div>
-                            </div>';
-                        }
+                        echo
+                        '<div class="card">
+                            <div>
+                                <img src="' . GetImagePath( $Each['photo_principale'], $Each['sous_categorie'] ) . '" class="card-image" alt="">
+                            </div>
+                            <div class= "card-text">
+                                <a href="article.php?id_article=' . $Each['id_article'] . '" class="card-title"><h3>' . $Each['titre'] . '</h3></a>
+                                <p class="date">' . $Each['date'] . '</p>
+                                <p class="resume">' . $Each['resume'] . '</p>
+                            </div>
+                        </div>';
                     }
                 }
             ?>
         </section>
+        <?php endif ?>
     </main>
 </body>
-
 </html>

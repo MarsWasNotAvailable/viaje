@@ -5,17 +5,14 @@
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
-
+    $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 0;
 
     $IsLoggedIn = isset($_SESSION['UserRole']);
     $IsEditingArticle = isset($_GET['edit']) ? $_GET['edit'] && $IsLoggedIn && CanEditArticles($_SESSION['UserRole']) : false;
     $IsEditingComment = isset($_GET['edit']) ? $_GET['edit'] && $IsLoggedIn && CanEditComments($_SESSION['UserRole']) : false;
 
-
     $DatabaseName = "viaje";
     $NewConnection = new MaConnexion($DatabaseName, "root", "", "localhost");
-
-    $CurrentArticleID = isset($_GET['id_article']) ? $_GET['id_article'] : 0;
 
 
     $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
@@ -30,18 +27,21 @@
         $SelectedArticle = array();
     }
     else {
-        $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
+        // $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
+        // foreach ($SelectedArticle as $Key => $Value)
+        // {
+        //     $CurrentArticleCategorie = strtolower( $SelectedCategories[$Value['categorie'] - 1]['nom'] );
+        //     $CurrentArticleCategorieSub = strtolower( $Value['sous_categorie'] );
+        //     break;
+        // }
 
+        $SelectedArticle = $NewConnection->select_full_article($CurrentArticleID);
+        // var_dump($SelectedArticle);
         foreach ($SelectedArticle as $Key => $Value)
         {
-            // $CurrentArticleCategorie = $Value['categorie'];
-            $CurrentArticleCategorie = strtolower( $SelectedCategories[$Value['categorie'] - 1]['nom'] );
-            // var_dump($CurrentArticleCategorie);
-
+            $CurrentArticleCategorie = strtolower( $Value['nom'] );
             $CurrentArticleCategorieSub = strtolower( $Value['sous_categorie'] );
-
-            // var_dump($CurrentArticleCategorieSub);
-
+            break;
         }
     }
 
@@ -81,10 +81,7 @@
                 function GenerateSection($IsEditingArticle, $SelectedArticle, $SectionNumber, $CurrentArticleCategorieSub)
                 {
                     foreach ($SelectedArticle as $Key => $Value)
-                    {
-                        // if (isset($Value['id_article']))
-                        // {    echo '<input type="hidden" name="id_article" value="' . $Value['id_article'] . '">'; }
-                            
+                    { 
                         echo '<h4 name="' . "sous_titre_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["sous_titre_$SectionNumber"] . '</h4>';
                         echo '<p name="' . "contenu_$SectionNumber" . '" contenteditable="' . boolalpha($IsEditingArticle) . '">' . $Value["contenu_$SectionNumber"] . '</p>';
 
@@ -131,8 +128,6 @@
                 <?php
                     foreach ($SelectedArticle as $Key => $Value)
                     {
-                        // $SelectedCategories = $NewConnection->select("categorie", "nom, id_categorie");
-
                         if ($IsEditingArticle){
                             
                             GenerateCategorieSelector($SelectedCategories, 'Categorie', $Value['categorie']);
@@ -348,9 +343,9 @@
 
                     return Response.text();
                 })
-                .then(function (ResponseText) {
-                    console.log(ResponseText);
-                })
+                // .then(function (ResponseText) {
+                //     console.log(ResponseText);
+                // })
                 ;
 
                 return true;

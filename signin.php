@@ -19,13 +19,11 @@
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="signin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" >
 </head>
 
 <body>
-
-<section class="login-box">
+    <section class="login-box">
         <a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
         <h1>Inscription</h1>
         <?php
