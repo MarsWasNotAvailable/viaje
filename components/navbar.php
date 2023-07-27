@@ -163,6 +163,39 @@
     .float-login {
         float: right;
     }
+
+    
+/* Styles des éléments de la navbar */
+.parallax {
+    display: inline-block;
+    padding: 0 20px;
+    cursor: pointer;
+    color: #FFD700; /* Couleur du texte par défaut */
+}
+
+/* Animation des éléments de la navbar lors du clic */
+.parallax.clicked {
+    animation: whirl-shrink-and-grow 2s linear infinite, text-fade 2s linear infinite; /* Animation au clic */
+}
+
+/* Animation d'effet de tourbillon et de rétrécissement/agrandissement */
+@keyframes whirl-shrink-and-grow {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(0.3); }
+    50% { transform: rotate(180deg) scale(0.2); }
+    75% { transform: rotate(270deg) scale(0.3); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Animation de changement de couleur */
+@keyframes text-fade {
+    0%, 100% { color: #FFD700; }
+    25% { color: #FFA500; }
+    50% { color: #FF8C00; }
+    75% { color: #FF4500; }    
+}
+
+
 </style>
 
 <div id="SiteHead">
@@ -171,8 +204,8 @@
     <div z-index="2" class="float-login">
         <?php if ($IsUserLoggedIn): $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
             ?>
-            <form method="POST" action="controller.php"><input type="submit" name="Intention" value="Logout" class="ConnexionButtons" ></form>
-            <img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;">
+            <form method="POST" action="controller.php"><input type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button" ></form>
+            <a href="./profile.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
         <?php else: ?>
             <button class="ConnexionButtons" onclick="window.location='./login.php'">Login</button>
         <?php endif ?>
@@ -181,7 +214,7 @@
 
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
-        <div class="dropdown">
+        <div class="parallax" class="dropdown">
             <a href="./index.php">BLOG VOYAGE</a>
         </div>
 
@@ -193,7 +226,7 @@
             ?>
         </div>
         <div class="dropdown">
-            <a href="#">AMÉRIQUE</a>
+            <a class="parallax" href="#">AMÉRIQUE</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Amérique'");
                 foreach ($Nav as $display) {
@@ -288,6 +321,28 @@
             x.className = "topnav";
         }
     }
+
+    // Fonction d'animation de l'effet gyroscopique sur l'image de fond
+    function animateBackground() {
+        const body = document.body;
+        body.style.animation = "gyroscopic-effect 2s linear"; // Animation d'effet gyroscopique pour l'image de fond
+        setTimeout(() => {
+            body.style.animation = "none"; // Réinitialise l'animation après 2 secondes (ajuste cette valeur selon ton préférence)
+        }, 2000);
+    }
+
+    // Ajout d'un gestionnaire d'événement au clic pour chaque élément de la navbar
+    const parallaxElements = document.querySelectorAll(".parallax");
+    parallaxElements.forEach((element) => {
+        element.addEventListener("click", function () {
+            this.classList.add("clicked"); // Ajoute la classe "clicked" au clic sur un élément de la navbar
+            animateBackground(); // Déclenche l'effet gyroscopique au clic sur un élément de la navbar
+            setTimeout(() => {
+                this.classList.remove("clicked"); // Retire la classe "clicked" après l'animation
+            }, 2000);
+        });
+    });
+
 </script> 
 
 <?php    

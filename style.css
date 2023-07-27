@@ -74,15 +74,15 @@ header .ConnexionButtons {
     padding: 0.5em;
     margin-left: 1em;
     margin-right: 1em;
-    background-color: transparent;
+    /* background-color: transparent; */
     border: 1px solid #000;
 
     cursor: pointer;
 }
 
-header .ConnexionButtons:hover {
+/* header .ConnexionButtons:hover {
     background-color: #1d6eabb9;
-}
+} */
 
 footer div {
     display: block;
@@ -166,6 +166,19 @@ article section h2, article section h4 {
 
     padding: 0.4em;
     width: 15em;
+}
+
+.red-button {
+    border: 1px solid black;
+    background-color: #1d6eabb9;
+    color: white;
+    cursor: pointer;
+
+    padding: 0.4em;
+}
+
+.red-button:hover {
+    background-color: #D66D40;
 }
 
 
@@ -525,4 +538,33 @@ button.update-edit {
     text-align: center;
     margin-bottom: 10px;
     color: #007bff;
+}
+
+.profile-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-box > * {
+    width: 80%;
+}
+
+
+.back-button {
+    border: 1px solid #000;
+    padding: 1em;
+    text-decoration: none;
+}
+
+.entete.profile {
+    margin-bottom: 2em;
+}
+
+@media (max-width: 900px) {
+
+    .entete.profile {
+        margin: 1em auto 2em auto;
+        display: inline-grid;
+    }
 }

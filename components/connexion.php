@@ -62,22 +62,38 @@
                 //     array("<>" => array("sous_categorie" => "not_that_one")),
                 //     array("LIKE" => array("content" => "%keyword%"))
                 // );
-
-                // What a terrible language: so much words for such a simple thing
-                $ConditionAsString = "";
-                foreach ($ConditionField as $Index => $EachConditionsPair) {
-                    foreach ($EachConditionsPair as $EachOperation => $EachPair) {
-                        foreach($EachPair as $EachKey => $EachValue) {
-                            $ConditionAsString .= "(`$Table`.`" . $EachKey . '` ' . $EachOperation . ' "' . $EachValue . '") AND ';
-                             break; //there should only be one pair per operations
+                $TypeOfCondition = gettype($ConditionField);
+                switch($TypeOfCondition)
+                {
+                    case 'array':
+                    case 'object':
+                        // What a terrible language: so much words for such a simple thing
+                        $ConditionAsString = "";
+                        foreach ($ConditionField as $Index => $EachConditionsPair) {
+                            foreach ($EachConditionsPair as $EachOperation => $EachPair) {
+                                foreach($EachPair as $EachKey => $EachValue) {
+                                    $ConditionAsString .= "(`$Table`.`" . $EachKey . '` ' . $EachOperation . ' "' . $EachValue . '") AND ';
+                                    break; //there should only be one pair per operations
+                                }
+                            }
                         }
-                    }
+                        $ConditionField = rtrim($ConditionAsString, ' AND ');
+                        var_dump($ConditionField);
+                        break;
+                    default:
+                    case 'boolean':
+                    case 'integer':
+                    case 'string':
+                    case 'double':
+                        break;
+                    case 'NULL':
+                        $ConditionField = 1;
+                        break;
                 }
-                $ConditionField = rtrim($ConditionAsString, ' AND ');
-                var_dump($ConditionField);
 
-                // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-                $Column = (preg_match($Column, null) === false) ? ('`' . $Column . '`') : $Column;
+                // NOTE: here, we try to support both valid name, and regex expression
+                $Column = (@preg_match($Column, null) === false) ? $Column : ('`' . $Column . '`');
+                // var_dump($Column);
                 $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
 
                 $Result = $this->Connection->query($SQLQueryString);

@@ -53,7 +53,7 @@
                     $Condition = '(`email` = "' . $_POST['email'] . '" AND `mot_de_passe` = "' . $_POST['mot_de_passe'] . '")';
                     $UniqueUser = $NewConnection->select($UsersTableName, "*", $Condition);
                     // var_dump($UniqueUser[0]);
-                    
+
                     session_start();
 
                     if ($UniqueUser) {
@@ -72,11 +72,7 @@
                         die();
                     }
                     else {
-                        // $_SESSION['CurrentUser'] = "Guest";
                         $_SESSION['HasFailedLogin'] = true;
-
-                        //TODO: can add a message to say the user does not exist
-                        // echo '<span>We do not know who you are. Do you mean to <a href="signup.php" >sign up</a> ?</span>';
 
                         header("Location: " . 'login.php');
                         die();
@@ -156,10 +152,6 @@
                         'mot_de_passe' => bin2hex(openssl_random_pseudo_bytes(4)),
                         'role' => 'guest'
                     );
-
-                    // $Condition = '(`email` = "' . $Values['email'] . '")';
-                    // $UniqueUser = $NewConnection->select($UsersTableName, "id_utilisateur", $Condition);
-                    // $UserID = ($UniqueUser) ? $UniqueUser[0]['id_utilisateur'] : $NewConnection->insert($UsersTableName, $Values);
 
                     $UserID = $NewConnection->insert_update($UsersTableName, $Values, array('Key' => 'nom', 'Value' => $Values['nom']));
                     // var_dump($UserID);
@@ -311,6 +303,30 @@
 
                     die();
                     break;
+
+                case 'UpdateProfile':
+                    $Values = array(
+                        // 'email' => $_POST['email'],
+                        'nom' => $_POST['nom']
+                    );
+
+                    $Condition = array('id_utilisateur' => $_POST['id_utilisateur']);
+
+                    $Success = $NewConnection->update($UsersTableName, $Condition, $Values);
+
+                    if ($Success)
+                    {
+                        session_start();
+
+                        // $_SESSION['CurrentUser'] = $_POST['email'];
+                        $_SESSION['CurrentUserName'] = $_POST['nom'];
+
+                        header("Location: " . './profile.php');
+                        die();
+                    }
+
+                    // die();
+                    break;
                 
                 default:
                     # code...
@@ -334,17 +350,6 @@
                     die();
                     break;
 
-                // case 'UploadImage':
-                //     $Values = array(
-                //         $_PUT['Column'] => $_PUT['Value']
-                //     );
-
-                //     $Condition = array('id_article' => $_PUT['id_article']);
-
-                //     $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
-
-                //     die();
-                //     break;
                 default:
                     break;
             }

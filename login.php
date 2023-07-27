@@ -18,7 +18,6 @@
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="signin.css">
 </head>
 
 <body>
@@ -38,7 +37,7 @@
             </div>
 
             <div class="input-group">
-                <input name="Intention" value="Login" type="submit" value="Se connecter">
+                <input name="Intention" value="Login" type="submit">
             </div>
         </form>
 
