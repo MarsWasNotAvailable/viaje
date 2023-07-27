@@ -163,12 +163,13 @@ article section h2, article section h4 {
     background-color: #4caf50;
     color: white;
     cursor: pointer;
-
+    
     padding: 0.4em;
 }
 
 #CommentaireForm button {
     width: 15em;
+    
 }
 
 .red-button {

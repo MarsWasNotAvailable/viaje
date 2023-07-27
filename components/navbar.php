@@ -57,6 +57,7 @@
     .dropdown {
         position: relative;
         display: inline-block;
+        
     }
 
     @media (max-width:1023px) {
@@ -76,6 +77,7 @@
 
     .dropdown:hover .dropdown-content {
         display: block;
+        border-radius: 16px;
     }
 
     .dropdown-content a {
@@ -161,7 +163,7 @@
     }
 
     .float-login {
-        float: right;
+        float: right;        
     }
 
     
