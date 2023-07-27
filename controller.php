@@ -32,7 +32,7 @@
                         'mot_de_passe' => $_POST['mot_de_passe'],
                         'role' => 'guest'
                     );
-                    var_dump($Values);
+                    // var_dump($Values);
 
                     $Success = $NewConnection->insert($UsersTableName, $Values);
 
@@ -88,7 +88,7 @@
                     // session_unset();
                     session_destroy();
                 
-                    var_dump($_SESSION);
+                    // var_dump($_SESSION);
                 
                     header('Location: ' . $Redirection );
                     die();
@@ -162,17 +162,17 @@
                         'id_utilisateur' => $UserID
                     );
 
-                    var_dump($Comments);
+                    // var_dump($Comments);
 
                     $CommentsID = $NewConnection->insert($CommentsTableName, $Comments);
-                    var_dump($CommentsID);
+                    // var_dump($CommentsID);
 
                     if ($UserID && $CommentsID)
                     {
                         require_once('./components/commons.php');
 
                         $CanEditToken = CanEditComments($_SESSION['UserRole']) ? 'edit=true&' : '&';
-                        // header("Location: " . 'article.php' . "?id_article=" . $_POST['id_article']);
+
                         header("Location: " . $ArticlePageRedirection . '?' . $CanEditToken . 'id_article=' . $_POST['id_article'] . '#Commentaires');
                         die();
                     }
@@ -198,7 +198,6 @@
                         $Success = $NewConnection->update($CommentsTableName, $Condition, $Values);
     
                         if ($Success) {
-                            // header("Location: " . $ArticlePageRedirection . '?edit=true#Commentaires');
                             header("Location: " . $ArticlePageRedirection . '?edit=true&id_article=' . $_POST['id_article'] . '#Commentaires');
                             die();
                         }
@@ -274,8 +273,7 @@
                         $CurrentCategorySubFolder = $CurrentCategorySub ? $CurrentCategorySub . '/' : '';
 
                         $LocalTempName = $_FILES[$_POST['Column']]['tmp_name'];
-                        // $ProjectDirectory = realpath(dirname(getcwd()));
-                        // $DestinationName = $ProjectDirectory . "/viaje/images/" . strtolower($_POST['Category']) . '/' . $_FILES[$_POST['Column']]['name'] ;
+
                         $DestinationName = './images/' . $CurrentCategorySubFolder . $_FILES[$_POST['Column']]['name'] ;
                         // var_dump($LocalTempName);
                         // var_dump($DestinationName);
@@ -336,20 +334,6 @@
         else if (isset($_PUT['Intention']))
         {
             switch ($_PUT['Intention']) {
-                case 'UpdateArticleField':
-                    $Values = array(
-                        $_PUT['Column'] => $_PUT['Value']
-                    );
-
-                    $Condition = array('id_article' => $_PUT['id_article']);
-
-                    echo "yellow";
-
-                    // $Success = $NewConnection->update($ArticleTableName, $Condition, $Values);
-
-                    die();
-                    break;
-
                 default:
                     break;
             }

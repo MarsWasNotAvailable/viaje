@@ -31,7 +31,9 @@
     <section class="display-result login-box">
         <?php if ($IsUserLoggedIn): $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
             ?>
-            <form method="POST" action="controller.php"><input type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button" ></form>
+            <form method="POST" action="controller.php">
+                <input type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button" >
+            </form>
 
             <form class="profile-box" action="controller.php" method="POST">
                 <img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 256px; height: 256px;">

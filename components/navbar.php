@@ -167,10 +167,10 @@
     
 /* Styles des éléments de la navbar */
 .parallax {
-    display: inline-block;
-    padding: 0 20px;
+    /* display: inline-block; */
+    /* padding: 0 20px; */
     cursor: pointer;
-    color: #FFD700; /* Couleur du texte par défaut */
+    /* color: #FFD700; Couleur du texte par défaut */
 }
 
 /* Animation des éléments de la navbar lors du clic */
@@ -207,25 +207,25 @@
             <form method="POST" action="controller.php"><input type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button" ></form>
             <a href="./profile.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
         <?php else: ?>
-            <button class="ConnexionButtons" onclick="window.location='./login.php'">Login</button>
+            <button class="ConnexionButtons green-button" onclick="window.location='./login.php'">Login</button>
         <?php endif ?>
     </div>
 </div>
 
 <nav class="navbar">
     <div class="topnav" id="myTopnav">
-        <div class="parallax" class="dropdown">
+        <div class="parallax dropdown">
             <a href="./index.php">BLOG VOYAGE</a>
         </div>
 
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Pratique'");
                 foreach ($Nav as $display) {
                     echo'<a href="categorie.php?id_categorie='. $display['id_categorie']. '">' .$display['nom'] . '</a>';
                 }
             ?>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a class="parallax" href="#">AMÉRIQUE</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Amérique'");
@@ -235,7 +235,7 @@
                 ?>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a href="#">ASIE</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Asie'");
@@ -245,7 +245,7 @@
                 ?>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a href="#">EUROPE</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Europe'");
@@ -255,7 +255,7 @@
                 ?>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a href="#">AFRIQUE &amp; MOYEN-ORIENT</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Afrique et Moyen-Orient'");
@@ -265,7 +265,7 @@
                 ?>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a href="#">OCÉANIE</a>
             <div class="dropdown-content">
                 <?php $Nav = $NewConnection->select("categorie", "*", "continent= 'Océanie'");
@@ -275,7 +275,7 @@
                 ?>                        
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown parallax">
             <a href="./contact.php">CONTACT</a>
             <div class="dropdown-content">
                 <a href="contact.php">Contact</a>
@@ -283,7 +283,7 @@
         </div>
 
         <?php if($IsUserLoggedIn && $CanEditArticles): ?>
-            <div class="dropdown">
+            <div class="dropdown parallax">
                 <a href="./gestion.php">GESTION</a>
             </div>
         <?php endif; ?>
@@ -334,11 +334,13 @@
     // Ajout d'un gestionnaire d'événement au clic pour chaque élément de la navbar
     const parallaxElements = document.querySelectorAll(".parallax");
     parallaxElements.forEach((element) => {
-        element.addEventListener("click", function () {
+        element.addEventListener("click", function (event) {
+            event.preventDefault();
             this.classList.add("clicked"); // Ajoute la classe "clicked" au clic sur un élément de la navbar
             animateBackground(); // Déclenche l'effet gyroscopique au clic sur un élément de la navbar
             setTimeout(() => {
                 this.classList.remove("clicked"); // Retire la classe "clicked" après l'animation
+                window.location = event.target.href;
             }, 2000);
         });
     });

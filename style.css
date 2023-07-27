@@ -165,6 +165,9 @@ article section h2, article section h4 {
     cursor: pointer;
 
     padding: 0.4em;
+}
+
+#CommentaireForm button {
     width: 15em;
 }
 
