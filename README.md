@@ -35,12 +35,9 @@ Nous utilisons phpMyAdmin version 5.2.0.
 
 3. Il y a une instance de maConnexion dans $NewConnection, n'hésitez pas à la modifier pour la connecter à votre système de gestion de données. Pour ce faire modifier les à l'aide de votre éditeur de texte. 
 
-4. Ouvrez index.php sur votre navigateur dans le local host. Pour commencer à tester le blog. Nous avons tester le blog dans différents navigateurs tels que : 
-
-            - Mozilla
-
-            - Google Chrome
-            
+4. Ouvrez index.php sur votre navigateur dans le local host. Pour commencer à tester le blog. Nous avons tester le blog dans différents navigateurs tels que :  
+            - Mozilla  
+            - Google Chrome  
             -Brave
 
 ## Utilisation ##
@@ -55,12 +52,9 @@ Etape 2: sur la page de connexion, taper un email et un mot de passe existant da
 
 Etape 3: cliquer sur login
 
->La connexion permet selon le rôle de :
-
-> gérer son compte via la page profile symboliser par un icon en haut à droite
-
-> supprimer ou modifier des commentaires
-
+>La connexion permet selon le rôle de :  
+> gérer son compte via la page profile symboliser par un icon en haut à droite  
+> supprimer ou modifier des commentaires  
 > écrire, modifier ou supprimer un article via la page gestion
 
 ### Exemple 2
