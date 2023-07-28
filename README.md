@@ -9,13 +9,20 @@ Viaje est un blog de voyage. Il comprend plusieurs articles illustrés sous lesq
 L'objectif de ce projet est de vous permettre de créer un blog en PHP. Nous avons développer une interface utilisateur web dynamique et adaptable, créer une base de données, développer la partie back-end, et réaliser une interface utilisateur avec une solution de gestion de contenu.
 
 ## Conception ##
+Tous les fichiers sont utiles au bon fonctionnement du blog, néanmoins 2 fichiers permettent les interactions entre l'interface et la base de données.
 
-Tous les fichiers sont utiles au bon fonctionnement du blog, néanmoins pour permettre les interactions entre l'interface et la base de données, 2 fichiers sont très importants.
-1. connexion.php : 
-Il contient **la class de connexion à la base de donnée** `MaConnexion` et ses fonctions. Sans ce fichier, aucune interaction n'est possible tout simplement car la base de données et le blog ne sont pas lié.
+En effet, pour concevoir notre application web, nous avons utilisé le modèle MVC (Model View Controller), ici :
+* Le fichier connexion.php correspond au Model,
+* Le fichier controller.php correspond au Controller,
+* Les autres fichiers front end qui constituent l'interface corrsepondent au View.
 
-2. controller.php : 
-Il permet de récupérer les données du formulaire envoyer via les méthodes POST pour en faire des requêtes envoyées à la base de données. Il applique les fonctions de la class `MaConnexion` selon les actions faites par les utilisateurs. 
+1. **Model** : connexion.php : 
+Le fichier connexion.php contient une **class** nous permettant d'intéragir avec la base de donnée, en utilisant des fonctions Create Read Update Delete (CRUD). Sans ce fichier, aucune interaction n'est possible tout simplement car la base de données et l'interface ne sont pas liées.
+
+2. **Controller** : controller.php : 
+Il permet de récupérer les données du formulaire envoyer via les méthodes POST pour en faire des requêtes envoyées à la base de données. Il fait appelle aux fonctions de la class `MaConnexion` selon les actions faites par les utilisateurs. 
+
+Afin d'éviter de répéter les mêmes codes pour composer l'interface nous avons isolé des bouts de codes qui se répetaient. Ainsi la navbar et le footer sont inclus grâce à la fonction PHP `require_once()`. Vous les retrouverez dans le dossier components.
 
 ## Installation ##
 Pour le bon fonctionnement de l'application chaque document doit rester dans son dossier d'origine. La version de php que nous utilisons est la version 8.1.13.
@@ -34,13 +41,25 @@ Nous utilisons phpMyAdmin version 5.2.0.
 * Brave
 
 ## Utilisation ##
-Voici un exemple d'utilisation. 
+Voici des exemples d'utilisation. 
 
-Pour se connecter à son compte, cliquez sur le bouton login en haut à droite de l'écran. Ceci ménera vers une page de connexion. Il faudra taper un email et un mot de passe existant dans la base de données, sinon il y a possibilité de s'inscrire en cliquant sur le lien vers _Do you mean to [signin]_. 
+### Exemple 1
+Pour se connecter à son compte:
 
-La connexion permet selon le rôle de :
-* gérer son compte via la page profile symboliser par un icon en haut à droite
-* supprimer ou modifier des commentaires
-* écrire, modifier ou supprimer un article via la page gestion
+Etape 1: cliquer sur le bouton login en haut à droite de l'écran
+Etape 2: sur la page de connexion, taper un email et un mot de passe existant dans la base de données, sinon il y a possibilité de s'inscrire en cliquant sur le lien vers _Do you mean to [signin]_. 
+Etape 3: cliquer sur login
 
-Pour se deconnecter, il suffit de cliquer sur le bouton logout apparu en haut à droite à la palce de login. 
+>La connexion permet selon le rôle de :
+> gérer son compte via la page profile symboliser par un icon en haut à droite
+> supprimer ou modifier des commentaires
+> écrire, modifier ou supprimer un article via la page gestion
+
+### Exemple 2
+
+Pour effectuer une recherche avec la barre de recherche, pour un utilisateur qui voudrait voyager en "Australie":
+
+Etape 1: entrer le mot "Australie", suivi de la touche entrer
+Etape 2: visualiser et cliquer sur l'article qui vous intéresse dans les résultats
+Etape 3: visualiser l'article jusqu'à la fin, et trouver la section commentaires
+Etape 4: laisser votre commentaire
