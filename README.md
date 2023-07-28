@@ -1,86 +1,46 @@
 # viaje
-Brief En Groupe De 3 - Blog Voyage
-
-## Contexte du projet
-
-Vous travaillez pour une entreprise de développement web qui souhaite élargir son offre de services en proposant des blogs personnalisés à ses clients.
-Votre mission est de créer un prototype de blog en PHP qui comprendra une gestion des articles depuis un backoffice. Le projet doit être réalisé sur une période de 10 jours, avec des objectifs quotidiens pour vous aider à rester sur la bonne voie.
-
-## Séquençage du travail :
-
-* Jour 1 : Planification du projet et définition des objectifs, Création du cahier des charges
-
-* Jour 2 : Conception des maquettes et wireframes
-
-* Jour 3 : Développement de l'interface utilisateur web statique
-
-* Jour 4 : Création de la base de données
-
-* Jour 5 : Développement de l'interface utilisateur web dynamique
-
-* Jour 6 : Développement de la partie back-end Jour
-
-* Jours 7, 8 et 9: Finalisation et revue du projet
-
-* Jour 10 : Préparation et présentation du projet
-
-## Objectif :
-
-L'objectif de ce projet est de vous permettre de créer un blog en PHP. Vous allez développer une interface utilisateur web dynamique, créer une base de données, développer la partie back-end, réaliser une interface utilisateur web statique et adaptable, et réaliser une interface utilisateur avec une solution de gestion de contenu.
-
-​
-## En PJ : une liste d'exemple de blog.
-
-> https://animalaxy.fr/
-
-> https://www.greenpeace.fr/
-
-> https://www.capital.fr/
-
-> https://www.presse-citron.net/
-
-> https://www.voyageway.com/
-
-> https://www.cadremploi.fr/emploi/top_recruteurs
-
-> https://siecledigital.fr/
-
-> https://www.voyageperou.info/
-
-
-## Optionnel :
-
-Idées de fonctionnalités optionnelles si vous avez le temps et/ou l'envie.
-
-- [x] Poster des commentaires sur les articles
-- [ ] Noter les articles
-
 
 ## Présentation du projet ##
 
-Les données de notre projet web utilise des styles CSS pour la mise en page et inclut des éléments tels qu'une barre de navigation comprenant des articles par categorie, une barre de recherche par mots clé également un login et d'autre fonctionnalités si rapportent.
+Viaje est un blog de voyage. Il comprend plusieurs articles illustrés sous lesquels il est possible de laisser des commentaires. Les utilisateurs peuvent créer un compte ou se connecter. Il existe 4 rôles d'utilisateurs donnant accès à des fonctionnalités différentes allant de la publication d'un commentaire à la création ou suppression d'un article.
 
-1. La ligne require_once("components/connexion.php") inclut un fichier de connexion à la base de données. Cela permet au code d'accéder à la base de données et d'exécuter des requêtes.
+## Objectif :
 
-2. La classe MaConnexion est utilisée pour créer une instance de connexion à la base de données. Les informations de connexion sont passées en paramètres lors de l'instanciation de la classe.
+L'objectif de ce projet est de vous permettre de créer un blog en PHP. Nous avons développer une interface utilisateur web dynamique et adaptable, créer une base de données, développer la partie back-end, et réaliser une interface utilisateur avec une solution de gestion de contenu.
 
-3. La méthode select de la classe MaConnexion est utilisée pour récupérer tous les enregistrements de la table "article" dans la base de données. Le résultat de cette requête est stocké dans la variable $Result.
+## Conception ##
 
-4. Le code HTML et CSS définit la structure et le style de la page. Des balises telles que `<header>, <main>, <section>, <div>, <img>, <a>, <h1>, <h2>, <h3>, <p>`, etc. sont utilisées pour structurer le contenu et appliquer le style.
+Tous les fichiers sont utiles au bon fonctionnement du blog, néanmoins pour permettre les interactions entre l'interface et la base de données, 2 fichiers sont très importants.
+1. connexion.php : 
+Il contient **la class de connexion à la base de donnée** `MaConnexion` et ses fonctions. aucune interaction n'est possible tout simplement car la base de données et le blog ne sont pas lié.
 
-5. À l'intérieur de la boucle foreach, chaque article est affiché dans une carte (`<div class="card">`). Les données de chaque article, telles que le titre, la date et le résumé, sont extraites de la variable $display et affichées à l'aide de balises HTML.
+2.controller.php : 
+Il permet de récupérer les données du formulaire envoyer via les méthodes POST pour en faire des requêtes envoyées à la base de données. Il applique les fonctions de la class `MaConnexion` selon les actions faites par les utilisateurs. 
 
-6. Les images des articles sont affichées à l'aide de la balise `<img>` avec la source spécifiée dans par la 'photo_principale' venant de la base de donnée.
+## Installation ##
+Pour le bon fonctionnement de l'application chaque document doit rester dans son dossier d'origine. La version de php que nous utilisons est la version 8.1.13.
 
+1. Pour commencer, clonez, le dépot Git sur votre ordinateur. 
+Pour garantir une meilleurs facilité à utiliser les fonctionnalités, en permettant de garder tous les fichiers dans leur emplacement originel.
 
-## PROBLEMES ET SOLUTIONS ##
+2. Importez le fichier viaje.sql, qui se situe dans le dossier utilities, sur votre système de gestion de données.
+Nous utilisons phpMyAdmin version 5.2.0.
 
-1. Transfert d'informations de PHP à JavaScript :
-Il y a eu des "soucis" (plus un embêtement) à transférer des informations de PHP à JavaScript dans ce code. Pour résoudre ce problème, des fonctions ont être créées en tant qu'interfaces entre les deux technologies. Mais c'est quand même désagréable de passer de PHP à JS.
+3. Il y a une instance de maConnexion dans $NewConnection, n'hésitez pas à la modifier pour la connecter à votre système de gestion de données. Pour ce faire modifier les à l'aide de votre éditeur de texte. 
 
-2. Script SQL de la base de données :
-Le partage du script SQL pour la base de donnée a été un défi (example: pas d'accès au nouveau article inserer par un collègue). Une solution pourrait être d'automatiser le processus en utilisant un script PHP (pour exécuter le script SQL et mettre en place la structure de la base de données), bien que cela n'ait pas été réalisé dans ce cas puisqu'on a fini assez rapidement. Une autre solution plausible serait d'avoir une base de donnée sur internet, néanmoins cela pourrait causer des conflits (INSERT, DELETE, DROP).
+4. Ouvrez index.php sur votre navigateur dans le local host. Pour commencer à tester le blog. Nous avons tester le blog dans différents navigateurs tels que : 
+* Mozilla
+* Google Chrome
+* Brave
 
-3. Conflits Git : Des conflits de fusion Git ont ralenti la progression du travail. Une solution consiste à travailler sur des parties distinctes du code pour éviter les conflits. En travaillant sur des branches distinctes, les développeurs peuvent fusionner leur travail sans rencontrer de conflits. L'utilisation de l'application Github Destop (interfaces graphique pour le client Git) facilite la fusion du travail de chacun, et reduit le besoin de résoudre les conflits.
+## Utilisation ##
+Voici un exemple d'utilisation. 
 
-4. Création d'un éditeur d'article : La création d'un éditeur d'article a été difficile en raison de la structure de la base de données où les contenus sont séparés, dans le but de les formatter lors de l'affichage sur la page. Une solution possible serait de stocker les contenus au format HTML pour permettre plus d'options de formatage (tel que des liens `<a>`ou des listes en point `<li>`), mais cela aurait augmenté la taille du contenu. Finalement, le model actuel fut le plus simple pour cette démonstration.
+Pour se connecter à son compte, cliquez sur le bouton login en haut à droite de l'écran. Ceci ménera vers une page de connexion. Il faudra taper un email et un mot de passe existant dans la base de données, sinon il y a possibilité de s'inscrire en cliquant sur le lien vers _Do you mean to [signin]_. 
+
+La connexion permet selon le rôle de :
+* gérer son compte via la page profile symboliser par un icon en haut à droite
+* supprimer ou modifier des commentaires
+* écrire, modifier ou supprimer un article via la page gestion
+
+Pour se deconnecter, il suffit de cliquer sur le bouton logout apparu en haut à droite à la palce de login. 
