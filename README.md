@@ -47,7 +47,9 @@ Voici des exemples d'utilisation.
 Pour se connecter à son compte:
 
 Etape 1: cliquer sur le bouton login en haut à droite de l'écran
+
 Etape 2: sur la page de connexion, taper un email et un mot de passe existant dans la base de données, sinon il y a possibilité de s'inscrire en cliquant sur le lien vers _Do you mean to [signin]_. 
+
 Etape 3: cliquer sur login
 
 >La connexion permet selon le rôle de :
@@ -60,6 +62,9 @@ Etape 3: cliquer sur login
 Pour effectuer une recherche avec la barre de recherche, pour un utilisateur qui voudrait voyager en "Australie":
 
 Etape 1: entrer le mot "Australie", suivi de la touche entrer
+
 Etape 2: visualiser et cliquer sur l'article qui vous intéresse dans les résultats
+
 Etape 3: visualiser l'article jusqu'à la fin, et trouver la section commentaires
+
 Etape 4: laisser votre commentaire
