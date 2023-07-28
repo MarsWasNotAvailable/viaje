@@ -12,9 +12,9 @@ L'objectif de ce projet est de vous permettre de créer un blog en PHP. Nous avo
 
 Tous les fichiers sont utiles au bon fonctionnement du blog, néanmoins pour permettre les interactions entre l'interface et la base de données, 2 fichiers sont très importants.
 1. connexion.php : 
-Il contient **la class de connexion à la base de donnée** `MaConnexion` et ses fonctions. aucune interaction n'est possible tout simplement car la base de données et le blog ne sont pas lié.
+Il contient **la class de connexion à la base de donnée** `MaConnexion` et ses fonctions. Sans ce fichier, aucune interaction n'est possible tout simplement car la base de données et le blog ne sont pas lié.
 
-2.controller.php : 
+2. controller.php : 
 Il permet de récupérer les données du formulaire envoyer via les méthodes POST pour en faire des requêtes envoyées à la base de données. Il applique les fonctions de la class `MaConnexion` selon les actions faites par les utilisateurs. 
 
 ## Installation ##
