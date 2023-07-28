@@ -53,8 +53,11 @@ Etape 2: sur la page de connexion, taper un email et un mot de passe existant da
 Etape 3: cliquer sur login
 
 >La connexion permet selon le rôle de :
+
 > gérer son compte via la page profile symboliser par un icon en haut à droite
+
 > supprimer ou modifier des commentaires
+
 > écrire, modifier ou supprimer un article via la page gestion
 
 ### Exemple 2
