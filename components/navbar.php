@@ -87,11 +87,12 @@
         padding: 8px 16px;
     }
 
-    /* enleve le fond gris dans le texte exemple:chine ,japon etcc pour les autres */  
-    /*.dropdown-content a:hover {
-        background-color: #f1f1f1;
+    .dropdown-content a:hover {
+        /* background-color: #f1f1f1; */
+        /* enleve le fond gris dans le texte exemple: chine ,japon etcc pour les autres */  
+        background-color: transparent;
     }
-    */
+   
 
     #search {
         display: inline-block;

@@ -2,6 +2,12 @@
     session_start();
     // var_dump($_SESSION);
 
+    if (isset($_SESSION['CurrentUser']))
+    {
+        header("Location: " . 'index.php');
+        die();
+    }
+
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
@@ -11,6 +17,7 @@
 
 <!DOCTYPE html>
 <html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +25,21 @@
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" >
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" >
 </head>
 
 <body>
     <section class="login-box">
         <a href="index.php"><img id="Blazon" class="logo" src="./images/icons_site_main.png" alt="L'image principale du site" ></a>
         <h1>Connection</h1>
+        <?php
+            if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin'])
+            {
+                echo '<h4 class="animate__animated animate__shakeX" >Impossible de vous connecter.</h4>';
+                
+                unset($_SESSION['HasFailedLogin']);
+            }
+        ?>
 
         <form action="controller.php" method="POST">
             <div class="input-group">
@@ -41,7 +57,7 @@
             </div>
         </form>
 
-        <h5>New here ? Do you want to <a href="./signin.php">signup</a> ?</h5>
+        <h5>Nouveau ici ? Voulez-vous vous <a href="./signin.php">inscrire</a> ?</h5>
 
         <!-- Ici, le lien Facebook + Twiter X -->
         <div class="social-login">

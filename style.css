@@ -481,12 +481,20 @@ button.update-edit {
 .login-box {
     max-width: 400px;
     width: 100%;
-    margin: 50px auto 0; /* Ajuster la marge supérieure (top) pour positionner la boîte plus en haut */
+    margin: auto auto 0 auto;
     padding: 10px;
     background-color: #fff;
     border-radius: 5px;
-    transform: scale(0.8); /* Ajuster le facteur de zoom selon vos préférences */
-    box-sizing: border-box; /* Inclure le padding et le bord dans la taille totale */
+    scale: 0.8;
+    /* transform: scale(0.8); */
+
+    /* Pour inclure le padding et le bord dans la taille totale */
+    box-sizing: border-box; 
+}
+
+.login-box form {
+    /* login and signup form have different numbers of fields */
+    min-height: 20em;
 }
 
 .login-box > * {
@@ -516,14 +524,14 @@ button.update-edit {
     font-weight: bold;
 }
 
-.login-box .input-group input {
+.login-box .input-group input, .login-box .input-group button {
     width: 94%;
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-.login-box .input-group input[type="submit"] {
+.login-box .input-group *[type="submit"] {
     width: 100%;
     /* border: none; */
     cursor: pointer;
@@ -531,7 +539,7 @@ button.update-edit {
     color: #fff;
 }
 
-.login-box .input-group input[type="submit"]:hover {
+.login-box .input-group *[type="submit"]:hover {
     background-color: #0056b3;
 }
 
@@ -546,6 +554,22 @@ button.update-edit {
     color: #007bff;
 }
 
+/* Profile */
+
+section.profile #Control {
+    justify-items: center;
+    display: grid;
+}
+
+section.profile .control {
+    /* width: 8em; */
+    padding: 1em;
+
+    display: inline-flex;
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
 .profile-box {
     display: flex;
     flex-direction: column;
@@ -556,16 +580,15 @@ button.update-edit {
     width: 80%;
 }
 
-
 .back-button {
     border: 1px solid #000;
-    padding: 1em;
+    /* padding: 1em; */
     text-decoration: none;
 }
 
-.entete.profile {
+/* .entete.profile {
     margin-bottom: 2em;
-}
+} */
 
 @media (max-width: 900px) {
 
