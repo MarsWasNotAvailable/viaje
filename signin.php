@@ -2,6 +2,12 @@
     session_start();
     // var_dump($_SESSION);
 
+    if (isset($_SESSION['CurrentUser']))
+    {
+        header("Location: " . 'index.php');
+        die();
+    }
+
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
@@ -56,7 +62,7 @@
             </div>
         </form>
 
-        <h5>Do you mean to <a href="./login.php">log in</a> ?</h5>
+        <h5>Voulez-vous vous <a href="./login.php">connecter</a> ?</h5>
 
         <!-- Ici, les liens sociaux -->
         <div class="social-login">

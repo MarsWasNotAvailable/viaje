@@ -2,6 +2,12 @@
     session_start();
     // var_dump($_SESSION);
 
+    if (!isset($_SESSION['CurrentUser']))
+    {
+        header("Location: " . 'login.php');
+        die();
+    }
+
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 
@@ -25,16 +31,20 @@
 <body class="chunks">
     <section class="entete profile" >
         <h1 class="titre" >Profile</h1>
-        <a class="back-button" href="./index.php">Retourner au site</a>
+        <a class="control back-button green-button" href="./index.php">Retour</a>
+        <div id="Control">
+            <div>
+                
+            </div>
+            <form method="POST" action="controller.php">
+                <input type="submit" name="Intention" value="Logout" class="control ConnexionButtons red-button" >
+            </form>
+        </div>
     </section>
 
-    <section class="display-result login-box">
+    <section class="login-box">
         <?php if ($IsUserLoggedIn): $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
             ?>
-            <form method="POST" action="controller.php">
-                <input type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button" >
-            </form>
-
             <form class="profile-box" action="controller.php" method="POST">
                 <img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 256px; height: 256px;">
 
@@ -56,7 +66,8 @@
                 </div> -->
 
                 <div class="input-group">
-                    <input name="Intention" value="UpdateProfile" type="submit">
+                    <!-- <input name="Intention" value="UpdateProfile" type="submit"> -->
+                    <button name="Intention" value="UpdateProfile" type="submit">Mettre à jour</button>
                 </div>
             </form>
 
