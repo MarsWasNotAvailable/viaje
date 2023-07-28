@@ -54,6 +54,7 @@
 
             <div class="input-group">
                 <input name="Intention" value="Login" type="submit">
+                <!-- <button name="Intention" value="Login" type="submit">Se connecter</button> -->
             </div>
         </form>
 

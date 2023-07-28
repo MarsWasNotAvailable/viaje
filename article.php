@@ -27,22 +27,22 @@
         $SelectedArticle = array();
     }
     else {
-        // $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
-        // foreach ($SelectedArticle as $Key => $Value)
-        // {
-        //     $CurrentArticleCategorie = strtolower( $SelectedCategories[$Value['categorie'] - 1]['nom'] );
-        //     $CurrentArticleCategorieSub = strtolower( $Value['sous_categorie'] );
-        //     break;
-        // }
-
-        $SelectedArticle = $NewConnection->select_full_article($CurrentArticleID);
-        // var_dump($SelectedArticle);
+        $SelectedArticle = $NewConnection->select("article", "*", "id_article = $CurrentArticleID");
         foreach ($SelectedArticle as $Key => $Value)
         {
-            $CurrentArticleCategorie = strtolower( $Value['nom'] );
+            $CurrentArticleCategorie = strtolower( $SelectedCategories[$Value['categorie'] - 1]['nom'] );
             $CurrentArticleCategorieSub = strtolower( $Value['sous_categorie'] );
             break;
         }
+
+        // $SelectedArticle = $NewConnection->select_full_article($CurrentArticleID);
+        // // var_dump($SelectedArticle);
+        // foreach ($SelectedArticle as $Key => $Value)
+        // {
+        //     $CurrentArticleCategorie = strtolower( $Value['nom'] );
+        //     $CurrentArticleCategorieSub = strtolower( $Value['sous_categorie'] );
+        //     break;
+        // }
     }
 
     if (!$IsEditingArticle && ($CurrentArticleCategorie == "brouillon" || $CurrentArticleCategorieSub == "brouillon" ))

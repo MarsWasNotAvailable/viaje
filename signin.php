@@ -59,6 +59,7 @@
 
             <div class="input-group">
                 <input name="Intention" value="Signup" type="submit" >
+                <!-- <button name="Intention" value="Signup" type="submit">S'inscrire</button> -->
             </div>
         </form>
 
