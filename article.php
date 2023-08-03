@@ -2,6 +2,12 @@
     session_start();
     // var_dump($_SESSION);
 
+    if (!isset($_SESSION['crsf_token']))
+    {
+        header("Location: " . 'login.php');
+        die();
+    }
+
     require_once("./components/commons.php");
     require_once("./components/connexion.php");
 

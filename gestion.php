@@ -2,6 +2,12 @@
     session_start();
     // var_dump($_SESSION);
 
+    if (!isset($_SESSION['crsf_token']))
+    {
+        header("Location: " . 'login.php');
+        die();
+    }
+
     // Redirect unregistered users
     if (!isset($_SESSION['UserRole']) || $_SESSION['UserRole'] != 'admin')
     {

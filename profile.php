@@ -2,7 +2,7 @@
     session_start();
     // var_dump($_SESSION);
 
-    if (!isset($_SESSION['CurrentUser']))
+    if (!isset($_SESSION['crsf_token']) || !isset($_SESSION['CurrentUser']))
     {
         header("Location: " . 'login.php');
         die();

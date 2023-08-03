@@ -64,6 +64,13 @@
             ?>
         </section> 
     </main>
+
+    <script>
+        window.addEventListener('focus', ()=>{
+            console.log("yay");
+            // We can make the page check if the page session has expired here
+        });
+    </script>
  
 <footer>
     <?php include_once './components/footer.php' ?>
