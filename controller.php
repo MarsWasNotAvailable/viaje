@@ -338,9 +338,26 @@
 
                     // die();
                     break;
-                
+                    
+                case 'CheckSession':
+                    session_start();
+
+                    $ResponseCode = isset($_SESSION['crsf_token']) ? 200 : 404;
+
+                    header('Location: login.php', true, $ResponseCode);
+                    die();
+                    break;
+    
                 default:
                     # code...
+                    break;
+            }
+        }
+        else if (isset($_GET['Intention']))
+        {
+            switch ($_GET['Intention']) {
+
+                default:
                     break;
             }
         }

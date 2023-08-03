@@ -69,8 +69,39 @@
         window.addEventListener('focus', ()=>{
             console.log("yay");
             // We can make the page check if the page session has expired here
+
+            let url = "./controller.php";
+
+            let form_data = new FormData();
+                form_data.append('Intention', 'CheckSession');
+
+            const Request = fetch(url, {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "no-cache",
+                    credentials: "same-origin",
+                    // headers: { 'Content-Type': 'multipart/form-data' },
+                    redirect: "follow",
+                    referrerPolicy: "no-referrer",
+                    body: form_data
+                })
+                .then(function (Response) {
+                    if (!Response.ok)
+                    {
+                        window.location = 'login.php';
+                    }
+                    // return Response.text();
+                })
+                // .then(function (ResponseText) {
+                //     console.log(ResponseText);
+                // })
+                ;
         });
     </script>
+
+    <form action="controller.php" method="POST">
+        <button name="Intention" value="CheckSession" type="submit">Yay</button>
+    </form>
  
 <footer>
     <?php include_once './components/footer.php' ?>
